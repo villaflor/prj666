@@ -1,0 +1,162 @@
+Logging in build 2017.0.2.60 started at: Wed May 17 10:36:32 2017
+========================================
+[00:04:12.416] 10:40:45.201 | Beginning SaveAs of 'Website-1' to file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' highest UID:141
+[00:04:14.051] 10:40:46.837 | SaveAs complete for file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' file size:524288 mod Date:Wed May 17 10:40:46 GMT-0400 2017 highest UID:141
+IntervalMgr::Interval::Fire called during dispatchEvent of event MuseQueueEvent::TASK_COMPLETE
+IntervalMgr::Interval::Fire called during dispatchEvent of event MuseQueueEvent::TASK_COMPLETE
+IntervalMgr::Interval::Fire called during dispatchEvent of event MuseQueueEvent::TASK_COMPLETE
+IntervalMgr::Interval::Fire called during dispatchEvent of event MuseQueueEvent::TASK_COMPLETE
+[00:29:20.126] 11:05:52.912 | MenuWidgetPageItem::copyTo::updateQueryInfoLocal removing listener(if any) for CONVERSION_SESSION_ENDING
+[00:32:50.229] 11:09:23.015 | Beginning Save for file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' highest UID:748
+[00:32:51.861] 11:09:24.647 | Save complete for file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' file size:1409024 mod Date:Wed May 17 11:09:24 GMT-0400 2017 highest UID:748
+[00:40:47.852] 11:17:20.638 | Beginning Save for file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' highest UID:748
+[00:40:49.320] 11:17:22.106 | Save complete for file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' file size:1441792 mod Date:Wed May 17 11:17:22 GMT-0400 2017 highest UID:748
+[00:41:08.233] 11:17:41.019 | Trying to open file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Start.muse with size:622592 mod Date:Thu Jan 12 09:54:08 GMT-0500 2017
+[00:41:08.235] 11:17:41.021 | Opening file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Start.muse' with status:success size:622592 mod Date:Thu Jan 12 09:54:08 GMT-0500 2017 highestUID: 189
+[00:41:13.609] 11:17:46.394 | Trying to open file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse with size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017
+[00:41:13.611] 11:17:46.396 | Opening file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse' with status:success size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017 highestUID: 1302
+[00:42:44.570] 11:19:17.356 | DataError:91045/400 at 
+[00:42:44.582] 11:19:17.367 | HTMLExport Muse_Essentials_03_Finish(9 pages) to 'example.com' failed with error 91045:Could not generate code to enable one or more web fonts on page 'Home'. [Error 400: Font not Available]
+[00:43:15.236] 11:19:48.022 | Trying to open file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse with size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017
+[00:43:15.239] 11:19:48.024 | Opening file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse' with status:success size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017 highestUID: 1302
+[00:43:36.488] 11:20:09.274 | DataError:91045/400 at 
+[00:43:36.499] 11:20:09.284 | HTMLExport Muse_Essentials_03_Finish(9 pages) to 'example.com' failed with error 91045:Could not generate code to enable one or more web fonts on page 'Home'. [Error 400: Font not Available]
+[00:44:35.322] 11:21:08.107 | DataError:91045/400 at 
+[00:44:35.332] 11:21:08.118 | HTMLExport Muse_Essentials_03_Finish(9 pages) to 'example.com' failed with error 91045:Could not generate code to enable one or more web fonts on page 'Home'. [Error 400: Font not Available]
+[00:45:02.239] 11:21:35.024 | DataError:91045/400 at 
+[00:45:02.249] 11:21:35.035 | HTMLExport Muse_Essentials_03_Finish(9 pages) to 'testing.com' failed with error 91045:Could not generate code to enable one or more web fonts on page 'Home'. [Error 400: Font not Available]
+[04:12:45.170] 14:49:17.956 | quitWithUI:Quitting Application. Called by: 
+[04:12:45.171] 14:49:17.957 | Quitting Application after 252.7 minutes. Called by: 
+[04:12:48.288] Logging shutdown normally
+
+==========
+Logging ended at: Wed May 17 14:49:21 2017
+
+Logging in build 2017.0.2.60 started at: Wed May 17 15:02:47 2017
+========================================
+[00:00:08.189] 15:02:55.872 | NOTE: File is valid SQL mini-save structure, but has no miniSaveHeader record. Ignoring.
+[00:00:24.372] 15:03:12.055 | Trying to open file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse with size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017
+[00:00:24.374] 15:03:12.057 | Opening file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse' with status:success size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017 highestUID: 1302
+[00:02:59.462] 15:05:47.146 | Trying to open file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse with size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017
+[00:02:59.464] 15:05:47.148 | Opening file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse' with status:success size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017 highestUID: 1302
+[00:03:30.141] 15:06:17.824 | Trying to open file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse with size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017
+[00:03:30.143] 15:06:17.826 | Opening file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse' with status:success size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017 highestUID: 1302
+[00:05:01.175] 15:07:48.858 | quitWithUI:Quitting Application. Called by: 
+[00:05:01.497] 15:07:49.180 | Quitting Application after 5 minutes. Called by: 
+[00:05:03.502] Logging shutdown normally
+
+==========
+Logging ended at: Wed May 17 15:07:51 2017
+
+Logging in build 2017.0.2.60 started at: Wed May 17 19:09:07 2017
+========================================
+[00:00:15.941] 19:09:23.622 | Trying to open file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse with size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017
+[00:00:15.945] 19:09:23.626 | Opening file '/Users/mavillaflor/Downloads/Ex_Files_Muse_EssT/Exercise Files/Adobe Muse Files/Muse_Essentials_03_Finish.muse' with status:success size:1540096 mod Date:Thu Jan 12 09:54:22 GMT-0500 2017 highestUID: 1302
+[00:18:29.391] 19:27:37.072 | Link proxy data loader error
+[00:18:29.396] 19:27:37.077 | Link proxy data loader error
+[00:20:08.194] 19:29:15.875 | Link proxy data loader error
+[00:25:41.294] 19:34:48.975 | HTMLExport Website-1(1 pages) to 'example.com' completed with 0 warnings.
+[00:38:57.752] 19:48:05.433 | Beginning SaveAs of 'Website-1' to file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' highest UID:854
+[00:38:57.765] 19:48:05.446 | Preparing to Save As over "/Users/mavillaflor/Desktop/testing webpage/Website-1.muse" exists: true
+[00:38:59.352] 19:48:07.033 | SaveAs complete for file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' file size:1212416 mod Date:Wed May 17 19:48:07 GMT-0400 2017 highest UID:854
+[00:48:04.920] 19:57:12.601 | Beginning Save for file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' highest UID:919
+[00:48:06.722] 19:57:14.403 | Save complete for file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' file size:1245184 mod Date:Wed May 17 19:57:14 GMT-0400 2017 highest UID:919
+[00:52:35.548] 20:01:43.229 | Trying to open file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse with size:1245184 mod Date:Wed May 17 19:57:14 GMT-0400 2017
+[00:52:35.549] 20:01:43.231 | Opening file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' with status:success size:1245184 mod Date:Wed May 17 19:57:14 GMT-0400 2017 highestUID: 919
+[00:56:20.486] 20:05:28.168 | Trying to open file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse with size:1245184 mod Date:Wed May 17 19:57:14 GMT-0400 2017
+[00:56:20.489] 20:05:28.170 | Opening file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' with status:success size:1245184 mod Date:Wed May 17 19:57:14 GMT-0400 2017 highestUID: 919
+[00:56:36.118] 20:05:43.799 | HTMLExport Website-1(10 pages) to 'example.com' completed with 0 warnings.
+[01:04:03.071] 20:13:10.752 | quitWithUI:Quitting Application. Called by: 
+[01:04:03.072] 20:13:10.753 | Quitting Application after 64 minutes. Called by: 
+[01:04:05.553] Logging shutdown normally
+
+==========
+Logging ended at: Wed May 17 20:13:13 2017
+
+Logging in build 2017.0.2.60 started at: Wed May 17 21:17:00 2017
+========================================
+[00:02:35.844] 21:19:36.394 | Trying to open file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse with size:1245184 mod Date:Wed May 17 19:57:14 GMT-0400 2017
+[00:02:35.846] 21:19:36.396 | Opening file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' with status:success size:1245184 mod Date:Wed May 17 19:57:14 GMT-0400 2017 highestUID: 919
+[00:03:01.672] 21:20:02.222 | HTMLExport Website-1(10 pages) to 'example.com' completed with 0 warnings.
+[00:12:05.429] 21:29:05.979 | Beginning Save for file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' highest UID:919
+[00:12:06.762] 21:29:07.312 | Save complete for file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' file size:1343488 mod Date:Wed May 17 21:29:07 GMT-0400 2017 highest UID:919
+[00:29:56.474] 21:46:57.024 | Trying to open file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse with size:1343488 mod Date:Wed May 17 21:29:07 GMT-0400 2017
+[00:29:56.476] 21:46:57.026 | Opening file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' with status:success size:1343488 mod Date:Wed May 17 21:29:07 GMT-0400 2017 highestUID: 919
+[00:44:33.547] 22:01:34.097 | quitWithUI:Quitting Application. Called by: 
+[00:44:40.076] 22:01:40.626 | Quitting Application after 44.6 minutes. Called by: 
+[00:44:42.740] Logging shutdown normally
+
+==========
+Logging ended at: Wed May 17 22:01:43 2017
+
+Logging in build 2017.0.2.60 started at: Thu May 18 09:33:01 2017
+========================================
+[00:00:15.040] 09:33:16.776 | Trying to open file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse with size:1343488 mod Date:Wed May 17 21:29:07 GMT-0400 2017
+[00:00:15.043] 09:33:16.779 | Opening file '/Users/mavillaflor/Desktop/testing webpage/Website-1.muse' with status:success size:1343488 mod Date:Wed May 17 21:29:07 GMT-0400 2017 highestUID: 919
+[00:04:58.489] 09:38:00.226 | quitWithUI:Quitting Application. Called by: 
+[00:04:58.490] 09:38:00.227 | Quitting Application after 4.9 minutes. Called by: 
+[00:05:00.558] Logging shutdown normally
+
+==========
+Logging ended at: Thu May 18 09:38:02 2017
+
+Logging in build 2017.0.2.60 started at: Thu May 18 10:57:09 2017
+========================================
+[00:00:07.870] 10:57:17.400 | Trying to open file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse with size:1343488 mod Date:Wed May 17 21:29:07 GMT-0400 2017
+[00:00:07.872] 10:57:17.403 | Opening file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' with status:success size:1343488 mod Date:Wed May 17 21:29:07 GMT-0400 2017 highestUID: 919
+[00:02:30.691] 10:59:40.222 | quitWithUI:Quitting Application. Called by: 
+[00:02:30.693] 10:59:40.223 | Quitting Application after 2.5 minutes. Called by: 
+[00:02:32.875] Logging shutdown normally
+
+==========
+Logging ended at: Thu May 18 10:59:42 2017
+
+Logging in build 2017.0.2.60 started at: Thu May 18 11:41:52 2017
+========================================
+[00:00:17.103] 11:42:09.978 | Trying to open file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse with size:1343488 mod Date:Wed May 17 21:29:07 GMT-0400 2017
+[00:00:17.105] 11:42:09.980 | Opening file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' with status:success size:1343488 mod Date:Wed May 17 21:29:07 GMT-0400 2017 highestUID: 919
+[00:14:44.219] 11:56:37.095 | Beginning Save for file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' highest UID:971
+[00:14:45.608] 11:56:38.483 | Save complete for file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' file size:1835008 mod Date:Thu May 18 11:56:38 GMT-0400 2017 highest UID:971
+[00:16:29.854] 11:58:22.730 | Trying to open file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse with size:1835008 mod Date:Thu May 18 11:56:38 GMT-0400 2017
+[00:16:29.856] 11:58:22.732 | Opening file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' with status:success size:1835008 mod Date:Thu May 18 11:56:38 GMT-0400 2017 highestUID: 971
+[00:17:21.910] 11:59:14.785 | HTMLExport Website-1(10 pages) to 'example.com' completed with 0 warnings.
+[00:19:09.125] 12:01:02.001 | HTMLExport Website-1(10 pages) to 'example.com' completed with 0 warnings.
+[02:28:05.325] 14:09:58.201 | Trying to open file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse with size:1343488 mod Date:Wed May 17 21:29:07 GMT-0400 2017
+[02:28:05.327] 14:09:58.203 | Opening file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' with status:success size:1343488 mod Date:Wed May 17 21:29:07 GMT-0400 2017 highestUID: 919
+[02:31:18.204] 14:13:11.079 | Beginning Save for file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' highest UID:934
+[02:31:19.574] 14:13:12.449 | Save complete for file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' file size:1343488 mod Date:Thu May 18 14:13:12 GMT-0400 2017 highest UID:934
+[04:08:07.781] 15:50:00.656 | quitWithUI:Quitting Application. Called by: 
+[04:08:07.782] 15:50:00.657 | Quitting Application after 248 minutes. Called by: 
+[04:08:09.922] Logging shutdown normally
+
+==========
+Logging ended at: Thu May 18 15:50:02 2017
+
+Logging in build 2017.0.2.60 started at: Mon May 22 11:22:39 2017
+========================================
+[00:00:20.840] 11:23:00.468 | Trying to open file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse with size:1343488 mod Date:Thu May 18 14:13:12 GMT-0400 2017
+[00:00:20.844] 11:23:00.471 | Opening file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' with status:success size:1343488 mod Date:Thu May 18 14:13:12 GMT-0400 2017 highestUID: 934
+[00:07:57.746] 11:30:37.374 | Trying to open file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse with size:1343488 mod Date:Thu May 18 14:13:12 GMT-0400 2017
+[00:07:57.748] 11:30:37.376 | Opening file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' with status:success size:1343488 mod Date:Thu May 18 14:13:12 GMT-0400 2017 highestUID: 934
+[00:08:59.560] 11:31:39.188 | HTMLExport Website-1(7 pages) to 'example.com' completed with 0 warnings.
+[00:09:08.881] 11:31:48.509 | Beginning Save for file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' highest UID:1074
+[00:09:10.363] 11:31:49.991 | Save complete for file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' file size:1572864 mod Date:Mon May 22 11:31:49 GMT-0400 2017 highest UID:1074
+[00:20:19.891] 11:42:59.519 | quitWithUI:Quitting Application. Called by: 
+[00:20:19.892] 11:42:59.520 | Quitting Application after 20.3 minutes. Called by: 
+[00:20:22.361] Logging shutdown normally
+
+==========
+Logging ended at: Mon May 22 11:43:02 2017
+
+Logging in build 2017.0.2.60 started at: Mon May 22 11:45:18 2017
+========================================
+[00:00:12.636] 11:45:31.412 | Trying to open file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse with size:1572864 mod Date:Mon May 22 11:31:49 GMT-0400 2017
+[00:00:12.638] 11:45:31.414 | Opening file '/Users/mavillaflor/Documents/Owncloud/PRJ666/testing webpage/Website-1.muse' with status:success size:1572864 mod Date:Mon May 22 11:31:49 GMT-0400 2017 highestUID: 1074
+[00:00:22.927] 11:45:41.703 | HTMLExport Website-1(7 pages) to 'example.com' completed with 0 warnings.
+[02:17:57.508] 14:03:16.284 | quitWithUI:Quitting Application. Called by: 
+[02:17:57.509] 14:03:16.285 | Quitting Application after 137.9 minutes. Called by: 
+[02:17:59.037] Logging shutdown normally
+
+==========
+Logging ended at: Mon May 22 14:03:17 2017
+
