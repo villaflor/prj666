@@ -51,4 +51,3 @@ function pixel(){
     fputs($fp, $info);
     fclose($fp);
 }
-
