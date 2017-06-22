@@ -1,0 +1,46 @@
+<div class="row header">
+  <div class="col-md-12 col-sm-12 col-xs-12">
+    <!-- search bar -->
+    <div class="row">
+      <div class="col-md-4 col-md-offset-9 col-sm-6 col-sm-offset-6 col-xs-offset-3 col-xs-8">
+        <form action="/action_page.php">
+          <input type="text" name="good" value="">
+          <input type="submit" value="search">
+        </form>
+      </div>
+    </div>
+    <div class="row">
+      <!-- logo -->
+      <div class="col-md-offset-1 col-md-2 col-sm-offset-1 col-sm-3 col-xs-offset-1 col-xs-4 ">
+
+      <a href="/">
+        <img src="images/logo.png" class="logo img-responsive" alt="Responsive image">
+      </a>
+      <br>
+      </div>
+      <!-- company name -->
+      <br>
+      <div class="col-md-7 col-md-offset-1 col-sm-6 col-sm-offset-1 col-xs-5 col-xs-offset-1 cname"><p>Wecreu</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- nar bar -->
+<div class="row narbar">
+  <div class="col-md-6 col-sm-6 col-xs-6">
+    <nav class="mnavbar">
+      <ul class="nav nav-pills">
+        <li><a href="index.php">Home</a></li>
+        <li><a href="good.php">Products</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">About Us</a></li>
+      </ul>
+    </nav>
+  </div>
+  <!-- icons -->
+  <div class="col-md-5 col-sm-5 col-xs-5">
+    <a href="cart.php"> <img class="pull-right hicon" src="images/cart.gif" alt="Cart"> </a>
+    <a href="logout.php"> <img class="pull-right hicon" src="images/logout.gif" alt="Logout"> </a>
+  </div>
+
+</div>
