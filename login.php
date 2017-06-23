@@ -64,7 +64,7 @@ if (Input::exists()) {
 </nav>
 
 <div class="container bg-faded py-5" style="min-height: 65vh">
-    <h2 class="mb-4">Administrator Log in</h2>
+    <h2 class="mb-4">Log in</h2>
     <?php
     if(Session::exists('login')) {
         echo '<p class="text-success">' . Session::flash('login') . '</p>';
