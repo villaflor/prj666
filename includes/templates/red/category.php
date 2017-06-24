@@ -2,8 +2,8 @@
   <div class=" col-md-3 col-sm-3 col-xs-3 sidebar">
       <ul class="nav nav-pills nav-stacked">
         <?php
-			include_once('/data/www/default/prj/tools/category.php');
-			include_once("/data/www/default/prj/tools/sql.php");
+			include_once('../../../tools/category.php');
+    		include_once("../../../tools/sql.php");
 
 			//create an object
 			$db = Database::getInstance();
