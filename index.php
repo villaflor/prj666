@@ -75,6 +75,7 @@ $user = new User();
                 <img src="images/t-red.png" alt="Red Template" class="img-thumbnail" style="display: block">
                 <h5 class="pt-1 mb-4 text-center">Red</h5>
             </a>
+            <p>A standar site for unlimited categories or goods. It shows the top sales items on the index page.</p>
         </div>
         <div class="col-sm-12 col-md-4 pb-3">
             <a href="includes/templates/blue/index.php">
@@ -87,6 +88,7 @@ $user = new User();
                 <img src="images/t-grey.png" alt="Grey Template" class="img-thumbnail" style="display: block">
                 <h5 class="pt-1 mb-4 text-center">Grey</h5>
             </a>
+            <p>This template is designed for limited goods and categories. It doesn't support search function. When customers move to another page( from good list to good detail), it will not refresh the whole page. At the buttom of the template, it allows customers connect quickly with client. It is good for selling serveices.</p>
         </div>
     </div>
 </div>
