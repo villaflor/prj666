@@ -1,10 +1,13 @@
 <?php
+    $clientId = 5;
     include_once('../../../tools/category.php');
     include_once("../../../tools/sql.php");
+    include_once("../../../tools/client.php");
 
 	//create an object
     $db = Database::getInstance();
     $category = new Category($db,5);
+    $client = new Client($db,$clientId);
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +15,11 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Wecreu</title> <!-- TODO -->
+        <title>
+            <?php
+                echo $client->getClientSiteTitle();
+            ?>
+        </title> 
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/normalize.css">
@@ -37,9 +44,7 @@ $(document).ready(function(){
 });
 </script>
 
-
 <style>
-
 
 .dropdown {
     position: relative;
@@ -70,10 +75,18 @@ $(document).ready(function(){
         <div class="sidebar-menu hidden-xs hidden-sm">
             <div class="top-section">
                 <div class="profile-image">
-                    <img src="images/logo.png" alt="logo">
+                    <a href="index.php"> <img src="images/logo.png" alt="logo"></a>
                 </div>
-                <h3 class="profile-title">Wecreu</h3> <!-- TODO -->
-                <p class="profile-description">Company description</p> <!-- TODO -->
+                <h3 class="profile-title">
+                    <?php
+                        echo $client->getClientSiteTitle();
+                    ?>
+                </h3>
+                <p class="profile-description">
+                    <?php
+                        echo $client->getClientInfo();
+                    ?>
+                </p>
             </div> <!-- top-section -->
             <div class="main-navigation">
                 <ul class="navigation">
@@ -97,8 +110,16 @@ $(document).ready(function(){
         <div class="banner-bg" id="top">
             <div class="banner-overlay"></div>
             <div class="welcome-text">
-                <h2>Wecreu</h2> <!-- TODO -->
-                <h5>Company description</h5> <!-- TODO -->
+                <h2>
+                    <?php
+                        echo $client->getClientSiteTitle();
+                    ?>
+                </h2> 
+                <h5>
+                    <?php
+                        echo $client->getClientInfo();
+                    ?>
+                </h5> 
             </div>
         </div>
 
@@ -140,9 +161,6 @@ $(document).ready(function(){
                     </div>
                     <hr>
 
-
-
-
                     <!-- CONTACT -->
                     <div class="page-section" id="contact">
                         <div class="row">
@@ -171,11 +189,9 @@ $(document).ready(function(){
                         </div> <!-- .contact-form -->
                     </div>
 
-                    
-
                     <div class="row" id="footer">
                         <div class="col-md-12 text-center">
-                            <p class="copyright-text">&copy; Wecreu <!-- TODO -->
+                            <p class="copyright-text">&copy; <?php echo $client->getClientSiteTitle(); ?>
 									 </p>
 								</div>
                     </div>

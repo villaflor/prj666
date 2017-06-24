@@ -13,14 +13,18 @@
       <!-- logo -->
       <div class="col-md-offset-1 col-md-2 col-sm-offset-1 col-sm-3 col-xs-offset-1 col-xs-4 ">
 
-      <a href="/">
+      <a href="index.php">
         <img src="images/logo.png" class="logo img-responsive" alt="Responsive image">
       </a>
       <br>
       </div>
       <!-- company name -->
       <br>
-      <div class="col-md-7 col-md-offset-1 col-sm-6 col-sm-offset-1 col-xs-5 col-xs-offset-1 cname"><p>Wecreu</p></div>
+      <div class="col-md-7 col-md-offset-1 col-sm-6 col-sm-offset-1 col-xs-5 col-xs-offset-1 cname"><p>
+        <?php
+          echo $client->getClientSiteTitle();
+        ?>
+      </p></div>
     </div>
   </div>
 </div>
