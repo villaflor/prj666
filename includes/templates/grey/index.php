@@ -40,8 +40,15 @@ $(document).ready(function(){
 			<?php
 		}
 	?>
+
+    $("#shoppingCart").click(function(){
+                $("#good").attr("src","cart.php");
+            });
+
     
 });
+
+
 </script>
 
 <style>
@@ -96,11 +103,12 @@ $(document).ready(function(){
 							<?php
 								$side = $category->getAllAvaliable();
 								while ($row = mysqli_fetch_assoc($side)) {
-									echo "<li id='c$row[category_id]'"."'><a href='#products'>$row[category_name]"."</a></li>";
+									echo "<li id='c$row[category_id]'"."><a href='#products'>$row[category_name]"."</a></li>";
 								}
 							?>
                         </ul>
                     </li>
+                    <li id="shoppingCart"><a href="#products"><i class="fa fa-shopping-cart"></i>Cart</a></li>
                     <li><a href="#aboutUs"><i class="fa fa-pencil"></i>About us</a></li>
                     <li><a href="#contact"><i class="fa fa-link"></i>Contact us</a></li>
                 </ul>
@@ -169,7 +177,7 @@ $(document).ready(function(){
                              </div>
                         </div>
                         <div class="row">
-                             <form action="tools/email/send.php" method="post" class="contact-form">
+                             <form action="funcs/email.php" method="post" class="contact-form">
                                   <fieldset class="col-md-4 col-sm-6">
                                         <input type="text" id="name" name="name" placeholder="Your Name...">
                                   </fieldset>
@@ -183,6 +191,7 @@ $(document).ready(function(){
                                         <textarea name="message" id="message" cols="30" rows="6" placeholder="Leave your message..."></textarea>
                                   </fieldset>
                                   <fieldset class="col-md-12 col-sm-12">
+                                        <input type="hidden" name="method" value="sendEmail">
                                         <input type="submit" class="button big default" value="Send Message">
                                   </fieldset>
                              </form>
