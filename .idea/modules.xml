@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../Quang files/.idea/Quang files.iml" filepath="$PROJECT_DIR$/../Quang files/.idea/Quang files.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Wecreu.iml" filepath="$PROJECT_DIR$/.idea/Wecreu.iml" />
     </modules>
   </component>
