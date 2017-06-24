@@ -3,10 +3,8 @@
       <ul class="nav nav-pills nav-stacked">
         <?php
 			include_once('../../../tools/category.php');
-    		include_once("../../../tools/sql.php");
 
 			//create an object
-			$db = Database::getInstance();
 		    $category = new Category($db, 5);
 		    
         	$alldata = $category->getAllAvaliable();
