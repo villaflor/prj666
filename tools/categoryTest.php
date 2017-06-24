@@ -1,12 +1,9 @@
 <?php
 
-include_once('category.php');
-include_once("sql.php");
-
+    include_once('category.php');
+    include_once("sql.php");
 
     $db = Database::getInstance();
-        
-
 
 	//create an object
     $category = new Category($db,3);
