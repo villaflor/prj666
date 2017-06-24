@@ -33,7 +33,7 @@
         <li><a href="index.php">Home</a></li>
         <li><a href="good.php">Products</a></li>
         <li><a href="#">FAQ</a></li>
-        <li><a href="#">About Us</a></li>
+        <li><a href="info.php">About Us</a></li>
       </ul>
     </nav>
   </div>
