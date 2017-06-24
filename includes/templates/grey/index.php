@@ -70,7 +70,7 @@ $(document).ready(function(){
         <div class="sidebar-menu hidden-xs hidden-sm">
             <div class="top-section">
                 <div class="profile-image">
-                    <img src="imgs/logo.png" alt="logo">
+                    <img src="images/logo.png" alt="logo">
                 </div>
                 <h3 class="profile-title">Wecreu</h3> <!-- TODO -->
                 <p class="profile-description">Company description</p> <!-- TODO -->
