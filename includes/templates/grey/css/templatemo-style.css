@@ -1,8 +1,3 @@
-/*
-Volton Template
-
-*/
-
 @font-face {
   font-family: 'robotolight';
   src: url("../fonts/Roboto-Light-webfont.eot");
@@ -422,7 +417,7 @@ h3.profile-title {
 .banner-bg {
   padding: 260px 80px;
   position: relative;
-  background: url("../imgs/cover.jpg");
+  background: url("../images/cover.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
