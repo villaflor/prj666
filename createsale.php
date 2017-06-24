@@ -105,9 +105,12 @@ if(Input::exists()){
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="index.php">Home</a>
                 <a class="nav-item nav-link" href="profile.php?user=<?php echo escape($user->data()->username); ?>">Profile</a>
-                <a class="nav-item nav-link" href="update.php">Update info</a>
+                <a class="nav-item nav-link" href="generateTemplate.php">Generate site</a>
+                <a class="nav-item nav-link" href="edit-com.php">Update info</a>
                 <a class="nav-item nav-link" href="changepassword.php">Change password</a>
-                <a class="nav-item nav-link active" href="createsale.php">Create Sale</a>
+                <a class="nav-item nav-link" href="create-good.php">Create good</a>
+                <a class="nav-item nav-link" href="edit-good.php">Edit good</a>
+                <a class="nav-item nav-link" href="createsale.php">Create Sale</a>
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
         </div>

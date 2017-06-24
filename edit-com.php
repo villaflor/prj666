@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once 'core/init.php';
 
 $user = new User();
@@ -22,8 +22,8 @@ if(Input::exists()){
                 'max' => 256
             )
         ));
-		
-	}
+
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -35,8 +35,8 @@ if(Input::exists()){
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Wecrue</title>
 </head>
-  <body>
-   <nav class="navbar bg-primary navbar-inverse navbar-toggleable-sm sticky-top">
+<body>
+<nav class="navbar bg-primary navbar-inverse navbar-toggleable-sm sticky-top">
     <div class="container">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#menuContent" aria-controls="menuContent" aria-expanded="false" aria-label="Toggle Navigation">
             <span class="navbar-toggler-icon"></span>
@@ -45,19 +45,19 @@ if(Input::exists()){
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="index.php">Home</a>
                 <a class="nav-item nav-link" href="profile.php?user=<?php echo escape($user->data()->username); ?>">Profile</a>
-                <a class="nav-item nav-link" href="update.php">Update info</a>
+                <a class="nav-item nav-link" href="generateTemplate.php">Generate site</a>
+                <a class="nav-item nav-link" href="edit-com.php">Update info</a>
                 <a class="nav-item nav-link" href="changepassword.php">Change password</a>
+                <a class="nav-item nav-link" href="create-good.php">Create good</a>
+                <a class="nav-item nav-link" href="edit-good.php">Edit good</a>
                 <a class="nav-item nav-link" href="createsale.php">Create Sale</a>
-				<a class="nav-item nav-link" href="createsale.php">Create Good</a>
-				<a class="nav-item nav-link" href="edit-good.php">Edit Good</a>
-				<a class="nav-item nav-link active" href="EditCom.php">Edit Company</a>
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
         </div>
         <h1 class="navbar-brand mb-0 mr-3">Hello <a class="text-white" href="profile.php?user=<?php echo escape($user->data()->username); ?>"><?php echo escape($user->data()->username); ?></a>!</h1>
     </div>
 </nav>
-  <div class="container bg-faded py-5">
+<div class="container bg-faded py-5">
     <h2 class="mb-4">Edit form</h2>
     <?php
     if($validate->errors()) {
@@ -77,10 +77,10 @@ if(Input::exists()){
                 <label class="form-control-label" for="client_site_title"><span class="text-danger">*</span> Site title</label>
                 <input class="form-control" type="text" name="client_site_title" id="client_site_title" placeholder="Edit site title" value="<?php echo escape($user->data()->client_site_title);?>" />
             </div>
-<!--            <div class="form-group col-md-6">-->
-<!--                <label class="form-control-label" for="fileToUpload">Site logo</label>-->
-<!--                <input class="form-control" type="file" name="fileToUpload" id="fileToUpload" placeholder="Upload your logo">-->
-<!--            </div>-->
+            <!--            <div class="form-group col-md-6">-->
+            <!--                <label class="form-control-label" for="fileToUpload">Site logo</label>-->
+            <!--                <input class="form-control" type="file" name="fileToUpload" id="fileToUpload" placeholder="Upload your logo">-->
+            <!--            </div>-->
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="client_info">Client information</label>
                 <textarea class="form-control" rows="3" name="client_info" id="client_info" placeholder=""><?php echo escape($user->data()->client_info);?></textarea>
