@@ -41,6 +41,10 @@ class Category {
 	Add one category
 	*/
 	public function add($name, $description) {
+		if ($name == "" || $description == ""){
+			return false;
+		}
+
 		$sql_query = "INSERT INTO category(category_name, category_description, category_display, client_id) VALUES ('$name', '$description', 1, $this->client_id)";
 	    return $this->mysqli->query($sql_query);
 	}
@@ -49,6 +53,10 @@ class Category {
 	Edit one category
 	*/
 	public function edit($id, $name, $description) {
+		if ($name == "" || $description == ""){
+			return false;
+		}
+
 		$sql_query = "UPDATE category SET category_name='$name',category_description='$description' WHERE category_id=$id AND client_id = $this->client_id";
 	    return $this->mysqli->query($sql_query);
 	}
