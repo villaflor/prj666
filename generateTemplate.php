@@ -20,22 +20,25 @@ if(Input::exists()){
     $check=0;
 // To create the nested structure, the $recursive parameter
 // to mkdir() must be specified.
-    if (!file_exists($destination)){
-        if (!mkdir($destination, 0770, true)) {
-            die('Failed to create folders...');
-        }
-    } else {
-        echo "directory already existed";
-        $check=1;
+    if (file_exists($destination)){
+        /*echo "directory already existed";
+        $check=1;*/
+        deleteDir($destination2);
+        deleteDir($destination3);
+        deleteDir($destination);
+        //exec('cd '.$destination2);
+
     }
     if($check == 0){
+        if (!file_exists($destination)){
+            if (!mkdir($destination, 0770, true)) {
+                die('Failed to create folders...');
+            }
+        }
         if (!file_exists($destination2)){
             if (!mkdir($destination2, 0770, true)) {
                 die('Failed to create folders...');
             }
-        }
-        else {
-            echo "directory already existed";
         }
 
         if (!file_exists($destination3)){
@@ -43,9 +46,7 @@ if(Input::exists()){
                 die('Failed to create folders...');
             }
         }
-        else {
-            echo "directory already existed";
-        }
+
     }
     echo "create";
 
@@ -73,12 +74,12 @@ if(Input::exists()){
             recurse_copy($source3,$destination3);
         }
         ob_start();
-        include('../../template/blue/index.php');
+        include('../template/blue/index.php');
         $forIndex = ob_get_contents();
         ob_end_clean();
 
         ob_start();
-        include('../../template/blue/Header.php');
+        include('../template/blue/Header.php');
         $forHeader = ob_get_contents();
         ob_end_clean();
 
@@ -104,12 +105,12 @@ if(Input::exists()){
             recurse_copy($source3,$destination3);
         }
         ob_start();
-        include('../../template/green/index-metadata.php');
+        include('../template/green/index-metadata.php');
         $forIndex = ob_get_contents();
         ob_end_clean();
 
         ob_start();
-        include('../../template/green/header-nav.php');
+        include('../template/green/header-nav.php');
         $forHeader = ob_get_contents();
         ob_end_clean();
 
@@ -140,7 +141,7 @@ if(Input::exists()){
         ob_end_clean();*/
 
         ob_start();
-        include('../../template/red/header.php');
+        include('../template/red/header.php');
         $forHeader = ob_get_contents();
         ob_end_clean();
 
@@ -155,6 +156,7 @@ if(Input::exists()){
 
         echo "Done writing";
     }
+
 }
 
 
@@ -175,13 +177,99 @@ function recurse_copy($src,$dst) {
     //echo "Copied";
     closedir($dir);
 }
+function deleteDir($dirPath) {
+    if (! is_dir($dirPath)) {
+        throw new InvalidArgumentException("$dirPath must be a directory");
+    }
+    if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
+        $dirPath .= '/';
+    }
+    $files = glob($dirPath . '*', GLOB_MARK);
+    foreach ($files as $file) {
+        if (is_dir($file)) {
+            deleteDir($file);
+        } else {
+            unlink($file);
+        }
+    }
+    rmdir($dirPath);
+}
 
 ?>
-<form action="" method="post"  enctype="multipart/form-data" >
-    <div>Logo: <input type="file" name="client_logo" id="client_logo" accept="image/x-png,image/jpeg"/></div>
-    <div>
-        <input type="radio" name="template" value="1" checked>Green<br></div>
-    <div><input type="radio" name="template" value="2">Blue<br></div>
-    <div><input type="radio" name="template" value="3">Red</div>
-    <div><input type="submit" value="submit"></div>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <title>Wecrue</title>
+</head>
+<body>
+<nav class="navbar bg-primary navbar-inverse navbar-toggleable-sm sticky-top">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#menuContent" aria-controls="menuContent" aria-expanded="false" aria-label="Toggle Navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menuContent">
+            <div class="navbar-nav mr-auto">
+                <a class="nav-item nav-link" href="index.php">Home</a>
+                <a class="nav-item nav-link" href="profile.php?user=<?php echo escape($user->data()->username); ?>">Profile</a>
+                <a class="nav-item nav-link" href="generateTemplate.php">Generate site</a>
+                <a class="nav-item nav-link" href="edit-com.php">Update info</a>
+                <a class="nav-item nav-link" href="changepassword.php">Change password</a>
+                <a class="nav-item nav-link" href="create-good.php">Create good</a>
+                <a class="nav-item nav-link" href="edit-good.php">Edit good</a>
+                <a class="nav-item nav-link" href="createsale.php">Create Sale</a>
+                <a class="nav-item nav-link" href="logout.php">Log out</a>
+            </div>
+        </div>
+        <h1 class="navbar-brand mb-0 mr-3">Hello <a class="text-white" href="profile.php?user=<?php echo escape($user->data()->username); ?>"><?php echo escape($user->data()->username); ?></a>!</h1>
+    </div>
+</nav>
+<div class="container bg-faded py-5" style="min-height: 100vh" >
+    <h2 class="mb-4">Generate template</h2>
+    <form action="" method="post"  enctype="multipart/form-data" >
+        <fieldset class="form-group">
+            <legend>Template</legend>
+            <div class="form-group col-md-6">
+                <label class="form-control-label" for="client_logo"><span class="text-danger">*</span> Choose your company logo: </label>
+                <input type="file" name="client_logo" id="client_logo" accept="image/x-png,image/jpeg"/>
+            </div>
+
+            <div class="form-check">
+                <p style=" margin-left:15px;"><span class="text-danger">*</span> Choose your template:</p>
+                <label class="form-check-label" for="template">
+
+                    <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="template" value="1" checked>
+                    Green</label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="template">
+                    <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="template" value="2">
+                    Blue</label>
+            </div>
+            <div class="form-check">
+                <label class="form-check-label" for="template">
+
+                    <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="template"value="3" />
+                    Red</label>
+            </div>
+
+        </fieldset>
+        <div class="form-group pt-5">
+            <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
+            <input class="btn btn-primary" type="submit" value="submit" />
+        </div>
+    </form>
+</div>
+
+<?php include('includes/footer.inc'); ?>
+
+<script src="js/jquery-3.1.1.slim.min.js"></script>
+<script src="js/tether.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
