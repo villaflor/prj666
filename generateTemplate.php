@@ -8,155 +8,161 @@ if (!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
 if(Input::exists()){
-    $client_name = $user->data()->username;
-    $com_title = $user->data()->client_site_title;
-    $target_dir = '/data/www/default/' . $client_name . '/images/';
-    $target_file = $target_dir . "/logo.jpg";
-    $uploadOk = 1;
+    if ($_FILES['client_logo']['size'] == 0)
+    {
+        echo "No logo uploaded";
+    }
+    else{
+        $client_name = $user->data()->username;
+        $com_title = $user->data()->client_site_title;
+        $target_dir = '/data/www/default/' . $client_name . '/images/';
+        $target_file = $target_dir . "/logo.jpg";
+        $uploadOk = 1;
 // Desired folder structure
-    $destination = '/data/www/default/' . $client_name;
-    $destination2 = '/data/www/default/' . $client_name . '/images';
-    $destination3 = '/data/www/default/' . $client_name . '/css';
-    $check=0;
+        $destination = '/data/www/default/' . $client_name;
+        $destination2 = '/data/www/default/' . $client_name . '/images';
+        $destination3 = '/data/www/default/' . $client_name . '/css';
+        $check=0;
 // To create the nested structure, the $recursive parameter
 // to mkdir() must be specified.
-    if (file_exists($destination)){
-        /*echo "directory already existed";
-        $check=1;*/
-        deleteDir($destination2);
-        deleteDir($destination3);
-        deleteDir($destination);
-        //exec('cd '.$destination2);
 
-    }
-    if($check == 0){
-        if (!file_exists($destination)){
-            if (!mkdir($destination, 0770, true)) {
-                die('Failed to create folders...');
+        if (file_exists($destination)){
+            /*echo "directory already existed";
+            $check=1;*/
+            deleteDir($destination2);
+            deleteDir($destination3);
+            deleteDir($destination);
+            //exec('cd '.$destination2);
+
+        }
+        if($check == 0){
+            if (!file_exists($destination)){
+                if (!mkdir($destination, 0770, true)) {
+                    die('Failed to create folders...');
+                }
+            }
+            if (!file_exists($destination2)){
+                if (!mkdir($destination2, 0770, true)) {
+                    die('Failed to create folders...');
+                }
+            }
+
+            if (!file_exists($destination3)){
+                if (!mkdir($destination3, 0770, true)) {
+                    die('Failed to create folders...');
+                }
+            }
+
+        }
+        echo "create";
+
+        if (file_exists($target_file)){
+            unlink($target_file);
+        }
+        if ($uploadOk == 0){
+            echo "Sorry, your file was not uploaded";
+        }
+        else {
+            if(move_uploaded_file($_FILES["client_logo"]["tmp_name"], $target_file)){
+                echo "uploaded";
+            }
+            else{
+                echo "Sorry";
             }
         }
-        if (!file_exists($destination2)){
-            if (!mkdir($destination2, 0770, true)) {
-                die('Failed to create folders...');
+        if ($check != 1 && $_POST['template'] == 2){
+            $source = '/data/www/default/prj/template/blue';
+            $source2 = '/data/www/default/prj/template/blue/images';
+            $source3 = '/data/www/default/prj/template/blue/css';
+            if($check==0){
+                recurse_copy($source,$destination);
+                recurse_copy($source2,$destination2);
+                recurse_copy($source3,$destination3);
             }
-        }
+            ob_start();
+            include('../template/blue/index.php');
+            $forIndex = ob_get_contents();
+            ob_end_clean();
 
-        if (!file_exists($destination3)){
-            if (!mkdir($destination3, 0770, true)) {
-                die('Failed to create folders...');
+            ob_start();
+            include('../template/blue/Header.php');
+            $forHeader = ob_get_contents();
+            ob_end_clean();
+
+            $indexFile = fopen("/data/www/default/" . $client_name . "/index.php", "w") or die("Unable to open file!");
+            $headerFile = fopen("/data/www/default/" . $client_name . "/Header.php", "w") or die("Unable to open file!");
+
+            fwrite($indexFile, $forIndex);
+            fclose($indexFile);
+
+            fwrite($headerFile, $forHeader);
+            fclose($headerFile);
+
+            echo "Done writing";
+
+        }
+        else if ($check != 1 && $_POST['template'] == 1){
+            $source = '/data/www/default/prj/template/green';
+            $source2 = '/data/www/default/prj/template/green/images';
+            $source3 = '/data/www/default/prj/template/green/css';
+            if($check==0){
+                recurse_copy($source,$destination);
+                recurse_copy($source2,$destination2);
+                recurse_copy($source3,$destination3);
             }
+            ob_start();
+            include('../template/green/index-metadata.php');
+            $forIndex = ob_get_contents();
+            ob_end_clean();
+
+            ob_start();
+            include('../template/green/header-nav.php');
+            $forHeader = ob_get_contents();
+            ob_end_clean();
+
+            $indexFile = fopen("/data/www/default/". $client_name . "/index-metadata.php", "w") or die("Unable to open file!");
+            $headerFile = fopen("/data/www/default/". $client_name ."/header-nav.php", "w") or die("Unable to open file!");
+
+            fwrite($indexFile, $forIndex);
+            fclose($indexFile);
+
+            fwrite($headerFile, $forHeader);
+            fclose($headerFile);
+
+            echo "Done writing";
+
         }
+        else if ($check != 1 && $_POST['template'] == 3){
+            $source = '/data/www/default/prj/template/red';
+            $source2 = '/data/www/default/prj/template/red/images';
+            $source3 = '/data/www/default/prj/template/red/css';
+            if($check==0){
+                recurse_copy($source,$destination);
+                recurse_copy($source2,$destination2);
+                recurse_copy($source3,$destination3);
+            }
+            /*ob_start();
+            include('../../template/red/');
+            $forIndex = ob_get_contents();
+            ob_end_clean();*/
 
-    }
-    echo "create";
+            ob_start();
+            include('../template/red/header.php');
+            $forHeader = ob_get_contents();
+            ob_end_clean();
 
-    if (file_exists($target_file)){
-        unlink($target_file);
-    }
-    if ($uploadOk == 0){
-        echo "Sorry, your file was not uploaded";
-    }
-    else {
-        if(move_uploaded_file($_FILES["client_logo"]["tmp_name"], $target_file)){
-            echo "uploaded";
+            //$indexFile = fopen("/data/www/default/testing2/index-metadata.php", "w") or die("Unable to open file!");
+            $headerFile = fopen("/data/www/default/". $client_name ."/header.php", "w") or die("Unable to open file!");
+
+            //fwrite($indexFile, $forIndex);
+            //fclose($indexFile);
+
+            fwrite($headerFile, $forHeader);
+            fclose($headerFile);
+
+            echo "Done writing";
         }
-        else{
-            echo "Sorry";
-        }
     }
-    if ($check != 1 && $_POST['template'] == 2){
-        $source = '/data/www/default/prj/template/blue';
-        $source2 = '/data/www/default/prj/template/blue/images';
-        $source3 = '/data/www/default/prj/template/blue/css';
-        if($check==0){
-            recurse_copy($source,$destination);
-            recurse_copy($source2,$destination2);
-            recurse_copy($source3,$destination3);
-        }
-        ob_start();
-        include('../template/blue/index.php');
-        $forIndex = ob_get_contents();
-        ob_end_clean();
-
-        ob_start();
-        include('../template/blue/Header.php');
-        $forHeader = ob_get_contents();
-        ob_end_clean();
-
-        $indexFile = fopen("/data/www/default/" . $client_name . "/index.php", "w") or die("Unable to open file!");
-        $headerFile = fopen("/data/www/default/" . $client_name . "/Header.php", "w") or die("Unable to open file!");
-
-        fwrite($indexFile, $forIndex);
-        fclose($indexFile);
-
-        fwrite($headerFile, $forHeader);
-        fclose($headerFile);
-
-        echo "Done writing";
-
-    }
-    else if ($check != 1 && $_POST['template'] == 1){
-        $source = '/data/www/default/prj/template/green';
-        $source2 = '/data/www/default/prj/template/green/images';
-        $source3 = '/data/www/default/prj/template/green/css';
-        if($check==0){
-            recurse_copy($source,$destination);
-            recurse_copy($source2,$destination2);
-            recurse_copy($source3,$destination3);
-        }
-        ob_start();
-        include('../template/green/index-metadata.php');
-        $forIndex = ob_get_contents();
-        ob_end_clean();
-
-        ob_start();
-        include('../template/green/header-nav.php');
-        $forHeader = ob_get_contents();
-        ob_end_clean();
-
-        $indexFile = fopen("/data/www/default/". $client_name . "/index-metadata.php", "w") or die("Unable to open file!");
-        $headerFile = fopen("/data/www/default/". $client_name ."/header-nav.php", "w") or die("Unable to open file!");
-
-        fwrite($indexFile, $forIndex);
-        fclose($indexFile);
-
-        fwrite($headerFile, $forHeader);
-        fclose($headerFile);
-
-        echo "Done writing";
-
-    }
-    else if ($check != 1 && $_POST['template'] == 3){
-        $source = '/data/www/default/prj/template/red';
-        $source2 = '/data/www/default/prj/template/red/images';
-        $source3 = '/data/www/default/prj/template/red/css';
-        if($check==0){
-            recurse_copy($source,$destination);
-            recurse_copy($source2,$destination2);
-            recurse_copy($source3,$destination3);
-        }
-        /*ob_start();
-        include('../../template/red/');
-        $forIndex = ob_get_contents();
-        ob_end_clean();*/
-
-        ob_start();
-        include('../template/red/header.php');
-        $forHeader = ob_get_contents();
-        ob_end_clean();
-
-        //$indexFile = fopen("/data/www/default/testing2/index-metadata.php", "w") or die("Unable to open file!");
-        $headerFile = fopen("/data/www/default/". $client_name ."/header.php", "w") or die("Unable to open file!");
-
-        //fwrite($indexFile, $forIndex);
-        //fclose($indexFile);
-
-        fwrite($headerFile, $forHeader);
-        fclose($headerFile);
-
-        echo "Done writing";
-    }
-
 }
 
 
@@ -194,6 +200,7 @@ function deleteDir($dirPath) {
     }
     rmdir($dirPath);
 }
+
 
 ?>
 <!DOCTYPE html>
