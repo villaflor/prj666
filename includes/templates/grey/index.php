@@ -1,5 +1,5 @@
 <?php
-    $isLogin=false; //TODO
+    $isLogin=true; //TODO
     $clientId = 5; //TODO
     include_once('../../../tools/category.php');
     include_once("../../../tools/sql.php");
@@ -50,6 +50,7 @@
 
      </script>
      <style>
+     .banner-bg { background: url("../../../images/covers/<?php echo $clientId;?>.jpg"); }
       input{ vertical-align:middle; margin:0; padding:0}
       .file-box{ position:relative;width:340px}
       .txt{ height:22px; border:1px solid #cdcdcd; width:180px;}
@@ -169,7 +170,7 @@
       </div>
     </div>
     <div class="row">
-     <form action="funcs/email.php" method="post" class="contact-form">
+     <form action="../../../tools/email.php" method="post" class="contact-form">
       <fieldset class="col-md-4 col-sm-6">
         <input type="text" id="name" name="name" placeholder="Your Name...">
       </fieldset>
@@ -204,10 +205,11 @@ if($isLogin){
    <div class="row">
     <div class="col-md-12">
       <div class="file-box">
-        <form action="funcs/uploadCover.php" method="post" enctype="multipart/form-data">
+        <form action="../../../tools/uploadCover.php" method="post" enctype="multipart/form-data">
           <input type='text' name='textfield' id='textfield' class='txt' />  
           <input type='button' class='btnUp' value='Browse' />
           <input type="file" name="fileToUpload" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
+          <input type="hidden" value="<?php echo $clientId; ?>" name="id">
           <input type="submit" name="submit" class="btnUp" value="upload" />
           <p><b>jpg, jpeg, bmp, gif, png</b> only</p>
         </form>

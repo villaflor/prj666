@@ -1,6 +1,6 @@
 <?php
     if($_POST && $_POST["method"] == "sendEmail"){
-        require_once('../../../../tools/email/PHPMailerAutoload.php');
+        require_once('email/PHPMailerAutoload.php');
         //require_once("../../../tools/email/");
         $mail = new PHPMailer;
     
@@ -48,6 +48,7 @@
         $mail->setFrom('wecreu@pying.ca', 'Message From wecreu');
         //TODO
         $mail->addAddress('py@pying.ca', '');     // Add a recipient
+        $mail->addCC($from);
         //$mail->addReplyTo('py@pying.ca', 'Peiying (Brian)');
         $mail->isHTML(true);                                  // Set email format to HTML
         
@@ -60,14 +61,14 @@
         ?>
             <script>
                 alert("Thank you. Your message has been sent.");
-                window.location.assign("../index.php#contact");
+                history.back();
             </script>
         <?php
         } else {
         ?>
             <script>
                 alert("There is error, you message cannot be sent.");
-                window.location.assign("../index.php#contact");
+                history.back();
             </script>
         <?php
         }

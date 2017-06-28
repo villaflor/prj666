@@ -1,7 +1,11 @@
 <?php
+if ($_SERVER['REQUEST_METHOD'] != 'POST'){
+	exit;
+}
+
 $uploadOk = true;
-$target_dir = "../images/";
-$target_file = $target_dir . "/cover.jpg";
+$target_dir = "../images/covers/";
+$target_file = $target_dir . $_POST['id'].".jpg";
 $uptypes=array(
 	'image/jpg',
 	'image/jpeg',
@@ -11,10 +15,6 @@ $uptypes=array(
 	'image/bmp',
 	'image/x-png'
 	);
-
-if ($_SERVER['REQUEST_METHOD'] != 'POST'){
-	exit;
-}
 
 // check if the file is uploaded
 if (!is_uploaded_file($_FILES["fileToUpload"]['tmp_name']))
@@ -52,14 +52,16 @@ if ($uploadOk){
 	?>
 	<script>
 		alert("Your cover has been changed. If you cannot see the change, please clean your browser cache.");
-		window.location.assign("../index.php");
+		history.back();
+		//window.location.assign("../index.php");
 	</script>
 	<?php
 }else{
 	?>
 	<script>
 		alert("Sorry, there is an error. Your cover cannot be changed.");
-		window.location.assign("../index.php#upload");
+		history.back();
+		//window.location.assign("../index.php#upload");
 	</script>
 	<?php
 }
