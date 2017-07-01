@@ -31,6 +31,7 @@ if(Input::exists()){
         'description' => array(
             'name' => 'Description',
             'required' => true,
+            'max' => 255
         ),
         'discount' => array(
             'name' => 'Discount',
@@ -223,7 +224,7 @@ if(Input::exists()){
             </fieldset>
         </fieldset>
         <div class="form-group">
-            <input type="hidden" name="token" value="">
+            <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
             <input class="btn btn-primary" type="submit" value="Submit" />
         </div>
     </form>
