@@ -2,6 +2,7 @@
 require_once 'core/init.php';
 ini_set('display_errors', 'On');
 $user = new User();
+$validate = new Validate();
 
 
 if (!$user->isLoggedIn()){
@@ -10,7 +11,8 @@ if (!$user->isLoggedIn()){
 if(Input::exists()){
     if ($_FILES['client_logo']['size'] == 0)
     {
-        echo "No logo uploaded";
+        $validate->addError('Logo is required');
+        //echo "No logo uploaded";
     }
     else{
         $client_name = $user->data()->username;
@@ -54,20 +56,20 @@ if(Input::exists()){
             }
 
         }
-        echo "create";
+        //echo "create";
 
         if (file_exists($target_file)){
             unlink($target_file);
         }
         if ($uploadOk == 0){
-            echo "Sorry, your file was not uploaded";
+            //echo "Sorry, your file was not uploaded";
         }
         else {
             if(move_uploaded_file($_FILES["client_logo"]["tmp_name"], $target_file)){
-                echo "uploaded";
+                //echo "uploaded";
             }
             else{
-                echo "Sorry";
+                //echo "Sorry";
             }
         }
         if ($check != 1 && $_POST['template'] == 2){
@@ -98,7 +100,7 @@ if(Input::exists()){
             fwrite($headerFile, $forHeader);
             fclose($headerFile);
 
-            echo "Done writing";
+            //echo "Done writing";
 
         }
         else if ($check != 1 && $_POST['template'] == 1){
@@ -129,7 +131,8 @@ if(Input::exists()){
             fwrite($headerFile, $forHeader);
             fclose($headerFile);
 
-            echo "Done writing";
+            Session::flash('generate', 'Your site has been generated successfully');
+            ?> <script type="text/javascript" language="Javascript">window.open('http://myvmlab.senecacollege.ca:5726/<?php echo $user->data()->username; ?>');</script> <?php
 
         }
         else if ($check != 1 && $_POST['template'] == 3){
@@ -160,7 +163,7 @@ if(Input::exists()){
             fwrite($headerFile, $forHeader);
             fclose($headerFile);
 
-            echo "Done writing";
+            //echo "Done writing";
         }
     }
 }
@@ -210,7 +213,7 @@ function deleteDir($dirPath) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Wecrue</title>
+    <title>Generate Site</title>
 </head>
 <body>
 <nav class="navbar bg-primary navbar-inverse navbar-toggleable-sm sticky-top">
@@ -236,6 +239,18 @@ function deleteDir($dirPath) {
 </nav>
 <div class="container bg-faded py-5" style="min-height: 100vh" >
     <h2 class="mb-4">Generate template</h2>
+    <?php
+    if(Session::exists('generate')) {
+        echo '<p class="text-success">' . Session::flash('generate') . '</p>';
+        echo '<p class="text-info"><a href="http://myvmlab.senecacollege.ca:5726/' .  $user->data()->username . '">Go to your website</a></p>';
+    }
+
+    if($validate->errors()) {
+        foreach ($validate->errors() as $error) {
+            echo '<small class="text-warning">' . $error . '</small><br />';
+        }
+    }
+    ?>
     <form action="" method="post"  enctype="multipart/form-data" >
         <fieldset class="form-group">
             <legend>Template</legend>
