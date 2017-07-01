@@ -31,7 +31,7 @@ if(Input::exists()) {
             include_once("tools/sql.php");
 
             $db = Database::getInstance();
-            $clientId = 3;
+            $clientId = $user->data()->client_id;
             //create an object
             $category = new Category($db, $clientId);
 
