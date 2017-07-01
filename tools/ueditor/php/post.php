@@ -3,7 +3,7 @@
 		$data = $_POST['data'];
 
 		$clientId = 5;
-		$fileUrl = "../../../companyInfo/aboutUs/".$clientId;
+		$fileUrl = "../../../companyInfo/aboutUs/".$clientId.".txt";
 
 		$myfile = fopen($fileUrl, "w");
 		fwrite($myfile, $data);

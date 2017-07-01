@@ -1,6 +1,6 @@
 <?php
 $clientId = 5;
-$url = "companyInfo/aboutUs/".$clientId;
+$url = "companyInfo/aboutUs/".$clientId.".txt";
 $content = file_get_contents($url);
 ?>
 
