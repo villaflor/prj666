@@ -1,6 +1,6 @@
 <?php
-include_once('good.php');
-include_once("sql.php");
+include_once("../../production/tools/good.php");
+include_once("../../production/tools/sql.php");
 
 
     $db = Database::getInstance();
@@ -22,6 +22,17 @@ include_once("sql.php");
         echo "$row[good_id] $row[good_name] $row[good_description] $row[sale_name]<br />";
     }    
 
+    echo "<br/>get row test 3 variables<br>";
+    $alldata = $good->getGoodRows(4, 2, 3);
+    while($row = mysqli_fetch_assoc($alldata)){
+        echo "$row[good_id] $row[good_name] $row[good_description] $row[category_id] $row[category_description]<br />";
+    }  
+  
+    echo "<br/>get row test 2 category 4, limit 3<br>";
+    $alldata = $good->getGoodRows(4, 3);
+    while($row = mysqli_fetch_assoc($alldata)){
+        echo "$row[good_id] $row[good_name] $row[good_description] $row[category_id] $row[category_description]<br />";
+    }    
     //add one
     echo "<br/>add new test<br>";
 
