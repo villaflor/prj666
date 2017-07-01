@@ -155,13 +155,11 @@
         </div>
         <div class="row">
          <div class="col-md-12">
-          <p class="widget-title">
-            <?php 
-            $url = "../../../companyInfo/aboutUs/".$clientId.".txt";
-            $content = file_get_contents($url);
-            echo $content;
-            ?>
-          </p>
+          <?php 
+          $url = "../../../companyInfo/aboutUs/".$clientId.".txt";
+          $content = file_get_contents($url);
+          echo $content;
+          ?>
         </div>
       </div>
     </div>
