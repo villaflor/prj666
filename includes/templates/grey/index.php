@@ -50,14 +50,14 @@
 
      </script>
      <style>
-     .banner-bg { background: url("../../../images/covers/<?php echo $clientId;?>.jpg"); }
-      input{ vertical-align:middle; margin:0; padding:0}
-      .file-box{ position:relative;width:340px}
-      .txt{ height:22px; border:1px solid #cdcdcd; width:180px;}
-      .btnUp{ background-color:#FFF; border:1px solid #CDCDCD;height:24px; width:70px;}
-      .file{ position:absolute; top:0; right:80px; height:24px; filter:alpha(opacity:0);opacity: 0;width:260px }
-      .dropdown {position: relative;display: inline-block; }
-      .dropdown-content { position: relative; display: none; background-color: #495461;
+       .banner-bg { background: url("../../../images/covers/<?php echo $clientId;?>.jpg"); }
+       input{ vertical-align:middle; margin:0; padding:0}
+       .file-box{ position:relative;width:340px}
+       .txt{ height:22px; border:1px solid #cdcdcd; width:180px;}
+       .btnUp{ background-color:#FFF; border:1px solid #CDCDCD;height:24px; width:70px;}
+       .file{ position:absolute; top:0; right:80px; height:24px; filter:alpha(opacity:0);opacity: 0;width:260px }
+       .dropdown {position: relative;display: inline-block; }
+       .dropdown-content { position: relative; display: none; background-color: #495461;
         min-width: 160px; z-index: 1; padding: 10px; }
         .dropdown-content a { margin: 0 0 0px 28px;}
         .dropdown:hover .dropdown-content { display: block; }
@@ -145,18 +145,21 @@
           </div>
         </div>
 
-
-
         <!-- About us -->
         <div class="page-section" id="aboutUs">
           <div class="row">
            <div class="col-md-12">
             <h4 class="widget-title">ABOUT US</h4>
+            <hr>
           </div>
         </div>
         <div class="row">
          <div class="col-md-12">
-          <p class="widget-title">Location: 123 abc Rd.</p>
+          <?php 
+          $url = "../../../companyInfo/aboutUs/".$clientId.".txt";
+          $content = file_get_contents($url);
+          echo $content;
+          ?>
         </div>
       </div>
     </div>
