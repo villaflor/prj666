@@ -3,9 +3,10 @@
       <ul class="nav nav-pills nav-stacked">
         <?php
 			include_once('../../../tools/category.php');
-
+			$clientId = file_get_contents('conf.ini');
+			
 			//create an object
-		    $category = new Category($db, 5);
+		    $category = new Category($db, $clientId);
 		    
         	$alldata = $category->getAllAvaliable();
 		    while ($row = mysqli_fetch_assoc($alldata)) {
