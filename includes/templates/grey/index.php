@@ -1,6 +1,6 @@
 <?php
     $isLogin=true; //TODO
-    $clientId = 5; //TODO
+    $clientId = file_get_contents('conf.ini'); 
     include_once('../../../tools/category.php');
     include_once("../../../tools/sql.php");
     include_once("../../../tools/client.php");
