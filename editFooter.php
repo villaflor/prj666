@@ -90,7 +90,7 @@ if(Input::exists()){
 include("narbar.php");
 ?>
 <div class="container bg-faded py-5">
-    <h2 class="mb-4">Edit About us</h2>
+    <h2 class="mb-4">Edit Footer</h2>
     <?php
     if($validate->errors()) {
         foreach ($validation->errors() as $error) {
@@ -102,8 +102,9 @@ include("narbar.php");
     <script id="editor" type="text/plain" style="width:1024px;height:500px;">
     <?php 
     $clientId = escape($user->data()->client_id);
-    $url = "companyInfo/aboutUs/".$clientId.".txt";
+    $url = "companyInfo/footer/".$clientId.".txt";
     $content = file_get_contents($url);
+
     echo $content;
     ?></script>
   </div>
@@ -131,7 +132,7 @@ include("narbar.php");
     function save(){
       var data = ue.getContent();
       $.ajax({  
-        url:"tools/ueditor/php/post.php", 
+        url:"tools/ueditor/php/postFooter.php", 
         data:{data:data,clientid:<?php echo $clientId;?>},
         dataType:"text", 
         method:"POST",

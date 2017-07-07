@@ -192,42 +192,14 @@
   </div> <!-- .contact-form -->
 </div>
 
-<!-- upload -->
-<?php
-if($isLogin){
-  ?>
-  <hr/>
-  <div class="page-section" id="upload">
-    <div class="row">
-     <div class="col-md-12">
-       <h4 class="widget-title">CHANGE COVER FOR SITE OWNER</h4>
-     </div>
-   </div>
-   <div class="row">
-    <div class="col-md-12">
-      <div class="file-box">
-        <form action="/wecreu/tools/uploadCover.php" method="post" enctype="multipart/form-data">
-          <input type='text' name='textfield' id='textfield' class='txt' />  
-          <input type='button' class='btnUp' value='Browse' />
-          <input type="file" name="fileToUpload" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
-          <input type="hidden" value="<?php echo $clientId; ?>" name="id">
-          <input type="hidden" name="url" value="<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']; ?>">
-          <input type="submit" name="submit" class="btnUp" value="upload" />
-          <p><b>jpg, jpeg, bmp, gif, png</b> only</p>
-        </form>
-      </div>
-      <p>If you can't see the new cover, please <b>clean</b> your browser cache</p>
-    </div>
-  </div> 
-</div>
-<hr/>
-<?php
-}
-?>
 
 <div class="row" id="footer">
-  <div class="col-md-12 text-center">
-    <p class="copyright-text">&copy; <?php echo $client->getClientSiteTitle(); ?>
+  <div class="col-md-12">
+    <p class=""><?php 
+          $url = "/data/www/default/wecreu/companyInfo/footer/".$clientId.".txt";
+          $content = file_get_contents($url);
+          echo $content;
+          ?>
     </p>
   </div>
 </div>
