@@ -1,16 +1,15 @@
 <?php
     $isLogin=true; //TODO
     $clientId = file_get_contents('conf.ini'); 
-    include_once('../../../tools/category.php');
-    include_once("../../../tools/sql.php");
-    include_once("../../../tools/client.php");
+    include_once('/data/www/default/wecreu/tools/category.php');
+    include_once("/data/www/default/wecreu/tools/sql.php");
+    include_once("/data/www/default/wecreu/tools/client.php");
 
 	//create an object
     $db = Database::getInstance();
     $category = new Category($db,$clientId);
     $client = new Client($db,$clientId);
     ?>
-
     <!DOCTYPE html>
     <html class="no-js">
     <head>
@@ -27,7 +26,7 @@
       <link rel="stylesheet" href="css/font-awesome.css">
       <link rel="stylesheet" href="css/bootstrap.min.css">
       <link rel="stylesheet" href="css/templatemo-style.css">
-      <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+      <script src="css/modernizr-2.6.2.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
       <script>
@@ -50,7 +49,7 @@
 
      </script>
      <style>
-       .banner-bg { background: url("../../../images/covers/<?php echo $clientId;?>.jpg"); }
+       .banner-bg { background: url("/wecreu/images/covers/<?php echo $clientId;?>.jpg"); }
        input{ vertical-align:middle; margin:0; padding:0}
        .file-box{ position:relative;width:340px}
        .txt{ height:22px; border:1px solid #cdcdcd; width:180px;}
@@ -118,8 +117,6 @@
       </div>
     </div>
 
-
-
     <!-- MAIN CONTENT -->
     <div class="main-content">
       <div class="fluid-container">
@@ -156,7 +153,7 @@
         <div class="row">
          <div class="col-md-12">
           <?php 
-          $url = "../../../companyInfo/aboutUs/".$clientId.".txt";
+          $url = "/data/www/default/wecreu/companyInfo/aboutUs/".$clientId.".txt";
           $content = file_get_contents($url);
           echo $content;
           ?>
@@ -173,7 +170,7 @@
       </div>
     </div>
     <div class="row">
-     <form action="../../../tools/email.php" method="post" class="contact-form">
+     <form action="/wecreu/tools/email.php" method="post" class="contact-form">
       <fieldset class="col-md-4 col-sm-6">
         <input type="text" id="name" name="name" placeholder="Your Name...">
       </fieldset>
@@ -188,6 +185,7 @@
       </fieldset>
       <fieldset class="col-md-12 col-sm-12">
         <input type="hidden" name="method" value="sendEmail">
+        <input type="hidden" name="url" value="<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']; ?>">
         <input type="submit" class="button big default" value="Send Message">
       </fieldset>
     </form>
@@ -208,11 +206,12 @@ if($isLogin){
    <div class="row">
     <div class="col-md-12">
       <div class="file-box">
-        <form action="../../../tools/uploadCover.php" method="post" enctype="multipart/form-data">
+        <form action="/wecreu/tools/uploadCover.php" method="post" enctype="multipart/form-data">
           <input type='text' name='textfield' id='textfield' class='txt' />  
           <input type='button' class='btnUp' value='Browse' />
           <input type="file" name="fileToUpload" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
           <input type="hidden" value="<?php echo $clientId; ?>" name="id">
+          <input type="hidden" name="url" value="<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']; ?>">
           <input type="submit" name="submit" class="btnUp" value="upload" />
           <p><b>jpg, jpeg, bmp, gif, png</b> only</p>
         </form>
@@ -226,9 +225,6 @@ if($isLogin){
 }
 ?>
 
-
-
-
 <div class="row" id="footer">
   <div class="col-md-12 text-center">
     <p class="copyright-text">&copy; <?php echo $client->getClientSiteTitle(); ?>
@@ -240,9 +236,9 @@ if($isLogin){
 </div>
 </div>
 
-<script src="js/vendor/jquery-1.10.2.min.js"></script>
-<script src="js/min/plugins.min.js"></script>
-<script src="js/min/main.min.js"></script>
+<script src="css/jquery-1.10.2.min.js"></script>
+<script src="css/plugins.min.js"></script>
+<script src="css/main.min.js"></script>
 
 </body>
 </html>
