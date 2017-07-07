@@ -39,61 +39,10 @@ body {
   line-height: 1;
 }
 
-blockquote,
-q {
-  quotes: none;
-}
-
-blockquote:before,
-blockquote:after {
-  content: '';
-  content: none;
-}
-
 html {
   font-size: 100%;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
-}
-
-img {
-  border: 0;
-  -ms-interpolation-mode: bicubic;
-}
-
-button,
-input,
-select,
-textarea {
-  font-size: 100%;
-  margin: 0;
-  vertical-align: baseline;
-  *vertical-align: middle;
-}
-
-button,
-input {
-  line-height: normal;
-  *overflow: visible;
-}
-
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-  border: 0;
-  padding: 0;
-}
-
-button,
-input[type="button"],
-input[type="reset"],
-input[type="submit"] {
-  cursor: pointer;
-  -webkit-appearance: button;
-}
-
-textarea {
-  overflow: auto;
-  vertical-align: top;
 }
 
 /*---------------------------------------------------------
@@ -116,38 +65,16 @@ a {
   transition: all 150ms ease-in-out;
   text-decoration: none !important;
 }
-a:hover {
-  color: #555555;
-}
 
 h1, h2, h3, h4, h5 {
   color: #555555;
 }
 
-::-webkit-input-placeholder {
-  color: #999999;
-}
-
-:-ms-input-placeholder {
-  color: #999999;
-}
 
 .main-content,
 .banner-bg {
   float: right;
   width: 77%;
-}
-@media screen and (max-width: 1290px) {
-  .main-content,
-  .banner-bg {
-    width: 70%;
-  }
-}
-@media screen and (max-width: 992px) {
-  .main-content,
-  .banner-bg {
-    width: 100%;
-  }
 }
 
 .content-wrapper {
@@ -179,24 +106,17 @@ hr {
 }
 
 .page-section {
-  padding-top: 80px;
+  padding-top: 60px;
 }
 
 .sidebar-menu {
   float: left;
-  width: 23%;
+  width: 20%;
   height: 100%;
   position: fixed;
   background-color:  #5F606e;
   color: FFFFFF;
   overflow-x: hidden;
-}
-
-@media screen and (max-width: 1290px) {
-  .sidebar-menu {
-    overflow-y: scroll;
-    width: 30%;
-  }
 }
 
 .top-section {
@@ -210,7 +130,7 @@ hr {
   -webkit-border-radius: 75px;
   border-radius: 75px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .profile-image img {
@@ -288,6 +208,7 @@ h3.profile-title {
 .contact-form {
   margin-top: 40px;
 }
+
 .contact-form input, .contact-form textarea {
   width: 100%;
   outline: 0;
