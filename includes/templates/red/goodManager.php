@@ -22,7 +22,7 @@
           for ($i=0;$i<10;$i++){
           ?>
           <tr>
-            <td><img src="../../images/logo.jpg"></td>
+            <td><img src="wecreu/images/logo.jpg"></td>
             <td style="vertical-align:middle;">Awesome name</td>
             <td style="vertical-align:middle;">$1000</td>
             <td style="vertical-align:middle;"><a href="goodEdit.php">Edit</a> | <a href="goodDelete.php">Delete</a></td>

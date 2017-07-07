@@ -61,14 +61,14 @@
         ?>
             <script>
                 alert("Thank you. Your message has been sent.");
-                history.back();
+                window.location.href="<?php echo $_POST['url'];?>";  
             </script>
         <?php
         } else {
         ?>
             <script>
                 alert("There is error, you message cannot be sent.");
-                history.back();
+                window.location.href="<?php echo $_POST['url'];?>";  
             </script>
         <?php
         }

@@ -1,7 +1,7 @@
 <?php
-  $clientId = 5;
-  include_once("../../../tools/sql.php");
-  include_once('../../../tools/client.php');
+  $clientId = file_get_contents('conf.ini');
+  include_once("/data/www/default/wecreu/tools/sql.php");
+  include_once('/data/www/default/wecreu/tools/client.php');
   //create an object
   $db = Database::getInstance();
   $client = new Client($db,$clientId);

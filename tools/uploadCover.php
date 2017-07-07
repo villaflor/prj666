@@ -52,7 +52,8 @@ if ($uploadOk){
 	?>
 	<script>
 		alert("Your cover has been changed. If you cannot see the change, please clean your browser cache.");
-		history.back();
+		window.location.href="<?php echo $_POST['url'];?>";  
+		// history.back();
 		//window.location.assign("../index.php");
 	</script>
 	<?php
@@ -60,7 +61,8 @@ if ($uploadOk){
 	?>
 	<script>
 		alert("Sorry, there is an error. Your cover cannot be changed.");
-		history.back();
+		window.location.href="<?php echo $_POST['url'];?>";  
+		// history.back();
 		//window.location.assign("../index.php#upload");
 	</script>
 	<?php

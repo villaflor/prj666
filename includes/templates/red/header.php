@@ -36,7 +36,6 @@
       <ul class="nav nav-pills">
         <li><a href="index.php">Home</a></li>
         <li><a href="good.php">Products</a></li>
-        <li><a href="#">FAQ</a></li>
         <li><a href="info.php">About Us</a></li>
       </ul>
     </nav>
@@ -44,7 +43,6 @@
   <!-- icons -->
   <div class="col-md-5 col-sm-5 col-xs-5">
     <a href="cart.php"> <img class="pull-right hicon" src="images/cart.gif" alt="Cart"> </a>
-    <a href="logout.php"> <img class="pull-right hicon" src="images/logout.gif" alt="Logout"> </a>
   </div>
 
 </div>
