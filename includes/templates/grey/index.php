@@ -1,5 +1,4 @@
 <?php
-    $isLogin=true; //TODO
     $clientId = file_get_contents('conf.ini'); 
     include_once('/data/www/default/wecreu/tools/category.php');
     include_once("/data/www/default/wecreu/tools/sql.php");
@@ -117,13 +116,10 @@
       </div>
     </div>
 
-    <!-- MAIN CONTENT -->
+    <!-- main -->
     <div class="main-content">
       <div class="fluid-container">
         <div class="content-wrapper">
-
-
-
           <!-- products -->
           <div class="page-section" id="products">
            <div class="row">
@@ -189,9 +185,8 @@
         <input type="submit" class="button big default" value="Send Message">
       </fieldset>
     </form>
-  </div> <!-- .contact-form -->
+  </div> 
 </div>
-
 
 <div class="row" id="footer">
   <div class="col-md-12">
