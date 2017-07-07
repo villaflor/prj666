@@ -4,6 +4,38 @@ ini_set('display_errors', 'On');
 $user = new User();
 $validate = new Validate();
 
+class CopyFile
+{
+public $fromFile;
+public $toFile;
+
+function copyFile($fromFile,$toFile){
+    $this->CreateFolder($toFile);
+    $folder1=opendir($fromFile);
+    while($f1=readdir($folder1)){
+        if($f1!="." && $f1!=".."){
+            $path2="{$fromFile}/{$f1}";
+            if(is_file($path2)){
+                $file = $path2;
+                $newfile = "{$toFile}/{$f1}";
+                copy($file, $newfile);
+            }elseif(is_dir($path2)){
+                $toFiles = $toFile.'/'.$f1;
+                $this->copyFile($path2,$toFiles);
+            }
+        }
+    }
+}
+function CreateFolder($dir, $mode = 0777){
+    if (is_dir($dir) || @mkdir($dir,$mode)){
+        return true;
+    }
+    if (!$this->CreateFolder(dirname($dir),$mode)){
+        return false;
+    }
+    return @mkdir($dir, $mode);
+}
+}
 
 if (!$user->isLoggedIn()){
     Redirect::to('index.php');
@@ -73,97 +105,115 @@ if(Input::exists()){
             }
         }
         if ($check != 1 && $_POST['template'] == 2){
-            $source = '/data/www/default/prj/template/blue';
-            $source2 = '/data/www/default/prj/template/blue/images';
-            $source3 = '/data/www/default/prj/template/blue/css';
-            if($check==0){
-                recurse_copy($source,$destination);
-                recurse_copy($source2,$destination2);
-                recurse_copy($source3,$destination3);
-            }
-            ob_start();
-            include('../template/blue/index.php');
-            $forIndex = ob_get_contents();
-            ob_end_clean();
+            $source = '/data/www/default/wecreu/includes/templates/blue';
+            $destination = "/data/www/default/". $client_name;
+            $file = new CopyFile($source,$destination);
 
-            ob_start();
-            include('../template/blue/Header.php');
-            $forHeader = ob_get_contents();
-            ob_end_clean();
-
-            $indexFile = fopen("/data/www/default/" . $client_name . "/index.php", "w") or die("Unable to open file!");
-            $headerFile = fopen("/data/www/default/" . $client_name . "/Header.php", "w") or die("Unable to open file!");
-
-            fwrite($indexFile, $forIndex);
-            fclose($indexFile);
-
-            fwrite($headerFile, $forHeader);
-            fclose($headerFile);
+            // $source = '/data/www/default/prj/template/blue';
+            // $source2 = '/data/www/default/prj/template/blue/images';
+            // $source3 = '/data/www/default/prj/template/blue/css';
+            // if($check==0){
+            //     recurse_copy($source,$destination);
+            //     recurse_copy($source2,$destination2);
+            //     recurse_copy($source3,$destination3);
+            // }
+            // ob_start();
+            // include('../template/blue/index.php');
+            // $forIndex = ob_get_contents();
+            // ob_end_clean();
+            //
+            // ob_start();
+            // include('../template/blue/Header.php');
+            // $forHeader = ob_get_contents();
+            // ob_end_clean();
+            //
+            // $indexFile = fopen("/data/www/default/" . $client_name . "/index.php", "w") or die("Unable to open file!");
+            // $headerFile = fopen("/data/www/default/" . $client_name . "/Header.php", "w") or die("Unable to open file!");
+            //
+            // fwrite($indexFile, $forIndex);
+            // fclose($indexFile);
+            //
+            // fwrite($headerFile, $forHeader);
+            // fclose($headerFile);
 
             //echo "Done writing";
 
         }
         else if ($check != 1 && $_POST['template'] == 1){
-            $source = '/data/www/default/prj/template/green';
-            $source2 = '/data/www/default/prj/template/green/images';
-            $source3 = '/data/www/default/prj/template/green/css';
-            if($check==0){
-                recurse_copy($source,$destination);
-                recurse_copy($source2,$destination2);
-                recurse_copy($source3,$destination3);
-            }
-            ob_start();
-            include('../template/green/index-metadata.php');
-            $forIndex = ob_get_contents();
-            ob_end_clean();
+            $source = '/data/www/default/wecreu/includes/templates/green';
+            $destination = "/data/www/default/". $client_name;
+            $file = new CopyFile($source,$destination);
 
-            ob_start();
-            include('../template/green/header-nav.php');
-            $forHeader = ob_get_contents();
-            ob_end_clean();
-
-            $indexFile = fopen("/data/www/default/". $client_name . "/index-metadata.php", "w") or die("Unable to open file!");
-            $headerFile = fopen("/data/www/default/". $client_name ."/header-nav.php", "w") or die("Unable to open file!");
-
-            fwrite($indexFile, $forIndex);
-            fclose($indexFile);
-
-            fwrite($headerFile, $forHeader);
-            fclose($headerFile);
-
-            Session::flash('generate', 'Your site has been generated successfully');
-            ?> <script type="text/javascript" language="Javascript">window.open('http://myvmlab.senecacollege.ca:5726/<?php echo $user->data()->username; ?>');</script> <?php
+            // $source = '/data/www/default/prj/template/green';
+            // $source2 = '/data/www/default/prj/template/green/images';
+            // $source3 = '/data/www/default/prj/template/green/css';
+            // if($check==0){
+            //     recurse_copy($source,$destination);
+            //     recurse_copy($source2,$destination2);
+            //     recurse_copy($source3,$destination3);
+            // }
+            // ob_start();
+            // include('../template/green/index-metadata.php');
+            // $forIndex = ob_get_contents();
+            // ob_end_clean();
+            //
+            // ob_start();
+            // include('../template/green/header-nav.php');
+            // $forHeader = ob_get_contents();
+            // ob_end_clean();
+            //
+            // $indexFile = fopen("/data/www/default/". $client_name . "/index-metadata.php", "w") or die("Unable to open file!");
+            // $headerFile = fopen("/data/www/default/". $client_name ."/header-nav.php", "w") or die("Unable to open file!");
+            //
+            // fwrite($indexFile, $forIndex);
+            // fclose($indexFile);
+            //
+            // fwrite($headerFile, $forHeader);
+            // fclose($headerFile);
+            //
+            // Session::flash('generate', 'Your site has been generated successfully');
+            // ?> <script type="text/javascript" language="Javascript">window.open('http://myvmlab.senecacollege.ca:5726/<?php echo $user->data()->username; ?>');</script> <?php
 
         }
         else if ($check != 1 && $_POST['template'] == 3){
-            $source = '/data/www/default/prj/template/red';
-            $source2 = '/data/www/default/prj/template/red/images';
-            $source3 = '/data/www/default/prj/template/red/css';
-            if($check==0){
-                recurse_copy($source,$destination);
-                recurse_copy($source2,$destination2);
-                recurse_copy($source3,$destination3);
-            }
-            /*ob_start();
-            include('../../template/red/');
-            $forIndex = ob_get_contents();
-            ob_end_clean();*/
+            $source = '/data/www/default/wecreu/includes/templates/red';
+            $destination = "/data/www/default/". $client_name;
+            $file = new CopyFile($source,$destination);
+        }
 
-            ob_start();
-            include('../template/red/header.php');
-            $forHeader = ob_get_contents();
-            ob_end_clean();
+        else if ($check != 1 && $_POST['template'] == 4){
+            $source = '/data/www/default/wecreu/includes/templates/grey';
+            $destination = "/data/www/default/". $client_name;
+            $file = new CopyFile($source,$destination);
 
-            //$indexFile = fopen("/data/www/default/testing2/index-metadata.php", "w") or die("Unable to open file!");
-            $headerFile = fopen("/data/www/default/". $client_name ."/header.php", "w") or die("Unable to open file!");
-
-            //fwrite($indexFile, $forIndex);
-            //fclose($indexFile);
-
-            fwrite($headerFile, $forHeader);
-            fclose($headerFile);
-
-            //echo "Done writing";
+            // $source = '/data/www/default/prj/template/red';
+            // $source2 = '/data/www/default/prj/template/red/images';
+            // $source3 = '/data/www/default/prj/template/red/css';
+            // if($check==0){
+            //     recurse_copy($source,$destination);
+            //     recurse_copy($source2,$destination2);
+            //     recurse_copy($source3,$destination3);
+            // }
+            // /*ob_start();
+            // include('../../template/red/');
+            // $forIndex = ob_get_contents();
+            // ob_end_clean();*/
+            //
+            // ob_start();
+            // include('../template/red/header.php');
+            // $forHeader = ob_get_contents();
+            // ob_end_clean();
+            //
+            // //$indexFile = fopen("/data/www/default/testing2/index-metadata.php", "w") or die("Unable to open file!");
+            // $headerFile = fopen("/data/www/default/". $client_name ."/header.php", "w") or die("Unable to open file!");
+            //
+            // //fwrite($indexFile, $forIndex);
+            // //fclose($indexFile);
+            //
+            // fwrite($headerFile, $forHeader);
+            // fclose($headerFile);
+            //
+            // //echo "Done writing";
         }
     }
 }
@@ -311,6 +361,13 @@ function deleteDir($dirPath) {
 
                     <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="template"value="3" />
                     Red</label>
+            </div>
+
+            <div class="form-check">
+                <label class="form-check-label" for="template">
+
+                    <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="template"value="4" />
+                    Grey</label>
             </div>
 
         </fieldset>
