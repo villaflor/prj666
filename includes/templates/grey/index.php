@@ -1,5 +1,5 @@
 <?php
-    $clientId = file_get_contents('conf.ini'); 
+    $clientId = file_get_contents('conf.ini');
     include_once('/data/www/default/wecreu/tools/category.php');
     include_once("/data/www/default/wecreu/tools/sql.php");
     include_once("/data/www/default/wecreu/tools/client.php");
@@ -18,7 +18,7 @@
         <?php
         echo $client->getClientSiteTitle();
         ?>
-      </title> 
+      </title>
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="css/normalize.css">
@@ -67,7 +67,7 @@
       <div class="sidebar-menu hidden-xs hidden-sm">
         <div class="top-section">
           <div class="profile-image">
-            <a href="index.php"> <img src="images/logo.png" alt="logo"></a>
+            <a href="index.php"> <img src="images/logo.jpg" alt="logo"></a>
           </div>
           <h3 class="profile-title">
             <?php
@@ -107,12 +107,12 @@
           <?php
           echo $client->getClientSiteTitle();
           ?>
-        </h2> 
+        </h2>
         <h5>
           <?php
           echo $client->getClientInfo();
           ?>
-        </h5> 
+        </h5>
       </div>
     </div>
 
@@ -148,7 +148,7 @@
         </div>
         <div class="row">
          <div class="col-md-12">
-          <?php 
+          <?php
           $url = "/data/www/default/wecreu/companyInfo/aboutUs/".$clientId.".txt";
           $content = file_get_contents($url);
           echo $content;
@@ -185,12 +185,12 @@
         <input type="submit" class="button big default" value="Send Message">
       </fieldset>
     </form>
-  </div> 
+  </div>
 </div>
 
 <div class="row" id="footer">
   <div class="col-md-12">
-    <p class=""><?php 
+    <p class=""><?php
           $url = "/data/www/default/wecreu/companyInfo/footer/".$clientId.".txt";
           $content = file_get_contents($url);
           echo $content;
@@ -209,4 +209,3 @@
 
 </body>
 </html>
-
