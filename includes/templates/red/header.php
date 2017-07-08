@@ -14,7 +14,7 @@
       <div class="col-md-offset-1 col-md-2 col-sm-offset-1 col-sm-3 col-xs-offset-1 col-xs-4 ">
 
       <a href="index.php">
-        <img src="images/logo.png" class="logo img-responsive" alt="Responsive image">
+        <img src="images/logo.jpg" class="logo img-responsive" alt="Responsive image">
       </a>
       <br>
       </div>
