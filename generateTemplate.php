@@ -49,7 +49,7 @@ if(Input::exists()){
     else{
         $client_name = $user->data()->username;
         $com_title = $user->data()->client_site_title;
-        $target_dir = '/data/www/default/' . $client_name . '/images/';
+        $target_dir = '/data/www/default/' . $client_name . '/images';
         $target_file = $target_dir . "/logo.jpg";
         $uploadOk = 1;
 // Desired folder structure
@@ -93,17 +93,7 @@ if(Input::exists()){
         if (file_exists($target_file)){
             unlink($target_file);
         }
-        if ($uploadOk == 0){
-            //echo "Sorry, your file was not uploaded";
-        }
-        else {
-            if(move_uploaded_file($_FILES["client_logo"]["tmp_name"], $target_file)){
-                //echo "uploaded";
-            }
-            else{
-                //echo "Sorry";
-            }
-        }
+
         if ($check != 1 && $_POST['template'] == 2){
             $source = '/data/www/default/wecreu/includes/templates/blue';
             $destination = "/data/www/default/". $client_name;
@@ -214,6 +204,19 @@ if(Input::exists()){
             // fclose($headerFile);
             //
             // //echo "Done writing";
+        }
+
+        if ($uploadOk == 0){
+            //echo "Sorry, your file was not uploaded";
+        }
+        else {
+            if(move_uploaded_file($_FILES["client_logo"]["tmp_name"], $target_file)){
+                //echo "uploaded";
+                //echo $target_file;
+            }
+            else{
+                //echo "Sorry";
+            }
         }
     }
 }
