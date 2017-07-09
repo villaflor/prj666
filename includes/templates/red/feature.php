@@ -16,8 +16,8 @@
   if(!isset($_GET['keyword'])){
     $alldata = $search->getAll($limit,$offSet);
   } else{
-      $keyword=$_GET['keyword'];
-      $alldata = $search->searchGood($keyword,$limit,$offSet);
+    $keyword=$_GET['keyword'];
+    $alldata = $search->searchGood($keyword,$limit,$offSet);
   }
 
   while ($row = mysqli_fetch_assoc($alldata)) {
@@ -41,5 +41,4 @@
   }
 
   ?>
-
   </div>
