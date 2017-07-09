@@ -3,6 +3,7 @@ require_once 'core/init.php';
 
 $user = new User();
 $validate = new Validate();
+$category = new Category();
 
 if (!$user->isLoggedIn()){
     Redirect::to('index.php');
@@ -11,13 +12,6 @@ if (!$user->isLoggedIn()){
 if(Input::exists()) {
     if (Token::check(Input::get('token'))) {
         $validation = $validate->check($_POST, array(
-            'category_name' => array(
-                'name' => 'Name',
-                'required' => true,
-                'unique' => 'category',
-                'min' => 2,
-                'max' => 30
-            ),
             'desc' => array(
                 'name' => 'Description',
                 'required' => true,
@@ -27,26 +21,18 @@ if(Input::exists()) {
 
         if ($validation->passed()) {
 
-            try {
-                include_once('tools/category.php');
-                include_once("tools/sql.php");
+            try{
 
-                $db = Database::getInstance();
-                $clientId = $user->data()->client_id;
-                //create an object
-                $category = new Category($db, $clientId);
+                $category->update(array(
+                    'category_description' => Input::get('desc')
+                ), 150);
 
-                // add one
-                if ($category->add($_POST['category_name'], $_POST['desc'])) {
-                    Session::flash('createC', 'New category has been added!');
-                    //Redirect::to('index.php');
 
-                } else {
-                    $validate->addError('Sorry, adding new category failed. Please try again.');
-                    //echo "add #1 fail<br>";
-                }
-            } catch (Exception $e) {
-                die($e->getMessage()); //or you can redirect to other page.
+                Session::flash('editC', 'Description description have been updated.');
+                //Redirect::to('index.php');
+
+            } catch (Exception $e){
+                die($e->getMessage());
             }
         }
     }
@@ -60,7 +46,7 @@ if(Input::exists()) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Wecrue - Add Category</title>
+    <title>Wecrue - Edit Category</title>
 </head>
 <body>
 
@@ -122,10 +108,10 @@ if(Input::exists()) {
 </nav>
 
 <div class="container bg-faded py-5">
-    <h2 class="mb-4">Create category form</h2>
+    <h2 class="mb-4">Edit category form</h2>
     <?php
-    if(Session::exists('createC')) {
-        echo '<p class="text-success">' . Session::flash('createC') . '</p>';
+    if(Session::exists('editC')) {
+        echo '<p class="text-success">' . Session::flash('editC') . '</p>';
     }
 
     if($validate->errors()) {
@@ -140,7 +126,7 @@ if(Input::exists()) {
             <legend></legend>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="category_name"><span class="text-danger">*</span> Name</label>
-                <input class="form-control" type="text" id="category_name" name="category_name" value="">
+                <input class="form-control" type="text" id="category_name" name="category_name" value="" disabled>
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="desc"><span class="text-danger">*</span> Description</label>
@@ -150,7 +136,7 @@ if(Input::exists()) {
         </fieldset>
         <div class="form-group">
             <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-            <input class="btn btn-primary" type="submit" value="Add" />
+            <input class="btn btn-primary" type="submit" value="Edit" />
         </div>
     </form>
 </div>

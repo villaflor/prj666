@@ -55,11 +55,6 @@ if(Input::exists()){
             } catch (Exception $e){
                 die($e->getMessage());
             }
-        } else{
-			
-            foreach ($validation->errors() as $error){
-                echo $error, '<br />';
-            }
         }
     }
 }
