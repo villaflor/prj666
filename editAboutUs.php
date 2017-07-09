@@ -197,7 +197,7 @@ if(Input::exists()){
 <script src="js/bootstrap.min.js"></script>
  <script type="text/javascript">
     var ue = UE.getEditor('editor', {
-      toolbars: [['bold', 'italic', 'underline', 'strikethrough', 'blockquote', 'insertunorderedlist', 'insertorderedlist', 'justifyleft','justifycenter', 'justifyright',  'link', 'fullscreen']],
+      toolbars: [['fontsize', 'bold', 'italic', 'underline', 'strikethrough', 'blockquote', 'insertunorderedlist', 'insertorderedlist', 'justifyleft','justifycenter', 'justifyright',  'link', 'fullscreen']],
       elementPathEnabled: true,
       enableContextMenu: false,
       wordCount:false,
