@@ -23,6 +23,12 @@ class Category{
         }
     }
 
+    public function update($fields = array(), $id = null){
+        if(!$this->_db->update('category', $id, $fields)){
+            throw new Exception('There was a problem updating.');
+        }
+    }
+
     public function data(){
         return $this->_data;
     }
