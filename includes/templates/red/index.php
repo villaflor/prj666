@@ -4,7 +4,6 @@
 <body >
   <!-- header -->
   <?php include_once("header.php");?>
-
   <br>
   <div class="container bg-faded pt-5">
   <!-- category -->
@@ -13,7 +12,5 @@
   </div>
   <!-- footer -->
   <?php include_once("footer.php");?>
-
-
 </body>
 </html>

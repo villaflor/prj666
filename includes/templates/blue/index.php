@@ -1,11 +1,14 @@
 <!DOCTYPE html>
+<?php  
+
+?>
 <html lang="en-US">
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="description" content="home page" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		
-		<title>Wecreu</title>
+		<title>Blue</title>
 		<link rel="stylesheet" href="css/stylesheet.css" />
 		
 		
@@ -23,7 +26,7 @@
 				
 				<div class="slideshow" style="float:left">
 					<img class="slides" src="images/fish.png" alt="fish" height="536" width="559"/>
-					<img class="slides" src="images/logo.png" alt="logo" height="536" width="559" />
+					<img class="slides" src="images/logo.jpg" alt="logo" height="536" width="559" />
 				</div>
 			
 				<div class="info">

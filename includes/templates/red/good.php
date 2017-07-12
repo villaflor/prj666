@@ -15,7 +15,7 @@
   ?>
     <div class="item col-md-12 col-sm-4 col-xs-4">
       <a href='detail.php'>
-         <img src="../../images/logo.jpg" class="img-responsive" alt="Cinque Terre">
+         <img src="/wecreu/images/cover.jpg" class="img-responsive" alt="Cinque Terre">
         <p>Name:</p> <p>Price:</p>
       </a>
   </div>

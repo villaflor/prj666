@@ -2,10 +2,11 @@
   <div class=" col-md-3 col-sm-3 col-xs-3 sidebar">
       <ul class="nav nav-pills nav-stacked">
         <?php
-			include_once('../../../tools/category.php');
-
+			include_once('/data/www/default/wecreu/tools/category.php');
+			$clientId = file_get_contents('conf.ini');
+			
 			//create an object
-		    $category = new Category($db, 5);
+		    $category = new Category($db, $clientId);
 		    
         	$alldata = $category->getAllAvaliable();
 		    while ($row = mysqli_fetch_assoc($alldata)) {

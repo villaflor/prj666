@@ -1,16 +1,14 @@
 <?php
-    $isLogin=true; //TODO
-    $clientId = 5; //TODO
-    include_once('../../../tools/category.php');
-    include_once("../../../tools/sql.php");
-    include_once("../../../tools/client.php");
+    $clientId = file_get_contents('conf.ini');
+    include_once('/data/www/default/wecreu/tools/category.php');
+    include_once("/data/www/default/wecreu/tools/sql.php");
+    include_once("/data/www/default/wecreu/tools/client.php");
 
 	//create an object
     $db = Database::getInstance();
     $category = new Category($db,$clientId);
     $client = new Client($db,$clientId);
     ?>
-
     <!DOCTYPE html>
     <html class="no-js">
     <head>
@@ -20,14 +18,14 @@
         <?php
         echo $client->getClientSiteTitle();
         ?>
-      </title> 
+      </title>
       <meta name="description" content="">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="css/normalize.css">
       <link rel="stylesheet" href="css/font-awesome.css">
       <link rel="stylesheet" href="css/bootstrap.min.css">
       <link rel="stylesheet" href="css/templatemo-style.css">
-      <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+      <script src="css/modernizr-2.6.2.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
       <script>
@@ -50,14 +48,14 @@
 
      </script>
      <style>
-     .banner-bg { background: url("../../../images/covers/<?php echo $clientId;?>.jpg"); }
-      input{ vertical-align:middle; margin:0; padding:0}
-      .file-box{ position:relative;width:340px}
-      .txt{ height:22px; border:1px solid #cdcdcd; width:180px;}
-      .btnUp{ background-color:#FFF; border:1px solid #CDCDCD;height:24px; width:70px;}
-      .file{ position:absolute; top:0; right:80px; height:24px; filter:alpha(opacity:0);opacity: 0;width:260px }
-      .dropdown {position: relative;display: inline-block; }
-      .dropdown-content { position: relative; display: none; background-color: #495461;
+       .banner-bg { background: url("/wecreu/images/covers/<?php echo $clientId;?>.jpg"); }
+       input{ vertical-align:middle; margin:0; padding:0}
+       .file-box{ position:relative;width:340px}
+       .txt{ height:22px; border:1px solid #cdcdcd; width:180px;}
+       .btnUp{ background-color:#FFF; border:1px solid #CDCDCD;height:24px; width:70px;}
+       .file{ position:absolute; top:0; right:80px; height:24px; filter:alpha(opacity:0);opacity: 0;width:260px }
+       .dropdown {position: relative;display: inline-block; }
+       .dropdown-content { position: relative; display: none; background-color: #495461;
         min-width: 160px; z-index: 1; padding: 10px; }
         .dropdown-content a { margin: 0 0 0px 28px;}
         .dropdown:hover .dropdown-content { display: block; }
@@ -69,7 +67,7 @@
       <div class="sidebar-menu hidden-xs hidden-sm">
         <div class="top-section">
           <div class="profile-image">
-            <a href="index.php"> <img src="images/logo.png" alt="logo"></a>
+            <a href="index.php"> <img src="images/logo.jpg" alt="logo"></a>
           </div>
           <h3 class="profile-title">
             <?php
@@ -109,24 +107,19 @@
           <?php
           echo $client->getClientSiteTitle();
           ?>
-        </h2> 
+        </h2>
         <h5>
           <?php
           echo $client->getClientInfo();
           ?>
-        </h5> 
+        </h5>
       </div>
     </div>
 
-
-
-    <!-- MAIN CONTENT -->
+    <!-- main -->
     <div class="main-content">
       <div class="fluid-container">
         <div class="content-wrapper">
-
-
-
           <!-- products -->
           <div class="page-section" id="products">
            <div class="row">
@@ -145,18 +138,21 @@
           </div>
         </div>
 
-
-
         <!-- About us -->
         <div class="page-section" id="aboutUs">
           <div class="row">
            <div class="col-md-12">
             <h4 class="widget-title">ABOUT US</h4>
+            <hr>
           </div>
         </div>
         <div class="row">
          <div class="col-md-12">
-          <p class="widget-title">Location: 123 abc Rd.</p>
+          <?php
+          $url = "/data/www/default/wecreu/companyInfo/aboutUs/".$clientId.".txt";
+          $content = file_get_contents($url);
+          echo $content;
+          ?>
         </div>
       </div>
     </div>
@@ -170,7 +166,7 @@
       </div>
     </div>
     <div class="row">
-     <form action="../../../tools/email.php" method="post" class="contact-form">
+     <form action="/wecreu/tools/email.php" method="post" class="contact-form">
       <fieldset class="col-md-4 col-sm-6">
         <input type="text" id="name" name="name" placeholder="Your Name...">
       </fieldset>
@@ -185,50 +181,20 @@
       </fieldset>
       <fieldset class="col-md-12 col-sm-12">
         <input type="hidden" name="method" value="sendEmail">
+        <input type="hidden" name="url" value="<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']; ?>">
         <input type="submit" class="button big default" value="Send Message">
       </fieldset>
     </form>
-  </div> <!-- .contact-form -->
+  </div>
 </div>
-
-<!-- upload -->
-<?php
-if($isLogin){
-  ?>
-  <hr/>
-  <div class="page-section" id="upload">
-    <div class="row">
-     <div class="col-md-12">
-       <h4 class="widget-title">CHANGE COVER FOR SITE OWNER</h4>
-     </div>
-   </div>
-   <div class="row">
-    <div class="col-md-12">
-      <div class="file-box">
-        <form action="../../../tools/uploadCover.php" method="post" enctype="multipart/form-data">
-          <input type='text' name='textfield' id='textfield' class='txt' />  
-          <input type='button' class='btnUp' value='Browse' />
-          <input type="file" name="fileToUpload" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
-          <input type="hidden" value="<?php echo $clientId; ?>" name="id">
-          <input type="submit" name="submit" class="btnUp" value="upload" />
-          <p><b>jpg, jpeg, bmp, gif, png</b> only</p>
-        </form>
-      </div>
-      <p>If you can't see the new cover, please <b>clean</b> your browser cache</p>
-    </div>
-  </div> 
-</div>
-<hr/>
-<?php
-}
-?>
-
-
-
 
 <div class="row" id="footer">
-  <div class="col-md-12 text-center">
-    <p class="copyright-text">&copy; <?php echo $client->getClientSiteTitle(); ?>
+  <div class="col-md-12">
+    <p class=""><?php
+          $url = "/data/www/default/wecreu/companyInfo/footer/".$clientId.".txt";
+          $content = file_get_contents($url);
+          echo $content;
+          ?>
     </p>
   </div>
 </div>
@@ -237,10 +203,9 @@ if($isLogin){
 </div>
 </div>
 
-<script src="js/vendor/jquery-1.10.2.min.js"></script>
-<script src="js/min/plugins.min.js"></script>
-<script src="js/min/main.min.js"></script>
+<script src="css/jquery-1.10.2.min.js"></script>
+<script src="css/plugins.min.js"></script>
+<script src="css/main.min.js"></script>
 
 </body>
 </html>
-

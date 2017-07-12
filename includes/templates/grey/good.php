@@ -25,7 +25,7 @@
   ?>
     <div class="item col-md-6 col-sm-6 col-xs-6">
       <a href='detail.php'>
-         <img src="../../images/logo.jpg" class="img-responsive" alt="Good">
+         <img src="/wecreu/images/logo.jpg" class="img-responsive" alt="Good">
         <p>Name:</p> <p>Price:</p>
       </a>
   </div>

@@ -120,7 +120,7 @@
                                                    style="box-sizing: border-box; color: #74787E; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 12px; line-height: 1.5em; margin-top: 0;"
                                                    align="left">
                                                     http://myvmlab.senecacollege.ca:5726/prj/production/passwordreset.php?email=<?=escape(Input::get('email'))?>&identifier=<?=$identifier?>
-                                                    &identifier=<?=$identifier?></p>
+                                                </p>
                                             </td>
                                         </tr>
                                     </table>
