@@ -1,29 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <?php include("metadata.php") ?>
     <title>Green Template</title>
 </head>
 
 <body style="background-color: seagreen">
-<header class="mb-sm-5" style="height: 20vh; align-content: center;">
-    <div class="container">
-        <div class="row">
-            <section class="col-1">
-                <img src="images/logo.png" alt="Wecreu Logo" class="rounded-circle" style="width: 100px;">
-            </section>
-            <section class="col-11">
-                <h1 class="text-right text-sm-center" style="font-size: 50px">Wecreu</h1>
-            </section>
-        </div>
-    </div>
+<header class="mb-5 mt-3" style="height: 20vh; align-content: center;">
+    <?php include("header.inc") ?>
 </header>
 <div class="container mb-5">
     <nav class="nav nav-pills nav-fill">
-        <a class="nav-item nav-link active" href="#">Home</a>
+        <a class="nav-item nav-link active" href="index.php">Home</a>
         <a class="nav-item nav-link text-white" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
