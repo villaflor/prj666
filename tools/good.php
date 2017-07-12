@@ -78,7 +78,7 @@ class Good {
                         $stock, $weight, $taxable, $visible, $category, 16)";
 
         if($this->mysqli->query($sql_query)){
-            echo "production/tools/good.php:query worked <br/>";
+            echo "production/tools/good.php:query worked ".$sql_query."<br/>";
             return true;
         }else{
             echo "production/tools/good.php:received error for query ".$sql_query." <br/>";
@@ -106,7 +106,7 @@ class Good {
     */
 
     public function deleteGood($id){
-       $sql_query = "DELETE FROM `good` WHERE `good_id`=65";
+       $sql_query = "DELETE FROM `good` WHERE `good_id`=$id";
         return $this->mysqli->query($sql_query);
     }
 
