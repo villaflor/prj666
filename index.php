@@ -102,27 +102,27 @@ $user = new User();
 <div class="container bg-faded py-5" style="min-height: 65vh">
     <h2 class="mb-4 text-center">Templates</h2>
     <div class="row">
-        <div class="col-sm-12 col-md-4 pb-3">
+        <div class="col-sm-12 col-md-6 pb-3">
             <a href="includes/templates/green/index.php">
                 <img src="images/t-green.png" alt="Green Template" class="img-thumbnail">
                 <h5 class="pt-1 mb-4 text-center">Green</h5>
             </a>
             <p>A very simple site to display all your products. It has responsive display feature. It is green.</p>
         </div>
-        <div class="col-sm-12 col-md-4 pb-3">
+        <div class="col-sm-12 col-md-6 pb-3">
             <a href="includes/templates/red/index.php">
                 <img src="images/t-red.png" alt="Red Template" class="img-thumbnail" style="display: block">
                 <h5 class="pt-1 mb-4 text-center">Red</h5>
             </a>
             <p>A standard site for unlimited categories or goods. It shows the top sales items on the index page.</p>
         </div>
-        <div class="col-sm-12 col-md-4 pb-3">
+        <div class="col-sm-12 col-md-6 pb-3">
             <a href="includes/templates/blue/index.php">
                 <img src="images/t-blue.png" alt="Blue Template" class="img-thumbnail" style="display: block">
                 <h5 class="pt-1 mb-4 text-center">Blue</h5>
             </a>
         </div>
-        <div class="col-sm-12 col-md-4 pb-3">
+        <div class="col-sm-12 col-md-6 pb-3">
             <a href="includes/templates/grey/index.php">
                 <img src="images/t-grey.png" alt="Grey Template" class="img-thumbnail" style="display: block">
                 <h5 class="pt-1 mb-4 text-center">Grey</h5>
