@@ -157,7 +157,7 @@ if(Input::exists()){
         <fieldset class="form-group">
             <legend>Edit Payment Method</legend>
             <div class="form-group form-inline">
-                <label class="form-control-label mr-2" for="client_tax">client tax</label>
+                <label class="form-control-label mr-2" for="client_tax">Total tax</label>
                 <input type="hidden" name="client_tax" value=0>
                 <input class="form-control" type="number" min="0.01" step="0.01" name="client_tax" id="client_tax" style="width: 90px;" value="<?php echo escape($user->data()->client_tax);?>" />
                 <span class="input-group-addon">%</span>
