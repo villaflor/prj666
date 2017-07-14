@@ -89,6 +89,9 @@ if(Input::exists()){
                     <div class="dropdown-menu" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="edit-com.php">Update account</a>
                         <a class="dropdown-item" href="changepassword.php">Change password</a>
+                        <a class="dropdown-item" href="editCover.php">Edit cover</a>
+                        <a class="dropdown-item" href="editFooter.php">Edit footer</a>
+                        <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
                     </div>
                 </div>
 
@@ -145,10 +148,6 @@ if(Input::exists()){
                 <label class="form-control-label" for="client_site_title">Site title</label>
                 <input class="form-control" type="text" name="client_site_title" id="client_site_title" placeholder="Edit site title" value="<?php echo escape($user->data()->client_site_title);?>" disabled = "disabled" />
             </div>
-            <!--            <div class="form-group col-md-6">-->
-            <!--                <label class="form-control-label" for="fileToUpload">Site logo</label>-->
-            <!--                <input class="form-control" type="file" name="fileToUpload" id="fileToUpload" placeholder="Upload your logo">-->
-            <!--            </div>-->
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="client_information">Client information</label>
                 <textarea class="form-control" rows="3" name="client_information" id="client_information" placeholder=""><?php echo escape($user->data()->client_information);?></textarea>
