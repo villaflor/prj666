@@ -19,9 +19,21 @@
 </div>
 <div class="container mb-5">
     <nav class="nav nav-pills nav-fill">
-        <a class="nav-item nav-link active" href="#">All categories</a>
-        <a class="nav-item nav-link text-white" href="#">Category 1</a>
-        <a class="nav-item nav-link text-white" href="#">Category 2</a>
+      <?php
+          include_once('/data/www/default/wecreu/tools/category.php');
+          $clientId = file_get_contents('conf.ini');
+          include_once("/data/www/default/wecreu/tools/sql.php");
+          //create an object
+          $db = Database::getInstance();
+          //create an object
+          $category = new Category($db, $clientId);
+
+          $alldata = $category->getAllAvaliable();
+          echo "<a class='nav-item nav-link text-white' href='products.php'>All categpries</a>";
+          while ($row = mysqli_fetch_assoc($alldata)) {
+              echo "<a class='nav-item nav-link text-white' href='products.php?cid=$row[category_id]'>$row[category_name]</a>";
+          }
+          ?>
     </nav>
 </div>
 <div class="container mb-5">
