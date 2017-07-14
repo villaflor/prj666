@@ -80,6 +80,9 @@ if(Input::exists()){
                     <div class="dropdown-menu" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="edit-com.php">Update account</a>
                         <a class="dropdown-item" href="changepassword.php">Change password</a>
+                        <a class="dropdown-item" href="editCover.php">Edit cover</a>
+                        <a class="dropdown-item" href="editFooter.php">Edit footer</a>
+                        <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
                     </div>
                 </div>
 
