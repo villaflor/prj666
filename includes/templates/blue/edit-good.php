@@ -18,14 +18,19 @@ if(!$user->isLoggedIn()){
     <title>Wecreu</title>
 </head>
 <body>
+        <!--used tutorial https://www.w3schools.com/php/showphp.asp?filename=demo_form_validation_escapechar 
+            and https://www.w3schools.com/php/php_form_required.asp -->
 		<?php
 			include 'Header.php';
-            $db = Database::getInstance();
-            $category = new Category($db,1);
-            $allcategory = $category->getAll();
             
+
+           // $db = Database::getInstance();
+           // $category = new Category($db,1);
+          //  $allcategory = $category->getAll();
+            
+            $id =  $_GET["gid"];
             $good = new Good($db);
-            $alldata = $good->getGoodDetail($_GET["gid"]);
+            $alldata = $good->getGoodDetail($id);
             $row = mysqli_fetch_assoc($alldata);     
                                         
             $name = $row['good_name'];
@@ -37,12 +42,35 @@ if(!$user->isLoggedIn()){
             $taxable = $row['good_taxable'];
             $visible = $row['good_visible'];
             $category = $row['category_id'];
+            $sale = 16;//$row['sale_id'];
             
             $nameErr = $imageErr = $descriptionErr = $priceErr = $quantityErr = $weightErr = $taxableErr = $visibleErr = $categoryErr = "";
+            $taxable = $visible = 0;
+            $nameVer = $imageVer = $descVer = $priceVer = $qtyVer = $weightVer = $catVer = $clientVer = false; 
+            
+            if($_POST){
+                include '/data/www/default/wecreu/tools/goodValidate.php';
 
-            include 'goodValidate.php';
+                echo "<br/>edit-good.php is getting ready to edit good ".$id." in db<br/>";
+                echo "$nameVer, $imageVer, $descVer, $priceVer, $qtyVer, $weightVer, $catVer, $clientVer Calling DB<br/>";
 
+                if($nameVer == true && $imageVer == true && $descVer == true && 
+                   $priceVer == true && $qtyVer == true && $weightVer == true && 
+                   $catVer == true && $clientVer == true){
+                      
+                //    echo "editing new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
 
+                    if($good->editGood($id, $name, $image, $description, $price, $quantity, $weight, $taxable, $visible, $category, $sale)){
+                       
+                        echo "updated successfully good ".$id.",".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category.",".$sale."<br/>";
+                    } else {
+                        echo "error received updating good ".$id.",".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category.",".$sale."<br/>";
+                    }
+                } else {
+                    echo "failed to edit to database<br/>";
+                }
+
+            }
 
         ?>
 <!--<nav class="navbar bg-primary navbar-inverse navbar-toggleable-sm sticky-top">
@@ -56,7 +84,7 @@ if(!$user->isLoggedIn()){
 			<div class="content">
 
     <h2>Edit good information</h2>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" style="" method="post">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"])."?gid=".$id;?>" style="" method="post" enctype="multipart/form-data" >
         <fieldset>
         <legend></legend>
             <table>
@@ -67,7 +95,7 @@ if(!$user->isLoggedIn()){
                 </tr>
                 <tr >
                     <td><label  for="good_image"><span >*</span> Image</label></td>
-                    <td><input  type="text" name="good_image" id="good_image" placeholder="Enter filepath of good image" value="<?php echo $image;?>" /></td>
+                    <td><input  type="file" name="good_image" id="good_image" accept="image/x-png,image/jpeg" placeholder="Enter filepath of good image" value="<?php echo $image;?>" /></td>
                     <td style="color:#ff0000;"><?php echo $imageErr;?></td>
                 </tr>
                 <tr>
