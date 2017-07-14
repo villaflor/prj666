@@ -94,18 +94,80 @@ if(!$username = Input::get('user')){
     </nav>
 
     <div class="container bg-faded py-5" style="min-height: 100vh">
-        <h2 class="mb-4">Profile</h2>
-        <?php
-        //        if(Session::exists('profile')) {
-        //            echo '<p class="text-success">' . Session::flash('profile') . '</p>';
-        //        }
-        //
-        //        if($validate->errors()) {
-        //            foreach ($validation->errors() as $error) {
-        //                echo '<small class="text-warning">' . $error . '</small><br />';
-        //            }
-        //        }
-        ?>
+        <h1 class="mb-4">Client profile</h1>
+
+        <div class="container">
+        <section class="container py-5 bg-info rounded mb-4">
+            <div class="row mb-5">
+                <div class="col-2">Logo here</div>
+                <div class="container col-5">
+                    <div class="col mb-5">
+                        <p>Client name</p>
+                        <h3>
+                            <?php
+                            echo $user->data()->client_name;
+                            ?>
+                        </h3>
+                    </div>
+                    <div class="col">
+                        <p>Client link</p>
+                        <h3><a href="<?php
+                            echo "/" . $user->data()->username;
+                            ?>">
+                                Link to your site
+                            </a>
+                        </h3>
+                    </div>
+                </div>
+                <div class="container col-5">
+                    <div class="col mb-5">
+                        <p>Site title</p>
+                        <h3>
+                            <?php
+                            echo $user->data()->client_site_title;
+                            ?>
+                        </h3>
+                    </div>
+                    <div class="col">
+                        <p>Acceptable payment</p>
+                        <?php
+                        if($user->data()->payment_option_visa) echo "<h3>Visa card</h3>";
+                        if($user->data()->payment_option_mastercard) echo "<h3>Master card</h3>";
+                        if($user->data()->payment_option_ae) echo "<h3>American Express</h3>";
+                        if($user->data()->payment_option_paypal) echo "<h3>Paypal</h3>";
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container col-6">
+                    <p>This year total sale</p>
+                </div>
+                <div class="container col-6">
+                    <p>Last year total sale</p>
+                </div>
+            </div>
+        </section>
+        </div>
+        <div class="container-fluid mb-4">
+            <div class="container">
+                <div class="row">
+           <section class="col-5 bg-danger rounded py-5 mr-4">
+               <h4>Low in stock</h4>
+           </section>
+           <section class="col bg-info rounded py-5">
+               <h4>Number of categories</h4>
+           </section>
+            </div>
+            </div>
+        </div>
+        <div class="container">
+
+                <section class="container bg-info rounded py-5">
+                    <h4>Number of products</h4>
+                </section>
+            </div>
+        </div>
 
     </div>
 
