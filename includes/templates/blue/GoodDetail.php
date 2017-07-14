@@ -1,7 +1,3 @@
-<?php
-// include database configuration file
-include 'sql.php';
-?>
 <!ow[good_imageDOCTYPE html>
 <html lang="en-US">
 	<head>
@@ -24,20 +20,20 @@ include 'sql.php';
 				
                 <?php
                    // include '../../tools/good.php';
-                    echo "Found file";
+               //     echo "Found file";
                     $db = Database::getInstance();
                     $good = new Good($db);
-                    echo "getting good object";
+                //    echo "getting good object";
                     $alldata = $good->getGoodDetail($_GET["gid"]);
-                    echo "getting goods list";
+               //     echo "getting goods list";
                    
                     $row = mysqli_fetch_assoc($alldata);
-                        echo "<br/>get $row<br/>";
-                        echo "<br/>";
+                    echo $row['good_image'];
+                    $imagepath = $row['good_image'];
                 ?>
                 
-				<div class="goodimage" >
-					<img src="<?php echo "$row[good_image]";  ?>" alt="images/fish.png" height="200" width="200" />
+				<div class="goodimage" >     
+					<img src='<?php echo $imagepath;  ?>' alt="images/fish.png" height="200" width="200" />
 				</div>
 				<div class="goodinfo">
 
@@ -76,7 +72,9 @@ include 'sql.php';
 							<td> Description:<?php echo "$row[good_description]";  ?></td>
 						</tr>
 						<tr>
-							<td><a class="btn btn-success" href="cartAction.php?action=addToCart&id=<?php echo $row["good_id"]; ?>">Add to cart</a></td>
+							<td><a class="button" href="cartAction.php?action=addToCart&id=<?php echo $row["good_id"]; ?>">Add to cart</a><!--<input type="button" class="button" value="Add to Cart" />--></td>
+							
+
 						</tr>
 					</table>
 				</div>

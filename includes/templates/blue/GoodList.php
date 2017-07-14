@@ -12,11 +12,9 @@
 		
 		<?php
 			include 'Header.php';
-         //   include '../../tools/good.php';
-           // include '../../tools/category.php';
-            //   echo "Found file";
-            $db = Database::getInstance();
-            $category = new Category($db,1);
+        
+          //  $db = Database::getInstance();
+            //$category = new Category($db,1);
 		?>
 		
 		<div class="middle">
@@ -27,7 +25,7 @@
                                                 $selectcategory = $_GET["cid"];
                                                 $alldata = $category->getOne($selectcategory);
                                                 $row = mysqli_fetch_assoc($alldata);
-                                                echo "$selectcategory $row[category_name]"; 
+                                                echo " $row[category_name]"; 
                                             }else{
                                                 $selectcategory = "*";
                                                 echo "All"; 
