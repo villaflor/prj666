@@ -12,37 +12,49 @@
 		
 		<?php
 			include 'Header.php';
+         //   include '../../tools/good.php';
+           // include '../../tools/category.php';
+            //   echo "Found file";
+            $db = Database::getInstance();
+            $category = new Category($db,1);
 		?>
 		
 		<div class="middle">
 		
 			<div class="content">
-				<h3>Goods in Category:[Category Name] </h3>
+				<h3>Goods in Category:<?php $selectcategory;
+                                            if(isset( $_GET["cid"])){
+                                                $selectcategory = $_GET["cid"];
+                                                $alldata = $category->getOne($selectcategory);
+                                                $row = mysqli_fetch_assoc($alldata);
+                                                echo "$selectcategory $row[category_name]"; 
+                                            }else{
+                                                $selectcategory = "*";
+                                                echo "All"; 
+                                            }?> </h3>
 				
                 <?php
-                    include '../../tools/sql.php';
-                    echo "Found file";
-                    $db = Database::getInstance();
-                    echo "got database ";
-                    $mysqli = $db->getConnection();
-                    echo "getting connection";
-                    echo "error connecting " . $mysqli->connect_error;
-                    /* echo "error connecting" . $mysqli->connect_errno;
-                   $sql_query = "SELECT * FROM good";
-                    $result = $mysqli->query($sql_query);
-
-                  while ($row = mysqli_fetch_assoc($result)){
-                        echo "$row[good_name]<br/>";
-                    }*/
+                   
+                    $good = new Good($db);
+                  //  echo "getting good object";
+                    $alldata = $good->getAllGoods($selectcategory);
+                 //   echo "getting goods list";
+                   
+                    while ($row = mysqli_fetch_assoc($alldata)){
+                     //   echo "$row[good_name]<br/>";
+                    ?>
+                    <div class="gooditem">
+                        <a href="GoodDetail.php?gid=<?php echo "$row[good_id]";?>">
+                        <?php echo "$row[good_name]";  ?>
+                        <img src=<?php echo "$row[good_image]"; ?> alt="images/fish.png" height="120" width="120" style="padding:20px 40px;"/>
+                        <br />
+                        $<?php echo "$row[good_price]";  ?>
+                        </a>
+                    </div>
+                 <?php
+                    }
                 ?>
-				<div class="gooditem">
-					<a href="GoodDetail.php">
-					Good Name
-					<img src="images/fish.png" alt="Good Image" height="120" width="120" style="padding:20px 40px;"/>
-					<br />
-					$Good Price
-					</a>
-				</div>
+
 				
 			</div>
 

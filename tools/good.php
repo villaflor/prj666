@@ -106,7 +106,7 @@ class Good {
     */
 
     public function deleteGood($id){
-       $sql_query = "DELETE FROM `good` WHERE `good_id`=65";
+       $sql_query = "DELETE FROM `good` WHERE `good_id`=$id";
         return $this->mysqli->query($sql_query);
     }
 

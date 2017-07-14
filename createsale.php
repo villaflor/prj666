@@ -31,6 +31,7 @@ if(Input::exists()){
         'description' => array(
             'name' => 'Description',
             'required' => true,
+            'max' => 255
         ),
         'discount' => array(
             'name' => 'Discount',
@@ -104,13 +105,48 @@ if(Input::exists()){
         <div class="collapse navbar-collapse" id="menuContent">
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="index.php">Home</a>
-                <a class="nav-item nav-link" href="profile.php?user=<?php echo escape($user->data()->username); ?>">Profile</a>
                 <a class="nav-item nav-link" href="generateTemplate.php">Generate site</a>
-                <a class="nav-item nav-link" href="edit-com.php">Update info</a>
-                <a class="nav-item nav-link" href="changepassword.php">Change password</a>
-                <a class="nav-item nav-link" href="create-good.php">Create good</a>
-                <a class="nav-item nav-link" href="edit-good.php">Edit good</a>
-                <a class="nav-item nav-link" href="createsale.php">Create Sale</a>
+                <a class="nav-item nav-link" href="profile.php?user=<?php echo escape($user->data()->username); ?>">Profile</a>
+
+                <div class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle" href="#"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       id="profileDropdown"
+                    >Account</a>
+
+                    <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                        <a class="dropdown-item" href="edit-com.php">Update account</a>
+                        <a class="dropdown-item" href="changepassword.php">Change password</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle" href="#"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       id="categoryDropdown"
+                    >Category</a>
+
+                    <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                        <a class="dropdown-item" href="#">View categories</a>
+                        <a class="dropdown-item" href="addCategoryForm.php">Create category</a>
+                        <a class="dropdown-item" href="#">Edit category</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle" href="#"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       id="goodDropdown"
+                    >Good</a>
+
+                    <div class="dropdown-menu" aria-labelledby="goodDropdown">
+                        <a class="dropdown-item" href="#">View goods</a>
+                        <a class="dropdown-item" href="create-good.php">Create good</a>
+                        <a class="dropdown-item" href="edit-good.php">Edit good</a>
+                    </div>
+                </div>
+
+                <a class="nav-item nav-link active" href="createsale.php">Create Sale</a>
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
         </div>
@@ -223,7 +259,7 @@ if(Input::exists()){
             </fieldset>
         </fieldset>
         <div class="form-group">
-            <input type="hidden" name="token" value="">
+            <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
             <input class="btn btn-primary" type="submit" value="Submit" />
         </div>
     </form>
