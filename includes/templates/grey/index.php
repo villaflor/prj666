@@ -150,8 +150,10 @@
          <div class="col-md-12">
           <?php
           $url = "/data/www/default/wecreu/companyInfo/aboutUs/".$clientId.".txt";
-          $content = file_get_contents($url);
-          echo $content;
+          if (file_exists($url)) {
+            $content = file_get_contents($url);
+            echo $content;
+          }
           ?>
         </div>
       </div>
@@ -190,12 +192,15 @@
 
 <div class="row" id="footer">
   <div class="col-md-12">
-    <p class=""><?php
+    <?php
           $url = "/data/www/default/wecreu/companyInfo/footer/".$clientId.".txt";
-          $content = file_get_contents($url);
-          echo $content;
+          if (file_exists($url)) {
+            $content = file_get_contents($url);
+            echo $content;
+          }else{
+            echo "@ ". $client->getClientSiteTitle();
+          }
           ?>
-    </p>
   </div>
 </div>
 
