@@ -38,8 +38,8 @@ if(Input::exists()) {
 
                 // add one
                 if ($category->add($_POST['category_name'], $_POST['desc'])) {
-                    Session::flash('createC', 'New category has been added!');
-                    //Redirect::to('index.php');
+                    Session::flash('category', 'New category '. $_POST['category_name'] .' has been added!');
+                    Redirect::to('category.php');
 
                 } else {
                     $validate->addError('Sorry, adding new category failed. Please try again.');
