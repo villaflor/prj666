@@ -32,7 +32,7 @@
             }else{
                 $active = '';
             }
-            echo "<a class='nav-item nav-link text-white $active' href='?cid=$row[category_id]'>$row[category_name]</a>";
+            echo "<a class='nav-item nav-link text-white $active' href='products.php?cid=$row[category_id]'>$row[category_name]</a>";
         }
         ?>
     </nav>
