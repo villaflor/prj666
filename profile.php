@@ -2,6 +2,14 @@
 require_once 'core/init.php';
 
 $user = new User();
+$good = new Good();
+$category = new Category();
+$lowStocks = array();
+$numLowStocks = 0;
+$categories_list = array();;
+$numCategories = 0;
+$goods_list = array();;
+$numGoods = 0;
 
 if($user->data()->username !== Input::get('user')){
     Redirect::to(404);
@@ -95,80 +103,174 @@ if(!$username = Input::get('user')){
     <div class="container bg-faded py-5" style="min-height: 100vh">
         <h1 class="mb-4">Client profile</h1>
 
-        <div class="container">
-        <section class="container py-5 bg-info rounded mb-4">
-            <div class="row mb-5">
-                <div class="col-2">Logo here</div>
-                <div class="container col-5">
-                    <div class="col mb-5">
-                        <p>Client name</p>
-                        <h3>
-                            <?php
-                            echo $user->data()->client_name;
-                            ?>
-                        </h3>
+        <div class="container mb-4">
+            <section class="container py-5 bg-info rounded mb-4">
+                <div class="row mb-5">
+                    <div class="col-2">Logo here</div>
+                    <div class="container col-5">
+                        <div class="col mb-5">
+                            <p>Client name</p>
+                            <h3>
+                                <?php
+                                echo $user->data()->client_name;
+                                ?>
+                            </h3>
+                        </div>
+                        <div class="col">
+                            <p>Client link</p>
+                            <h3><a href="<?php
+                                echo "/" . $user->data()->username;
+                                ?>">
+                                    Link to your site
+                                </a>
+                            </h3>
+                        </div>
                     </div>
-                    <div class="col">
-                        <p>Client link</p>
-                        <h3><a href="<?php
-                            echo "/" . $user->data()->username;
-                            ?>">
-                                Link to your site
-                            </a>
-                        </h3>
+                    <div class="container col-5">
+                        <div class="col mb-5">
+                            <p>Site title</p>
+                            <h3>
+                                <?php
+                                echo $user->data()->client_site_title;
+                                ?>
+                            </h3>
+                        </div>
+                        <div class="col">
+                            <p>Acceptable payment</p>
+                            <?php
+                            if($user->data()->payment_option_visa) echo "<h3>Visa card</h3>";
+                            if($user->data()->payment_option_mastercard) echo "<h3>Master card</h3>";
+                            if($user->data()->payment_option_ae) echo "<h3>American Express</h3>";
+                            if($user->data()->payment_option_paypal) echo "<h3>Paypal</h3>";
+                            ?>
+                        </div>
                     </div>
                 </div>
-                <div class="container col-5">
-                    <div class="col mb-5">
-                        <p>Site title</p>
-                        <h3>
-                            <?php
-                            echo $user->data()->client_site_title;
-                            ?>
-                        </h3>
+                <div class="row">
+                    <div class="container col-6">
+                        <p>This year total sale</p>
                     </div>
-                    <div class="col">
-                        <p>Acceptable payment</p>
+                    <div class="container col-6">
+                        <p>Last year total sale</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="container mb-4">
+
+
+            <section class="col bg-danger rounded py-5">
+                <?php
+                $category->getCategory($user->data()->client_id);
+                if($category->exists()) {
+                    $categoryItems = $category->data();
+
+                    foreach ($categoryItems as $categoryItem) {
+                        $categories_list[] = $categoryItem->category_name . '<br>';
+                        $numCategories++;
+
+                        $good->getGood(array('category_id', '=', $categoryItem->category_id));
+                        if($good->exists()){
+                            $goodItems = $good->data();
+
+                            foreach ($goodItems as $goodItem){
+                                if($goodItem->good_in_stock < 6) {
+                                    $lowStocks[] = $goodItem->good_name .' <span class="badge badge-warning">'. $goodItem->good_in_stock .'</span><br>';
+                                    $numLowStocks++;
+                                }
+
+                                $goods_list[] = $goodItem->good_name .' <span class="badge badge-success">'. $goodItem->good_in_stock .'</span><br>';
+                                $numGoods++;
+                            }
+                        }
+                    }
+                }
+                ?>
+                <h4>Number of low in stock <span class="badge badge-warning"><?php echo $numLowStocks; ?></span></h4>
+                <div class="container row">
+                    <div class="col-md-4">
                         <?php
-                        if($user->data()->payment_option_visa) echo "<h3>Visa card</h3>";
-                        if($user->data()->payment_option_mastercard) echo "<h3>Master card</h3>";
-                        if($user->data()->payment_option_ae) echo "<h3>American Express</h3>";
-                        if($user->data()->payment_option_paypal) echo "<h3>Paypal</h3>";
+                        for ($i = 0; $i < $numLowStocks; $i += 3){
+                            echo $lowStocks[$i];
+                        }
+                        ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php
+                        for ($i = 1; $i < $numLowStocks; $i += 3){
+                            echo $lowStocks[$i];
+                        }
+                        ?>
+                    </div>
+                    <div class="col-md-4"><?php
+                        for ($i = 2; $i < $numLowStocks; $i += 3){
+                            echo $lowStocks[$i];
+                        }
                         ?>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="container col-6">
-                    <p>This year total sale</p>
+            </section>
+        </div>
+        <div class="container mb-4">
+            <section class="col bg-info rounded py-5">
+                <h4>Number of categories <span class="badge badge-success"><?php echo $numCategories; ?></span></h4>
+                <div class="container row">
+                    <div class="col-md-4">
+                        <?php
+                        for ($i = 0; $i < $numCategories; $i += 3){
+                            echo $categories_list[$i];
+                        }
+                        ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php
+                        for ($i = 1; $i < $numCategories; $i += 3){
+                            echo $categories_list[$i];
+                        }
+                        ?>
+                    </div>
+                    <div class="col-md-4"><?php
+                        for ($i = 2; $i < $numCategories; $i += 3){
+                            echo $categories_list[$i];
+                        }
+                        ?>
+                    </div>
                 </div>
-                <div class="container col-6">
-                    <p>Last year total sale</p>
+            </section>
+
+
+        </div>
+
+        <div class="container mb-4">
+            <section class="container bg-info rounded py-5">
+                <h4>Number of products <span class="badge badge-success"><?php echo $numGoods; ?></span></h4>
+                <div class="container row">
+                    <div class="col-md-4">
+                        <?php
+                        for ($i = 0; $i < $numGoods; $i += 3){
+                            echo $goods_list[$i];
+                        }
+                        ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php
+                        for ($i = 1; $i < $numGoods; $i += 3){
+                            echo $goods_list[$i];
+                        }
+                        ?>
+                    </div>
+                    <div class="col-md-4"><?php
+                        for ($i = 2; $i < $numGoods; $i += 3){
+                            echo $goods_list[$i];
+                        }
+                        ?>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
         </div>
-        <div class="container-fluid mb-4">
-            <div class="container">
-                <div class="row">
-           <section class="col-5 bg-danger rounded py-5 mr-4">
-               <h4>Low in stock</h4>
-           </section>
-           <section class="col bg-info rounded py-5">
-               <h4>Number of categories</h4>
-           </section>
-            </div>
-            </div>
-        </div>
-        <div class="container">
-
-                <section class="container bg-info rounded py-5">
-                    <h4>Number of products</h4>
-                </section>
-            </div>
-        </div>
-
     </div>
+
+
 
     <?php include('includes/footer.inc'); ?>
 
