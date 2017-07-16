@@ -113,9 +113,8 @@ if(Input::exists()){
                     >Category</a>
 
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                        <a class="dropdown-item" href="#">View categories</a>
+                        <a class="dropdown-item" href="category.php">View categories</a>
                         <a class="dropdown-item" href="addCategoryForm.php">Create category</a>
-                        <a class="dropdown-item" href="#">Edit category</a>
                     </div>
                 </div>
 

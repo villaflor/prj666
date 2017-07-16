@@ -9,6 +9,14 @@ if (!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
 
+if($user->data()->username !== Input::get('user')){
+    Redirect::to(404);
+}
+
+if(!$category->find(Input::get('categoryNo'))){
+    Redirect::to(404);
+}
+
 if(Input::exists()) {
     if (Token::check(Input::get('token'))) {
         $validation = $validate->check($_POST, array(
@@ -24,12 +32,13 @@ if(Input::exists()) {
             try{
 
                 $category->update(array(
-                    'category_description' => Input::get('desc')
-                ), 150);
+                    'category_description' => Input::get('desc'),
+                    'category_display' => ((Input::get('visible')) ? 1 : 0)
+                ), Input::get('categoryNo'));
 
 
-                Session::flash('editC', 'Description description have been updated.');
-                //Redirect::to('index.php');
+                Session::flash('category', 'Category ' . $category->data()->category_name . ' has been updated');
+                Redirect::to('category.php');
 
             } catch (Exception $e){
                 die($e->getMessage());
@@ -83,9 +92,8 @@ if(Input::exists()) {
                     >Category</a>
 
                     <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                        <a class="dropdown-item" href="#">View categories</a>
+                        <a class="dropdown-item" href="category.php">View categories</a>
                         <a class="dropdown-item" href="addCategoryForm.php">Create category</a>
-                        <a class="dropdown-item" href="#">Edit category</a>
                     </div>
                 </div>
 
@@ -128,13 +136,23 @@ if(Input::exists()) {
         <fieldset class="form-group">
             <legend></legend>
             <div class="form-group col-md-6">
-                <label class="form-control-label" for="category_name"><span class="text-danger">*</span> Name</label>
-                <input class="form-control" type="text" id="category_name" name="category_name" value="" disabled>
+                <label class="form-control-label" for="category_name">Name</label>
+                <input class="form-control" type="text" id="category_name" name="category_name" value="<?php echo escape($category->data()->category_name); ?>" disabled>
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="desc"><span class="text-danger">*</span> Description</label>
-                <textarea class="form-control" rows="3" name="desc" id="desc" placeholder="Enter description"><?php echo escape(Input::get('desc'))?></textarea>
+                <textarea class="form-control" rows="3" name="desc" id="desc" value="Enter description"><?php echo escape($category->data()->category_description); ?></textarea>
                 <input type="hidden" name="method" value="categoryAdd">
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" name="visible" value="1"
+                        <?php
+                            if($category->data()->category_display) echo "checked"
+                        ?>
+                    > Visible
+
+                </label>
             </div>
         </fieldset>
         <div class="form-group">
