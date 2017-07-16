@@ -86,7 +86,7 @@ if(!$username = Input::get('user')){
                         >Good</a>
 
                         <div class="dropdown-menu" aria-labelledby="goodDropdown">
-                            <a class="dropdown-item" href="#">View goods</a>
+                            <a class="dropdown-item" href="good.php">View goods</a>
                             <a class="dropdown-item" href="create-good.php">Create good</a>
                             <a class="dropdown-item" href="edit-good.php">Edit good</a>
                         </div>
@@ -176,10 +176,13 @@ if(!$username = Input::get('user')){
                             foreach ($goodItems as $goodItem){
                                 if($goodItem->good_in_stock < 6) {
                                     $lowStocks[] = $goodItem->good_name .' <span class="badge badge-warning">'. $goodItem->good_in_stock .'</span><br>';
-                                    $numLowStocks++;
-                                }
+                                    $goods_list[] = $goodItem->good_name .' <span class="badge badge-warning">'. $goodItem->good_in_stock .'</span><br>';
 
-                                $goods_list[] = $goodItem->good_name .' <span class="badge badge-success">'. $goodItem->good_in_stock .'</span><br>';
+                                    $numLowStocks++;
+                                }else{
+                                    $goods_list[] = $goodItem->good_name .' <span class="badge badge-success">'. $goodItem->good_in_stock .'</span><br>';
+
+                                }
                                 $numGoods++;
                             }
                         }
@@ -187,6 +190,7 @@ if(!$username = Input::get('user')){
                 }
                 ?>
                 <h4>Number of low in stock <span class="badge badge-warning"><?php echo $numLowStocks; ?></span></h4>
+                <hr>
                 <div class="container row">
                     <div class="col-md-4">
                         <?php
@@ -213,7 +217,8 @@ if(!$username = Input::get('user')){
         </div>
         <div class="container mb-4">
             <section class="col bg-info rounded py-5">
-                <h4>Number of categories <span class="badge badge-success"><?php echo $numCategories; ?></span></h4>
+                <h4><a class="text-gray-dark" href="category.php">Number of categories</a> <span class="badge badge-success"><?php echo $numCategories; ?></span></h4>
+                <hr>
                 <div class="container row">
                     <div class="col-md-4">
                         <?php
@@ -243,7 +248,8 @@ if(!$username = Input::get('user')){
 
         <div class="container mb-4">
             <section class="container bg-info rounded py-5">
-                <h4>Number of products <span class="badge badge-success"><?php echo $numGoods; ?></span></h4>
+                <h4><a class="text-gray-dark" href="good.php">Number of products</a> <span class="badge badge-success"><?php echo $numGoods; ?></span></h4>
+                <hr>
                 <div class="container row">
                     <div class="col-md-4">
                         <?php
