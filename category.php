@@ -35,7 +35,7 @@ $categories = new Category();
                 <a class="nav-item nav-link" href="profile.php?user=<?php echo escape($user->data()->username); ?>">Profile</a>
 
                 <div class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle active" href="#"
+                    <a class="nav-item nav-link dropdown-toggle" href="#"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        id="profileDropdown"
                     >Account</a>
@@ -50,7 +50,7 @@ $categories = new Category();
                 </div>
 
                 <div class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle" href="#"
+                    <a class="nav-item nav-link dropdown-toggle active" href="#"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        id="categoryDropdown"
                     >Category</a>
