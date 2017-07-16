@@ -39,9 +39,11 @@
 </div>
 <div class="container mb-5">
     <div class="input-group mb-5">
-        <input type="text" class="form-control" placeholder="Search for...">
-        <span class="input-group-btn">
-        <button class="btn btn-secondary" type="button">Search!</button>
+        <form action="search.php" method="GET">
+            <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-btn">
+            <input type="submit" class="btn btn-secondary" type="button">Search!</button>
+        </form>
       </span>
     </div>
 
