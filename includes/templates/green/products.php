@@ -40,7 +40,7 @@
 <div class="container mb-5">
     <div class="form-inline mb-5">
         <form action="search.php" method="GET">
-            <input type="text" class="form-control" placeholder="Search for">
+            <input type="text" name="keyword" class="form-control" placeholder="Search for">
             <input type="submit" class="btn btn-secondary" value="Search!">
         </form>
     </div>
