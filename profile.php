@@ -106,7 +106,7 @@ if(!$username = Input::get('user')){
         <h1 class="mb-4">Client profile</h1>
 
         <div class="container mb-4">
-            <section class="container py-5 bg-info rounded mb-4">
+            <section class="container py-5 bg-primary rounded mb-4">
                 <div class="row mb-5">
                     <div class="col-2">Logo here</div>
                     <div class="container col-5">
@@ -120,7 +120,7 @@ if(!$username = Input::get('user')){
                         </div>
                         <div class="col">
                             <p>Client link</p>
-                            <h3><a href="<?php
+                            <h3><a class="text-gray-dark" href="<?php
                                 echo "/" . $user->data()->username;
                                 ?>">
                                     Link to your site
