@@ -2,13 +2,12 @@
 require_once  'core/init.php';
 
 $user = new User();
-$validate = new Validate();
 
 if(!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
 
-$categories = new Category();
+$sale = new Sale();
 
 ?>
 
@@ -82,10 +81,10 @@ $categories = new Category();
 
                     <div class="dropdown-menu" aria-labelledby="saleDropdown">
                         <a class="dropdown-item" href="sale.php">View sales</a>
+                        <a class="dropdown-item" href="onsale.php">Goods on sale</a>
                         <a class="dropdown-item" href="createsale.php">Create Sale</a>
                     </div>
                 </div>
-
 
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
@@ -95,7 +94,7 @@ $categories = new Category();
 </nav>
 
 <div class="container bg-faded py-5" style="min-height: 100vh">
-    <h2 class="mb-4">List of on sale</h2>
+    <h2 class="mb-4">List of sales</h2>
     <?php
     if(Session::exists('sale')) {
         echo '<p class="text-success">' . Session::flash('sale') . '</p>';
@@ -111,34 +110,20 @@ $categories = new Category();
             <th>Actions</th>
         </tr>
         <?php
-        $category->getCategory($user->data()->client_id);
-        if($category->exists()) {
-            $categoryItems = $category->data();
+        $sale->getSale($user->data()->client_id);
+        if($sale->exists()) {
+            $sales = $sale->data();
 
-            foreach ($categoryItems as $categoryItem) {
-                $good->getGood(array('category_id', '=', $categoryItem->category_id));
-                if($good->exists()){
-                    $goodItems = $good->data();
+            foreach ($sales as $saleDetail) {
+                echo '<tr>';
+                echo '<th>' . $saleDetail->sale_name . '</th>';
+                echo '<td>' . $saleDetail->sale_description . '</td>';
+                echo '<td>' . $saleDetail->discount . " %" . '</td>';
+                echo '<td></td>';
+                echo '</tr>';
 
-                    foreach ($goodItems as $goodItem){
-                        if($goodItem->sale_id && date("Y-m-d") < $goodItem->end_date) {
-                            echo '<tr>';
-                            echo '<th>' . $goodItem->good_name . '</th>';
-                            echo '<td>' . $goodItem->good_description . '</td>';
-                            if ($goodItem->good_visible) {
-                                echo '<td>Yes</td>';
-                            } else {
-                                echo '<td>No</td>';
-                            }
-
-                            echo '<td><a href="editcategory.php?user=' . $user->data()->username . '&goodNo=' . $goodItem->good_id . '">edit</a></td>';
-                            echo '</tr>';
-                        }
-                    }
-                }
             }
         }
-
         ?>
     </table>
 

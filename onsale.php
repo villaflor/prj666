@@ -2,12 +2,12 @@
 require_once  'core/init.php';
 
 $user = new User();
-$validate = new Validate();
 
 if(!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
 
+$sale = new Sale();
 $category = new Category();
 $good = new Good();
 $action = Input::get('action');
@@ -28,7 +28,7 @@ if($action === 'delete'){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Wecrue - Sale</title>
+    <title>Wecrue - On sale</title>
 </head>
 <body>
 
@@ -90,11 +90,11 @@ if($action === 'delete'){
                     >Sale</a>
 
                     <div class="dropdown-menu" aria-labelledby="saleDropdown">
+                        <a class="dropdown-item" href="sale.php">View sales</a>
                         <a class="dropdown-item" href="onsale.php">Goods on sale</a>
                         <a class="dropdown-item" href="createsale.php">Create Sale</a>
                     </div>
                 </div>
-
 
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
@@ -104,7 +104,7 @@ if($action === 'delete'){
 </nav>
 
 <div class="container bg-faded py-5" style="min-height: 100vh">
-    <h2 class="mb-4">List of on sale</h2>
+    <h2 class="mb-4">List of goods on sale</h2>
     <?php
     if(Session::exists('sale')) {
         echo '<p class="text-success">' . Session::flash('sale') . '</p>';
@@ -114,32 +114,27 @@ if($action === 'delete'){
 
     <table class="table table-striped">
         <tr>
-            <th>Name</th>
-            <th>Description</th>
+            <th>Good Name</th>
+            <th>Sale Name</th>
             <th>Discount</th>
             <th>Actions</th>
         </tr>
         <?php
-        $category->getCategory($user->data()->client_id);
-        if($category->exists()) {
-            $categoryItems = $category->data();
+        $sale->getGoodWithSale($user->data()->client_id);
+        if($sale->exists()) {
+            $saleItems = $sale->data();
 
-            foreach ($categoryItems as $categoryItem) {
-                $good->getGood(array('category_id', '=', $categoryItem->category_id));
-                if($good->exists()){
-                    $goodItems = $good->data();
+            foreach ($saleItems as $item) {
 
-                    foreach ($goodItems as $goodItem){
-                        if($goodItem->sale_id) {
                             echo '<tr>';
-                            echo '<th>' . $goodItem->good_name . '</th>';
-                            echo '<td>' . $goodItem->good_description . '</td>';
-
-                            echo '<td><a href="onsale.php?action=delete&item_id='. escape($goodItem->good_id) .'">(delete)</a></td>';
+                            echo '<th>' . $item->good_name . '</th>';
+                            echo '<td>' . $item->sale_name . '</td>';
+                            echo '<td>' . $item->discount . '</td>';
+                            echo '<td><a href="onsale.php?action=delete&item_id='. escape($item->good_id) .'">(delete)</a></td>';
                             echo '</tr>';
-                        }
-                    }
-                }
+
+
+
             }
         }
 
