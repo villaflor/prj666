@@ -192,15 +192,18 @@
 
 <div class="row" id="footer">
   <div class="col-md-12">
+    <hr/>
+    <br/>
     <?php
-          $url = "/data/www/default/wecreu/companyInfo/footer/".$clientId.".txt";
-          if (file_exists($url)) {
-            $content = file_get_contents($url);
-            echo $content;
-          }else{
-            echo "@ ". $client->getClientSiteTitle();
-          }
-          ?>
+    $url = "/data/www/default/wecreu/companyInfo/footer/".$clientId.".txt";
+    if (file_exists($url)) {
+    $content = file_get_contents($url);
+    echo $content;
+    }else{
+    echo "@ ". $client->getClientSiteTitle();
+    }
+    ?>
+    <br/>
   </div>
 </div>
 
