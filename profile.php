@@ -6,10 +6,12 @@ $good = new Good();
 $category = new Category();
 $lowStocks = array();
 $numLowStocks = 0;
-$categories_list = array();;
+$categories_list = array();
 $numCategories = 0;
-$goods_list = array();;
+$goods_list = array();
 $numGoods = 0;
+$sale_list = array();
+$numSale = 0;
 
 if($user->data()->username !== Input::get('user')){
     Redirect::to(404);
@@ -181,7 +183,11 @@ if(!$username = Input::get('user')){
                                     $numLowStocks++;
                                 }else{
                                     $goods_list[] = $goodItem->good_name .' <span class="badge badge-success">'. $goodItem->good_in_stock .'</span><br>';
+                                }
 
+                                if($goodItem->sale_id){
+                                    $sale_list[] = $goodItem->good_name . '<br>';
+                                    $numSale++;
                                 }
                                 $numGoods++;
                             }
@@ -217,6 +223,34 @@ if(!$username = Input::get('user')){
         </div>
         <div class="container mb-4">
             <section class="col bg-info rounded py-5">
+                <h4><a class="text-gray-dark" href="createsale.php">Number of on sale</a> <span class="badge badge-success"><?php echo $numSale; ?></span></h4>
+                <hr>
+                <div class="container row">
+                    <div class="col-md-4">
+                        <?php
+                        for ($i = 0; $i < $numSale; $i += 3){
+                            echo $sale_list[$i];
+                        }
+                        ?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php
+                        for ($i = 1; $i < $numSale; $i += 3){
+                            echo $sale_list[$i];
+                        }
+                        ?>
+                    </div>
+                    <div class="col-md-4"><?php
+                        for ($i = 2; $i < $numSale; $i += 3){
+                            echo $sale_list[$i];
+                        }
+                        ?>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="container mb-4">
+            <section class="col bg-info rounded py-5">
                 <h4><a class="text-gray-dark" href="category.php">Number of categories</a> <span class="badge badge-success"><?php echo $numCategories; ?></span></h4>
                 <hr>
                 <div class="container row">
@@ -242,8 +276,6 @@ if(!$username = Input::get('user')){
                     </div>
                 </div>
             </section>
-
-
         </div>
 
         <div class="container mb-4">
