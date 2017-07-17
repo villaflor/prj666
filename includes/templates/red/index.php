@@ -10,6 +10,7 @@
   <?php include_once("category.php");?>
   <?php include_once("feature.php");?>
   </div>
+  </div>
   <!-- footer -->
   <?php include_once("footer.php");?>
 </body>
