@@ -116,7 +116,7 @@ $user = new User();
                 <img src="images/t-red.png" alt="Red Template" class="img-thumbnail" style="display: block">
                 <h5 class="pt-1 mb-4 text-center">Red</h5>
             </a>
-            <p>A standard site for unlimited categories or goods. It shows the top sales items on the index page.</p>
+            <p>A standard site for unlimited categories or goods. It shows the all sales items on the index page. It's red.</p>
         </div>
         <div class="col-sm-12 col-md-6 pb-3">
             <a href="includes/templates/blue/index.php">
@@ -141,6 +141,3 @@ $user = new User();
 <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
-
-
-
