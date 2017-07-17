@@ -248,7 +248,7 @@ if(Input::exists()){
                                 $goodItems = $good->data();
 
                                 foreach ($goodItems as $goodItem){
-                                    if ($goodItem->sale_id) echo '<p>On sale: ' . escape($goodItem->good_name) . ' <a href="createsale.php?action=delete&item_id='. escape($goodItem->good_id) .'">(delete)</a></p>';
+                                    if ($goodItem->sale_id) echo 'On sale: ' . escape($goodItem->good_name) . ' <a href="createsale.php?action=delete&item_id='. escape($goodItem->good_id) .'">(delete)</a><br>';
                                 }
                             }
                         }
