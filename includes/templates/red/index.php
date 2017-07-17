@@ -7,9 +7,7 @@
   <br>
   <div class="container bg-faded pt-5">
   <!-- category -->
-  <?php include_once("category.php");?>
   <?php include_once("feature.php");?>
-  </div>
   </div>
   <!-- footer -->
   <?php include_once("footer.php");?>
