@@ -32,17 +32,17 @@
             }else{
                 $active = '';
             }
-            echo "<a class='nav-item nav-link text-white $active' href='?cid=$row[category_id]'>$row[category_name]</a>";
+            echo "<a class='nav-item nav-link text-white $active' href='products.php?cid=$row[category_id]'>$row[category_name]</a>";
         }
         ?>
     </nav>
 </div>
 <div class="container mb-5">
-    <div class="input-group mb-5">
-        <input type="text" class="form-control" placeholder="Search for...">
-        <span class="input-group-btn">
-        <button class="btn btn-secondary" type="button">Search!</button>
-      </span>
+    <div class="form-inline mb-5">
+        <form action="search.php" method="GET">
+            <input type="text" class="form-control" placeholder="Search for">
+            <input type="submit" class="btn btn-secondary" value="Search!">
+        </form>
     </div>
 
     <div class="row text-center">
