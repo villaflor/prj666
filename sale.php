@@ -8,8 +8,8 @@ if(!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
 
-$good = new Good();
-$category = new Category();
+$categories = new Category();
+
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +19,7 @@ $category = new Category();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Wecrue - Good</title>
+    <title>Wecrue - Sale</title>
 </head>
 <body>
 
@@ -62,7 +62,7 @@ $category = new Category();
                 </div>
 
                 <div class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle active" href="#"
+                    <a class="nav-item nav-link dropdown-toggle" href="#"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        id="goodDropdown"
                     >Good</a>
@@ -74,7 +74,19 @@ $category = new Category();
                     </div>
                 </div>
 
-                <a class="nav-item nav-link" href="createsale.php">Create Sale</a>
+                <div class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle active" href="#"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       id="saleDropdown"
+                    >Sale</a>
+
+                    <div class="dropdown-menu" aria-labelledby="saleDropdown">
+                        <a class="dropdown-item" href="sale.php">View sales</a>
+                        <a class="dropdown-item" href="createsale.php">Create Sale</a>
+                    </div>
+                </div>
+
+
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
         </div>
@@ -83,10 +95,10 @@ $category = new Category();
 </nav>
 
 <div class="container bg-faded py-5" style="min-height: 100vh">
-    <h2 class="mb-4">List of Goods</h2>
+    <h2 class="mb-4">List of on sale</h2>
     <?php
-    if(Session::exists('good')) {
-        echo '<p class="text-success">' . Session::flash('good') . '</p>';
+    if(Session::exists('sale')) {
+        echo '<p class="text-success">' . Session::flash('sale') . '</p>';
     }
     ?>
 
@@ -95,7 +107,7 @@ $category = new Category();
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Number of stocks</th>
+            <th>Discount</th>
             <th>Actions</th>
         </tr>
         <?php
@@ -109,21 +121,24 @@ $category = new Category();
                     $goodItems = $good->data();
 
                     foreach ($goodItems as $goodItem){
-                        echo '<tr>';
-                        echo '<th>'. $goodItem->good_name .'</th>';
-                        echo '<td>'. $goodItem->good_description .'</td>';
-                        if ($goodItem->good_visible) {
-                            echo '<td>Yes</td>';
-                        } else{
-                            echo '<td>No</td>';
-                        }
+                        if($goodItem->sale_id && date("Y-m-d") < $goodItem->end_date) {
+                            echo '<tr>';
+                            echo '<th>' . $goodItem->good_name . '</th>';
+                            echo '<td>' . $goodItem->good_description . '</td>';
+                            if ($goodItem->good_visible) {
+                                echo '<td>Yes</td>';
+                            } else {
+                                echo '<td>No</td>';
+                            }
 
-                        echo '<td><a href="editcategory.php?user='. $user->data()->username .'&goodNo='. $goodItem->good_id .'">edit</a></td>';
-                        echo '</tr>';
+                            echo '<td><a href="editcategory.php?user=' . $user->data()->username . '&goodNo=' . $goodItem->good_id . '">edit</a></td>';
+                            echo '</tr>';
+                        }
                     }
                 }
             }
         }
+
         ?>
     </table>
 
