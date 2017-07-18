@@ -1,10 +1,6 @@
 <div class="categories">
 	<ul>
         <?php
-
-       // $db = Database::getInstance();
-    
-      //  $alldata = $category->getAll();
         mysqli_data_seek($allcategory, 0);
         while ($row = mysqli_fetch_assoc($allcategory /*$alldata*/)){
         ?>

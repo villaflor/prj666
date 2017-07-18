@@ -1,12 +1,12 @@
 <?php
-/*require_once 'core/init.php';
+/*require_once '/data/www/default/wecreu/core/init.php';
 
 $user = new User();
 
 if(!$user->isLoggedIn()){
     Redirect::to('index.php');
-}*/
-
+}
+*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,39 +32,44 @@ if(!$user->isLoggedIn()){
             $taxable = $visible = 0;
            
             $name = $image = $description = $price = $quantity = $weight = $category = "";
-            $nameVer = $imageVer = $descVer = $priceVer = $qtyVer = $weightVer = $catVer = $clientVer = false; 
+            $nameVer = $imageVer = $descVer = $priceVer = $qtyVer = $weightVer = $catVer = false; 
             $nameErr = $imageErr = $descriptionErr = $priceErr = $quantityErr = $weightErr = $taxableErr = $visibleErr = $categoryErr = "";
 
             if($_POST){
                 include '/data/www/default/wecreu/tools/goodValidate.php';
 
-                echo "<br/>UPDATE: now its create-good.php is getting ready to insert into db<br/>";
-                echo "$nameVer, $imageVer, $descVer, $priceVer, $qtyVer, $weightVer, $catVer, $clientVer Calling DB<br/>";
+             //   echo "<br/>UPDATE: now create-good.php is getting ready to insert into db<br/>";
+               // echo "$nameVer, $imageVer, $descVer, $priceVer, $qtyVer, $weightVer, $catVer, $clientVer Calling DB<br/>";
 
                 if($nameVer == true && $imageVer == true && $descVer == true && 
                    $priceVer == true && $qtyVer == true && $weightVer == true && 
-                   $catVer == true && $clientVer == true){
+                   $catVer == true){
 
                     $good = new Good($db);
                       
                 //    echo "adding new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
 
                     if($good->addGood($name, $image, $description, $price, $quantity, $weight, $taxable, $visible, $category)){
-                        
-                        echo "added successfully new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
+                         echo "<script type='text/javascript'>alert('New good has been created') </script>";       
+                      //  echo "added successfully new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
                     } else {
-                        echo "error received adding new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
+                        echo "<script type='text/javascript'>alert('Database error received while adding good') </script>";
+                     //   echo "error received adding new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
+                        if($image){
+                            removeImage($image);
+                        }
                     }
                 } else {
-                    echo "failed to add to database<br/>";
+                    echo "<script type='text/javascript'>alert('Failed to create a new good') </script>";
+                 //   echo "error received adding new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
+                    if($image){
+                        removeImage($image);
+                    }
                 }
             }
             
 		?>
-<!--
-<nav class="navbar bg-primary navbar-inverse navbar-toggleable-sm sticky-top">
-                <a class="nav-item nav-link" href="index.php">Home</a>
-                <a class="nav-item nav-link" href="profile.php?user=<?php /*echo escape($user->data()->username); */?>">Profile</a>
+<!--            <a class="nav-item nav-link" href="profile.php?user=<?php /*echo escape($user->data()->username); */?>">Profile</a>
         <h1 class="navbar-brand mb-0 mr-3">Hello <a class="text-white" href="profile.php?user=<?php /*echo escape($user->data()->username); */?>"><?php /*echo escape($user->data()->username);*/ ?></a>!</h1>
 </nav>-->
 
@@ -144,7 +149,7 @@ if(!$user->isLoggedIn()){
                 </form>
 
                 <?php 
-                    echo "Input: <br/>";
+                 /*   echo "Input: <br/>";
                     echo $name;
                     echo "<br/>";
                     echo $image; 
@@ -161,7 +166,7 @@ if(!$user->isLoggedIn()){
                     echo "<br/>";
                     echo $visible;
                     echo "<br/>";
-                    echo $category;
+                    echo $category;*/
                 ?>
 
 			</div>

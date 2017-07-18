@@ -1,10 +1,10 @@
-<!ow[good_imageDOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-US">
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="description" content="good detail page" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<title>About</title>
+		<title>Good Detail</title>
 		<link rel="stylesheet" href="css/stylesheet.css" />
 		
 	</head>
@@ -25,15 +25,12 @@
                     $good = new Good($db);
                 //    echo "getting good object";
                     $alldata = $good->getGoodDetail($_GET["gid"]);
-               //     echo "getting goods list";
-                   
                     $row = mysqli_fetch_assoc($alldata);
-                    echo $row['good_image'];
                     $imagepath = $row['good_image'];
                 ?>
                 
 				<div class="goodimage" >     
-					<img src='<?php echo $imagepath;  ?>' alt="images/fish.png" height="200" width="200" />
+					<img src='<?php echo $imagepath;  ?>' alt="good image" height="200" width="200" />
 				</div>
 				<div class="goodinfo">
 
@@ -43,7 +40,7 @@
 							<td>Quantity: <?php echo "$row[good_in_stock]";  ?></td>
 						</tr>
 						<tr>
-							<td>Category: <?php echo "$row[category_id] $row[category_name]";  ?></td>                        
+							<td>Category: <?php echo "$row[category_name]";  ?></td>                        
 							<td>Weight: <?php echo "$row[good_weight]";  ?></td>
 						</tr>
 						<tr>
@@ -64,7 +61,7 @@
                                                         }else{
                                                             echo "Not on Sale";
                                                         }?></td>     
-                            <td>A</td>
+                            <td></td>
                         </tr>
 					</table>
                     <table style="width:100%">
@@ -72,9 +69,7 @@
 							<td> Description:<?php echo "$row[good_description]";  ?></td>
 						</tr>
 						<tr>
-							<td><a class="button" href="cartAction.php?action=addToCart&id=<?php echo $row["good_id"]; ?>">Add to cart</a><!--<input type="button" class="button" value="Add to Cart" />--></td>
-							
-
+							<td><a class="button" href="cartAction.php?action=addToCart&id=<?php echo $row["good_id"]; ?>">Add to cart</a></td>
 						</tr>
 					</table>
 				</div>
