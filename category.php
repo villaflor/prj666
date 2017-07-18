@@ -1,11 +1,14 @@
 <?php
-require_once 'core/init.php';
-
-if(Session::exists('home')) {
-    echo '<p>' . Session::flash('home') . '</p>';
-}
+require_once  'core/init.php';
 
 $user = new User();
+$validate = new Validate();
+
+if(!$user->isLoggedIn()){
+    Redirect::to('index.php');
+}
+
+$categories = new Category();
 
 ?>
 
@@ -16,14 +19,9 @@ $user = new User();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Wecreu - About us</title>
+    <title>Wecrue - Category</title>
 </head>
 <body>
-<header class="clearfix " style="height: 30vh; background: url(images/cover.jpg) no-repeat center center; background-size: cover;">
-    <div class="container pt-3">
-        <img src="images/logo.png" alt="Wecreu Logo" class="rounded-circle" style="width: 100px; display: block;">
-    </div>
-</header>
 
 <nav class="navbar bg-primary navbar-inverse navbar-toggleable-sm sticky-top">
     <div class="container">
@@ -33,10 +31,6 @@ $user = new User();
         <div class="collapse navbar-collapse" id="menuContent">
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" href="index.php">Home</a>
-                <?php
-
-                if($user->isLoggedIn()) {
-                ?>
                 <a class="nav-item nav-link" href="generateTemplate.php">Generate site</a>
                 <a class="nav-item nav-link" href="profile.php?user=<?php echo escape($user->data()->username); ?>">Profile</a>
 
@@ -49,11 +43,14 @@ $user = new User();
                     <div class="dropdown-menu" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="edit-com.php">Update account</a>
                         <a class="dropdown-item" href="changepassword.php">Change password</a>
+                        <a class="dropdown-item" href="editCover.php">Edit cover</a>
+                        <a class="dropdown-item" href="editFooter.php">Edit footer</a>
+                        <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
                     </div>
                 </div>
 
                 <div class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle" href="#"
+                    <a class="nav-item nav-link dropdown-toggle active" href="#"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        id="categoryDropdown"
                     >Category</a>
@@ -93,29 +90,43 @@ $user = new User();
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
         </div>
-
         <h1 class="navbar-brand mb-0 mr-3">Hello <a class="text-white" href="profile.php?user=<?php echo escape($user->data()->username); ?>"><?php echo escape($user->data()->username); ?></a>!</h1>
-
-        <?php
-        } else{
-        ?>
-        <a class="nav-item nav-link active" href="aboutus.php">About us</a>
-        <a class="nav-item nav-link" href="login.php">Log in</a>
-        <a class="nav-item nav-link" href="register.php">Register</a>
-    </div>
-    </div>
-
-    <h1 class="navbar-brand mb-0 mr-3">Hi there!</h1>
-
-    <?php
-    }
-    ?>
-
     </div>
 </nav>
 
-<div class="container bg-faded py-5" style="min-height: 65vh">
-    <h2 class="mb-4">About Wecreu</h2>
+<div class="container bg-faded py-5" style="min-height: 100vh">
+    <h2 class="mb-4">List of Categories</h2>
+    <?php
+    if(Session::exists('category')) {
+    echo '<p class="text-success">' . Session::flash('category') . '</p>';
+    }
+    ?>
+
+
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Visible</th>
+            <th>Actions</th>
+        </tr>
+        <?php
+        $categories->getCategory($user->data()->client_id);
+        foreach ($categories->data() as $category){
+            echo '<tr>';
+            echo '<th>'. $category->category_name .'</th>';
+            echo '<td>'. $category->category_description .'</td>';
+            if ($category->category_display) {
+                echo '<td>Yes</td>';
+            } else{
+                echo '<td>No</td>';
+            }
+
+            echo '<td><a href="editcategory.php?user='. $user->data()->username .'&categoryNo='. $category->category_id .'">edit</a></td>';
+            echo '</tr>';
+        }
+        ?>
+    </table>
 
 </div>
 
@@ -124,8 +135,6 @@ $user = new User();
 <script src="js/jquery-3.1.1.slim.min.js"></script>
 <script src="js/tether.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>
-
-
-

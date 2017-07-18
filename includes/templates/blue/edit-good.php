@@ -42,8 +42,8 @@ if(!$user->isLoggedIn()){
             $taxable = $row['good_taxable'];
             $visible = $row['good_visible'];
             $category = $row['category_id'];
+
             $sale = $row['sale_id'];
-            
             $nameErr = $imageErr = $descriptionErr = $priceErr = $quantityErr = $weightErr = $taxableErr = $visibleErr = $categoryErr = "";
             $taxable = $visible = 0;
             $nameVer = $imageVer = $descVer = $priceVer = $qtyVer = $weightVer = $catVer = false; 
@@ -51,17 +51,18 @@ if(!$user->isLoggedIn()){
             if($_POST){
                 include '/data/www/default/wecreu/tools/goodValidate.php';
 
+
            //     echo "<br/>edit-good.php is getting ready to edit good ".$id." in db<br/>";
              //   echo "$nameVer, $imageVer, $descVer, $priceVer, $qtyVer, $weightVer, $catVer Calling DB<br/>";
 
                 if($nameVer == true && $imageVer == true && $descVer == true && 
                    $priceVer == true && $qtyVer == true && $weightVer == true && 
                    $catVer == true){
+
                       
                 //    echo "editing new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
 
                     if($good->editGood($id, $name, $image, $description, $price, $quantity, $weight, $taxable, $visible, $category, $sale)){
-                        
                         echo "<script type='text/javascript'>alert('Good has been updated') </script>";                             
                       //  echo "updated successfully good ".$id.",".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category.",".$sale."<br/>";
                     } else {
@@ -70,6 +71,7 @@ if(!$user->isLoggedIn()){
                     }
                 } else {
                     echo "<script type='text/javascript'>alert('Failed to update good') </script>";
+
                 }
 
             }

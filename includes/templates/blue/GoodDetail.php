@@ -25,7 +25,6 @@
                     $good = new Good($db);
                 //    echo "getting good object";
                     $alldata = $good->getGoodDetail($_GET["gid"]);
-                   
                     $row = mysqli_fetch_assoc($alldata);
                     $imagepath = $row['good_image'];
                 ?>
@@ -71,7 +70,6 @@
 						</tr>
 						<tr>
 							<td><a class="button" href="cartAction.php?action=addToCart&id=<?php echo $row["good_id"]; ?>">Add to cart</a></td>
-							
 						</tr>
 					</table>
 				</div>
