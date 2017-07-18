@@ -47,7 +47,7 @@
 
     <div class="row text-center">
     <?php
-        $limit=8;
+        $limit=20;
         if(isset($_GET['offSet'])){
           $offSet=$_GET['offSet'];
         }else{
