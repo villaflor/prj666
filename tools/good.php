@@ -1,6 +1,5 @@
 <?php
 include_once("/data/www/default/wecreu/tools/sql.php");
-
 /*
 *Good Class
 *Author Olga
@@ -11,22 +10,25 @@ class Good {
     
     private $mysqli;
 
+
     /*
     Get all goods
     return good list
     */
     public function getAllGoods($categoryid){
+        $clientid = file_get_contents('/data/www/default/wecreu/includes/templates/blue/conf.ini');
+
         if($categoryid === "*"){
              $sql_query = "SELECT g.good_id as good_id, g.good_name as good_name, g.good_image as good_image, g.good_description as good_description, g.good_price as good_price, 
                         c.category_id as category_id, c.category_name as category_name, c.category_description as category_description, c.client_id as client_id
-                        from good g join category c on g.category_id = c.category_id"; //where c.client_id=1 
+                        FROM good g JOIN category c ON g.category_id = c.category_id WHERE c.client_id = $clientid";
         }else{
             $sql_query = "SELECT g.good_id as good_id, g.good_name as good_name, g.good_image as good_image, g.good_description as good_description, g.good_price as good_price, 
                         c.category_id as category_id, c.category_name as category_name, c.category_description as category_description, c.client_id as client_id
-                        from good g join category c on g.category_id = c.category_id
-                        where c.category_id = $categoryid"; //where c.client_id=1 
+                        FROM good g JOIN category c ON g.category_id = c.category_id
+                        WHERE c.category_id = $categoryid AND c.client_id = $clientid";
         }
-
+     //   echo "clientId is ".$clientid." SQL QUERY ".$sql_query;
         return $this->mysqli->query($sql_query);
     }
 
@@ -35,17 +37,18 @@ class Good {
     return good list
     */
     public function getGoodRows($categoryid, $limit=0, $offset=0){
+        $clientid = file_get_contents('/data/www/default/wecreu/includes/templates/blue/conf.ini');
         if($categoryid === "*"){
              $sql_query = "SELECT g.good_id as good_id, g.good_name as good_name, g.good_image as good_image, g.good_description as good_description, g.good_price as good_price, 
                         c.category_id as category_id, c.category_name as category_name, c.category_description as category_description, c.client_id as client_id
-                        from good g join category c on g.category_id = c.category_id
-                        limit $limit offset $offset"; //where c.client_id=1 
+                        FROM good g JOIN category c ON g.category_id = c.category_id WHERE c.client_id = $clientid
+                        LIMIT $limit OFFSET $offset"; // 
         }else{
             $sql_query = "SELECT g.good_id as good_id, g.good_name as good_name, g.good_image as good_image, g.good_description as good_description, g.good_price as good_price, 
                         c.category_id as category_id, c.category_name as category_name, c.category_description as category_description, c.client_id as client_id
-                        from good g join category c on g.category_id = c.category_id
-                        where c.category_id = $categoryid
-                        limit $limit offset $offset"; //where c.client_id=1 
+                        FROM good g JOIN category c ON g.category_id = c.category_id
+                        where c.category_id = $categoryid WHERE c.client_id = $clientid
+                        LIMIT $limit OFFSET $offset"; 
         }
 
         return $this->mysqli->query($sql_query);
@@ -78,10 +81,10 @@ class Good {
                         $stock, $weight, $taxable, $visible, $category, 16)";
 
         if($this->mysqli->query($sql_query)){
-            echo "good.php:query worked ".$sql_query."<br/>";
+       //     echo "good.php:query worked ".$sql_query."<br/>";
             return true;
         }else{
-            echo "good.php:received error for query ".$sql_query." <br/>";
+         //   echo "good.php:received error for query ".$sql_query." <br/>";
             return false;
         }
     }
@@ -90,19 +93,17 @@ class Good {
     Edit an existing good in db
     */
     public function editGood($id, $name, $image, $description, $price, $stock, $weight, $taxable, $visible, $category, $sale){
-       /*"UPDATE good SET good_name='test', good_image='image', good_description='description', good_price=40.50,
-                                       good_in_stock=100, good_weight=5, good_taxable=1, good_visible=1, category_id=4, sale_id=1 
-                                    WHERE good_id = $id";*/
+       
         $sql_query = "UPDATE `good` SET good_name='$name', good_image='$image', good_description='$description', good_price=$price, 
                                     good_in_stock=$stock, good_weight=$weight, good_taxable=$taxable, good_visible=$visible,
                                     category_id=$category, sale_id=$sale WHERE good_id = $id";
         //echo $sql_query;
      //   return $this->mysqli->query($sql_query);
         if($this->mysqli->query($sql_query)){
-            echo "good.php:query worked ".$sql_query."<br/>";
+        //    echo "good.php:query worked ".$sql_query."<br/>";
             return true;
         }else{
-            echo "good.php:received error for query ".$sql_query." <br/>";
+         //   echo "good.php:received error for query ".$sql_query." <br/>";
             return false;
         }  
     }
@@ -120,6 +121,7 @@ class Good {
     public function __construct($db){
         //echo "Constructor called";
         $this->mysqli = $db->getConnection();  
+        
         //echo "error connecting " . $mysqli->connect_error;
         /*echo "error connecting" . $mysqli->connect_errno;*/
     }

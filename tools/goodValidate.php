@@ -1,11 +1,11 @@
 <?php
-    echo "goodValidate starts<br/>";
+  //  echo "goodValidate starts<br/>";
 
   //  $nameVer = $imageVer = $descVer = $priceVer = $qtyVer = $weightVer = $catVer = $clientVer = false; 
   
     if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-        echo "got POST data<br/>";
+      //  echo "got POST data<br/>";
      //   echo "checking good_name<br/>";
 
         if(empty($_POST["good_name"])){
@@ -24,22 +24,20 @@
             }
         }
 
-      /*   echo "<br/>received ".$_POST['good_image']."<br/>";
        if(!empty($_FILES["good_image"]['name'])){
             
-            $imagelength = validate($_FILES["good_image"]['name']));
-            if(strlen($image) > 256){
-                $imageErr = "image file path must be less that 256 characters ".strlen($image);
-            } else {
-                echo "good_image is not empty, processing...image=".$image.", imageVer=".$imageVer."<br/>";
-            */    
-                echo "calling uploadImage script<br/>";
+            $imagelength = validate($_FILES["good_image"]['name']);
+            if(strlen($imagelength) > 256){
+                $imageErr = "image file path must be less that 256 characters";
+            } else { 
+              //  echo "calling uploadImage script<br/>";
                 include '/data/www/default/wecreu/tools/uploadImage.php';
-         //   }
-      /*  } else {
-            echo "no image uploaded <br/>";
+            }
+        } else {
+        //    echo "no image uploaded <br/>";
             $imageVer = true;
-        }*/
+            $image="";
+        }
 
       //  echo "checking description<br/>";
         if(!empty($_POST["description"])){
@@ -125,11 +123,6 @@
             $catVer = true;
         }
     }
-
-   // echo "setting client_id ...";
-    $clientid=1;
-    $clientVer = true; 
- //   echo " to ".$clientid." and clientVer = ".$clientVer."<br/>";
 
  
     function validate($data){
