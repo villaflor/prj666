@@ -6,35 +6,36 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<title>About</title>
 		<link rel="stylesheet" href="css/stylesheet.css" />
-		
+
 	</head>
 	<body>
-		
+
 		<?php
 			include 'Header.php';
 		?>
-		
+
 		<div class="middle">
 			<div class="content">
-				 <?php
-	              $url = "/data/www/default/wecreu/companyInfo/aboutUs/".$clientId.".txt";
-	              if (file_exists($url)) {
-	                $content = file_get_contents($url);
-	                echo $content;
-	              }
-	              ?>
+				<?php
+				$clientId = file_get_contents("conf.ini");
+				$url = "/data/www/default/wecreu/companyInfo/aboutUs/".$clientId.".txt";
+				if (file_exists($url)) {
+					$content = file_get_contents($url);
+				echo $content;
+				}
+				?>
 			</div>
-			
+
 			<?php
 				include 'Categories.php';
 			?>
-		
+
 		</div>
-		
+
 		<?php
 			include 'Menu.php';
 		?>
-		
+
 		<?php
 			include 'Footer.php';
 		?>
