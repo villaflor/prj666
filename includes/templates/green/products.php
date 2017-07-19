@@ -25,7 +25,7 @@
         if(!isset($_GET['cid'])){
             $active = 'active';
         }
-        echo "<a class='nav-item nav-link text-white $active' href='products.php'>All categpries</a>";
+        echo "<a class='nav-item nav-link text-white $active' href='products.php'>All categories</a>";
         while ($row = mysqli_fetch_assoc($alldata)) {
             if (isset($_GET['cid']) && $row['category_id'] == $_GET['cid']){
                 $active = 'active';
