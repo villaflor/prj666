@@ -9,11 +9,11 @@
         $category = new Category($db,$clientid);
         $allcategory = $category->getAll();
     ?>
-	<img src="../../images/logo.jpg" alt="logo" height="130" width="140" />
-			
-	<form>
-		<input type="text" name="keyword" /> Search
+	<img src="images/logo.jpg" alt="logo" height="130" width="140" />
+
+	<form action="search.php" method="GET">
+		<input type="text" name="keyword" />
+        <input type="submit" value="Submit" />
 	</form>
 	<h1>Slideshow Template</h1>
-			
 </header>
