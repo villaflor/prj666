@@ -1,8 +1,19 @@
+<?php
+    $clientId = file_get_contents('conf.ini');
+    include_once('/data/www/default/wecreu/tools/category.php');
+    include_once("/data/www/default/wecreu/tools/sql.php");
+    include_once("/data/www/default/wecreu/tools/client.php");
+
+	//create an object
+    $db = Database::getInstance();
+    $category = new Category($db,$clientId);
+    $client = new Client($db,$clientId);
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <?php include("metadata.php") ?>
-    <title>Green Template</title>
+    <title><?php echo $client->getClientSiteTitle(); ?></title>
 </head>
 
 <body style="background-color: seagreen">
