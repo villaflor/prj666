@@ -3,8 +3,8 @@ require_once 'core/init.php';
 ini_set('display_errors', 'On');
 $user = new User();
 $validate = new Validate();
-
-
+$wait=0;
+$wait2=0;
 if (!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
@@ -17,6 +17,7 @@ if(Input::exists()){
     else{
         $client_name = $user->data()->username;
         $com_title = $user->data()->client_site_title;
+		$client_id = $user->data()->client_id;
         $target_dir = '/data/www/default/' . $client_name . '/images/';
         $target_file = $target_dir . "/logo.jpg";
         $uploadOk = 1;
@@ -24,17 +25,27 @@ if(Input::exists()){
         $destination = '/data/www/default/' . $client_name;
         $destination2 = '/data/www/default/' . $client_name . '/images';
         $destination3 = '/data/www/default/' . $client_name . '/css';
+		$destination4 = '/data/www/default/' . $client_name . '/js';
+		$destination5 = '/data/www/default/' . $client_name . '/good';
+		$destination6 = '/data/www/default/' . $client_name . '/backup';
         $check=0;
 // To create the nested structure, the $recursive parameter
 // to mkdir() must be specified.
 
         if (file_exists($destination)){
-            /*echo "directory already existed";
-            $check=1;*/
-            deleteDir($destination2);
-            deleteDir($destination3);
-            deleteDir($destination);
-            //exec('cd '.$destination2);
+            /*echo "directory already existed";*/
+            $wait=1;
+            rrmdir($destination2);
+            rrmdir($destination3);
+			if (file_exists($destination4)){
+				rrmdir($destination4);
+			}
+			if(file_exists($destination5)){
+				rrmdir($destination5);
+			}
+            rrmdir($destination);
+			
+            
 
         }
         if($check == 0){
@@ -54,117 +65,181 @@ if(Input::exists()){
                     die('Failed to create folders...');
                 }
             }
+			
 
         }
         //echo "create";
 
-        if (file_exists($target_file)){
-            unlink($target_file);
-        }
-        if ($uploadOk == 0){
-            //echo "Sorry, your file was not uploaded";
-        }
-        else {
-            if(move_uploaded_file($_FILES["client_logo"]["tmp_name"], $target_file)){
-                //echo "uploaded";
-            }
-            else{
-                //echo "Sorry";
-            }
-        }
+        
         if ($check != 1 && $_POST['template'] == 2){
-            $source = '/data/www/default/prj/template/blue';
-            $source2 = '/data/www/default/prj/template/blue/images';
-            $source3 = '/data/www/default/prj/template/blue/css';
+			if (!file_exists($destination5)){
+                if (!mkdir($destination5, 0770, true)) {
+                    die('Failed to create folders...');
+                }
+            }
+			if (!file_exists($destination6)){
+                if (!mkdir($destination6, 0770, true)) {
+                    die('Failed to create folders...');
+                }
+            }
+            $source = '/data/www/default/wecreu/includes/templates/blue';
+            $source2 = '/data/www/default/wecreu/includes/templates/blue/images';
+            $source3 = '/data/www/default/wecreu/includes/templates/blue/css';
+			$source4 = '/data/www/default/wecreu/includes/templates/blue/good';
+			$source5 = '/data/www/default/wecreu/includes/templates/blue/backup';
             if($check==0){
                 recurse_copy($source,$destination);
                 recurse_copy($source2,$destination2);
                 recurse_copy($source3,$destination3);
+				recurse_copy($source4,$destination5);
+				recurse_copy($source5,$destination6);
             }
-            ob_start();
-            include('../template/blue/index.php');
+            /*ob_start();
+            include('../prj/template/blue/index.php');
             $forIndex = ob_get_contents();
             ob_end_clean();
 
             ob_start();
-            include('../template/blue/Header.php');
+            include('../prj/template/blue/Header.php');
             $forHeader = ob_get_contents();
-            ob_end_clean();
+            ob_end_clean();*/
 
-            $indexFile = fopen("/data/www/default/" . $client_name . "/index.php", "w") or die("Unable to open file!");
-            $headerFile = fopen("/data/www/default/" . $client_name . "/Header.php", "w") or die("Unable to open file!");
-
-            fwrite($indexFile, $forIndex);
+            //$indexFile = fopen("/data/www/default/" . $client_name . "/index.php", "w") or die("Unable to open file!");
+            //$headerFile = fopen("/data/www/default/" . $client_name . "/Header.php", "w") or die("Unable to open file!");
+			$config = fopen("/data/www/default/" . $client_name . "/conf.ini", "w") or die ("Unable to open file!");
+            /*fwrite($indexFile, $forIndex);
             fclose($indexFile);
 
             fwrite($headerFile, $forHeader);
-            fclose($headerFile);
+            fclose($headerFile);*/
 
-            //echo "Done writing";
+			fwrite($config, $client_id);
+			fclose($config);
+            
 
         }
         else if ($check != 1 && $_POST['template'] == 1){
-            $source = '/data/www/default/prj/template/green';
-            $source2 = '/data/www/default/prj/template/green/images';
-            $source3 = '/data/www/default/prj/template/green/css';
+			if (!file_exists($destination4)){
+                if (!mkdir($destination4, 0770, true)) {
+                    die('Failed to create folders...');
+                }
+            }
+            $source = '/data/www/default/wecreu/includes/templates/green';
+            $source2 = '/data/www/default/wecreu/includes/templates/green/images';
+            $source3 = '/data/www/default/wecreu/includes/templates/green/css';
+			$source4 = '/data/www/default/wecreu/includes/templates/green/js';
             if($check==0){
                 recurse_copy($source,$destination);
                 recurse_copy($source2,$destination2);
                 recurse_copy($source3,$destination3);
+				recurse_copy($source4,$destination4);
             }
-            ob_start();
-            include('../template/green/index-metadata.php');
+            /*ob_start();
+            include('../prj/template/green/index-metadata.php');
             $forIndex = ob_get_contents();
             ob_end_clean();
 
             ob_start();
-            include('../template/green/header-nav.php');
+            include('../prj/template/green/header-nav.php');
             $forHeader = ob_get_contents();
             ob_end_clean();
 
             $indexFile = fopen("/data/www/default/". $client_name . "/index-metadata.php", "w") or die("Unable to open file!");
-            $headerFile = fopen("/data/www/default/". $client_name ."/header-nav.php", "w") or die("Unable to open file!");
+            $headerFile = fopen("/data/www/default/". $client_name ."/header-nav.php", "w") or die("Unable to open file!");*/
+			$config = fopen("/data/www/default/" . $client_name . "/conf.ini", "w") or die ("Unable to open file!");
+            //fwrite($indexFile, $forIndex);
+            //fclose($indexFile);
 
-            fwrite($indexFile, $forIndex);
-            fclose($indexFile);
+            //fwrite($headerFile, $forHeader);
+            //fclose($headerFile);
 
-            fwrite($headerFile, $forHeader);
-            fclose($headerFile);
-
-            Session::flash('generate', 'Your site has been generated successfully');
-            ?> <script type="text/javascript" language="Javascript">window.open('http://myvmlab.senecacollege.ca:5726/<?php echo $user->data()->username; ?>');</script> <?php
+			fwrite($config, $client_id);
+			fclose($config);
 
         }
         else if ($check != 1 && $_POST['template'] == 3){
-            $source = '/data/www/default/prj/template/red';
-            $source2 = '/data/www/default/prj/template/red/images';
-            $source3 = '/data/www/default/prj/template/red/css';
+			
+            $source = '/data/www/default/wecreu/includes/templates/red';
+            $source2 = '/data/www/default/wecreu/includes/templates/red/images';
+            $source3 = '/data/www/default/wecreu/includes/templates/red/css';
             if($check==0){
                 recurse_copy($source,$destination);
                 recurse_copy($source2,$destination2);
                 recurse_copy($source3,$destination3);
             }
             /*ob_start();
-            include('../../template/red/');
-            $forIndex = ob_get_contents();
-            ob_end_clean();*/
+            include('../prj/template/red/headmeta.php');
+            $forHeadMeta = ob_get_contents();
+            ob_end_clean();
 
             ob_start();
-            include('../template/red/header.php');
+            include('../prj/template/red/header.php');
             $forHeader = ob_get_contents();
             ob_end_clean();
 
-            //$indexFile = fopen("/data/www/default/testing2/index-metadata.php", "w") or die("Unable to open file!");
-            $headerFile = fopen("/data/www/default/". $client_name ."/header.php", "w") or die("Unable to open file!");
+            $headMetaFile = fopen("/data/www/default/" . $client_name . "/headmeta.php", "w") or die("Unable to open file!");
+            $headerFile = fopen("/data/www/default/". $client_name ."/header.php", "w") or die("Unable to open file!");*/
+			$config = fopen("/data/www/default/" . $client_name . "/conf.ini", "w") or die ("Unable to open file!");
+            //fwrite($headMetaFile, $forHeadMeta);
+            //fclose($headMetaFile);
 
-            //fwrite($indexFile, $forIndex);
-            //fclose($indexFile);
-
-            fwrite($headerFile, $forHeader);
-            fclose($headerFile);
-
+            //fwrite($headerFile, $forHeader);
+            //fclose($headerFile);
+			
+			fwrite($config, $client_id);
+			fclose($config);
             //echo "Done writing";
         }
+		
+		else if ($check != 1 && $_POST['template'] == 4){
+            $source = '/data/www/default/prj/template/grey';
+            $source2 = '/data/www/default/prj/template/grey/images';
+            $source3 = '/data/www/default/prj/template/grey/css';
+            if($check==0){
+                recurse_copy($source,$destination);
+                recurse_copy($source2,$destination2);
+                recurse_copy($source3,$destination3);
+            }
+            /*ob_start();
+            include('../prj/template/grey/index.php');
+            $forIndex = ob_get_contents();
+            ob_end_clean();*/
+
+          
+
+            //$index = fopen("/data/www/default/" . $client_name . "/index.php", "w") or die("Unable to open file!");
+            
+			$config = fopen("/data/www/default/" . $client_name . "/conf.ini", "w") or die ("Unable to open file!");
+            //fwrite($index, $forIndex);
+            //fclose($index);
+
+            
+			
+			fwrite($config, $client_id);
+			fclose($config);
+            
+        }
+		if (file_exists($target_file)){
+            unlink($target_file);
+        }
+        if ($uploadOk == 0){
+            
+        }
+        else {
+            if(move_uploaded_file($_FILES["client_logo"]["tmp_name"], $target_file)){
+                
+            }
+            else{
+                
+            }
+        }
+		
+		if($wait == 1){
+			sleep(60);
+			//$wait2 = 1;
+	    }
+		Session::flash('generate', 'Your site has been generated successfully');
+            ?> <script type="text/javascript" language="Javascript">window.open('http://myvmlab.senecacollege.ca:5726/<?php echo $user->data()->username; ?>');</script> <?php
     }
 }
 
@@ -186,25 +261,22 @@ function recurse_copy($src,$dst) {
     //echo "Copied";
     closedir($dir);
 }
-function deleteDir($dirPath) {
-    if (! is_dir($dirPath)) {
-        throw new InvalidArgumentException("$dirPath must be a directory");
-    }
-    if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
-        $dirPath .= '/';
-    }
-    $files = glob($dirPath . '*', GLOB_MARK);
-    foreach ($files as $file) {
-        if (is_dir($file)) {
-            deleteDir($file);
-        } else {
-            unlink($file);
-        }
-    }
-    rmdir($dirPath);
-}
 
 
+function rrmdir($dir) { 
+   if (is_dir($dir)) { 
+     $objects = scandir($dir); 
+     foreach ($objects as $object) { 
+       if ($object != "." && $object != "..") { 
+         if (is_dir($dir."/".$object))
+           rrmdir($dir."/".$object);
+         else
+           unlink($dir."/".$object); 
+       } 
+     }
+     rmdir($dir); 
+   } 
+ }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -214,6 +286,20 @@ function deleteDir($dirPath) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Generate Site</title>
+	<style>
+		#myProgress {
+			width: 100%;
+			background-color: #ddd;
+		}
+		#myBar {
+			width: 0%;
+			height: 30px;
+			background-color: #4CAF50;
+			text-align: center;
+			line-height: 30px;
+			color: white;
+		}
+	</style>
 </head>
 <body>
 <nav class="navbar bg-primary navbar-inverse navbar-toggleable-sm sticky-top">
@@ -310,29 +396,62 @@ function deleteDir($dirPath) {
 
             <div class="form-check">
                 <p style=" margin-left:15px;"><span class="text-danger">*</span> Choose your template:</p>
-                <label class="form-check-label" for="template">
+                <label class="form-check-label" for="green">
 
-                    <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="template" value="1" checked>
+                    <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="green" value="1" checked>
                     Green</label>
             </div>
             <div class="form-check">
-                <label class="form-check-label" for="template">
-                    <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="template" value="2">
+                <label class="form-check-label" for="blue">
+                    <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="blue" value="2">
                     Blue</label>
             </div>
             <div class="form-check">
-                <label class="form-check-label" for="template">
+                <label class="form-check-label" for="red">
 
-                    <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="template"value="3" />
+                    <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="red"value="3" >
                     Red</label>
+            </div>
+			
+			<div class="form-check">
+                <label class="form-check-label" for="grey">
+
+                    <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="grey" value="4" >
+                    Grey</label>
             </div>
 
         </fieldset>
         <div class="form-group pt-5">
             <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-            <input class="btn btn-primary" type="submit" value="submit" />
+            <input class="btn btn-primary" onclick="move();" type="submit" value="submit" />
         </div>
     </form>
+	<?php //if ($wait == 1 ){?>
+<div id="myProgress">
+	<div id="myBar">0%</div>
+	
+</div>
+
+<br>
+<script>
+//move();
+function move() {
+	var elem = document.getElementById("myBar");   
+	var width = 0;
+	var id = setInterval(frame, 600);
+	function frame() {
+		if (width >= 100) {
+			clearInterval(id);
+		} else {
+			width++; 
+			elem.style.width = width + '%'; 
+			elem.innerHTML = width * 1  + '%';
+		}
+	}
+	//window.alert("Please wait !!!");
+}
+</script>
+<?php //}?>
 </div>
 
 <?php include('includes/footer.inc'); ?>

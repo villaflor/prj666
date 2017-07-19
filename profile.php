@@ -21,6 +21,9 @@ if(!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
 
+$client_name = $user->data()->username;
+$check = 0;
+
 if(!$username = Input::get('user')){
     Redirect::to('index.php');
 } else{
@@ -318,6 +321,10 @@ if(!$username = Input::get('user')){
                 </div>
             </section>
         </div>
+		<form action="" method="post">
+			<input class="btn btn-primary float-right" type="submit" name="submitBtn" value="Delete your website">
+		</form>
+		
     </div>
 
 
@@ -335,3 +342,50 @@ if(!$username = Input::get('user')){
 
     <?php
 }
+	
+
+	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+		if (isset($_POST['submitBtn'])) {
+			$deletedDir = '/data/www/default/' . $client_name;
+			$deletedDir2 = '/data/www/default/' . $client_name . '/images';
+			$deletedDir3 = '/data/www/default/' . $client_name . '/css';
+			$deletedDir4 = '/data/www/default/' . $client_name . '/js';
+			$deletedDir5 = '/data/www/default/' . $client_name . '/good';
+			$deletedDir6 = '/data/www/default/' . $client_name . '/backup';
+			if(file_exists($deletedDir)){
+				rrmdir($deletedDir2);
+				rrmdir($deletedDir3);
+				if (file_exists($deletedDir4)){
+					rrmdir($deletedDir4);
+				}
+				if(file_exists($$deletedDir5)){
+					rrmdir($deletedDir5);
+				}
+				if(file_exists($deletedDir6)){
+					rrmdir($deletedDir6);
+				}
+				rrmdir($deletedDir);
+				$check == 1;
+			}
+		}
+		if ($check == 1){
+			echo "Your site has been deleted.";
+		}
+		
+	}
+
+function rrmdir($dir) { 
+   if (is_dir($dir)) { 
+     $objects = scandir($dir); 
+     foreach ($objects as $object) { 
+       if ($object != "." && $object != "..") { 
+         if (is_dir($dir."/".$object))
+           rrmdir($dir."/".$object);
+         else
+           unlink($dir."/".$object); 
+       } 
+     }
+     rmdir($dir); 
+   } 
+ }
+?>
