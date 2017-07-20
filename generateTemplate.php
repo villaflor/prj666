@@ -44,8 +44,8 @@ if(Input::exists()){
 				rrmdir($destination5);
 			}
             rrmdir($destination);
-			
-            
+
+
 
         }
         if($check == 0){
@@ -65,12 +65,12 @@ if(Input::exists()){
                     die('Failed to create folders...');
                 }
             }
-			
+
 
         }
         //echo "create";
 
-        
+
         if ($check != 1 && $_POST['template'] == 2){
 			if (!file_exists($destination5)){
                 if (!mkdir($destination5, 0770, true)) {
@@ -115,7 +115,7 @@ if(Input::exists()){
 
 			fwrite($config, $client_id);
 			fclose($config);
-            
+
 
         }
         else if ($check != 1 && $_POST['template'] == 1){
@@ -158,7 +158,7 @@ if(Input::exists()){
 
         }
         else if ($check != 1 && $_POST['template'] == 3){
-			
+
             $source = '/data/www/default/wecreu/includes/templates/red';
             $source2 = '/data/www/default/wecreu/includes/templates/red/images';
             $source3 = '/data/www/default/wecreu/includes/templates/red/css';
@@ -185,16 +185,16 @@ if(Input::exists()){
 
             //fwrite($headerFile, $forHeader);
             //fclose($headerFile);
-			
+
 			fwrite($config, $client_id);
 			fclose($config);
             //echo "Done writing";
         }
-		
+
 		else if ($check != 1 && $_POST['template'] == 4){
-            $source = '/data/www/default/prj/template/grey';
-            $source2 = '/data/www/default/prj/template/grey/images';
-            $source3 = '/data/www/default/prj/template/grey/css';
+            $source = '/data/www/default/wecreu/includes/templates/grey';
+            $source2 = '/data/www/default/wecreu/includes/templates/grey/images';
+            $source3 = '/data/www/default/wecreu/includes/templates/grey/css';
             if($check==0){
                 recurse_copy($source,$destination);
                 recurse_copy($source2,$destination2);
@@ -205,35 +205,35 @@ if(Input::exists()){
             $forIndex = ob_get_contents();
             ob_end_clean();*/
 
-          
+
 
             //$index = fopen("/data/www/default/" . $client_name . "/index.php", "w") or die("Unable to open file!");
-            
+
 			$config = fopen("/data/www/default/" . $client_name . "/conf.ini", "w") or die ("Unable to open file!");
             //fwrite($index, $forIndex);
             //fclose($index);
 
-            
-			
+
+
 			fwrite($config, $client_id);
 			fclose($config);
-            
+
         }
 		if (file_exists($target_file)){
             unlink($target_file);
         }
         if ($uploadOk == 0){
-            
+
         }
         else {
             if(move_uploaded_file($_FILES["client_logo"]["tmp_name"], $target_file)){
-                
+
             }
             else{
-                
+
             }
         }
-		
+
 		if($wait == 1){
 			sleep(60);
 			//$wait2 = 1;
@@ -263,19 +263,19 @@ function recurse_copy($src,$dst) {
 }
 
 
-function rrmdir($dir) { 
-   if (is_dir($dir)) { 
-     $objects = scandir($dir); 
-     foreach ($objects as $object) { 
-       if ($object != "." && $object != "..") { 
+function rrmdir($dir) {
+   if (is_dir($dir)) {
+     $objects = scandir($dir);
+     foreach ($objects as $object) {
+       if ($object != "." && $object != "..") {
          if (is_dir($dir."/".$object))
            rrmdir($dir."/".$object);
          else
-           unlink($dir."/".$object); 
-       } 
+           unlink($dir."/".$object);
+       }
      }
-     rmdir($dir); 
-   } 
+     rmdir($dir);
+   }
  }
 ?>
 <!DOCTYPE html>
@@ -285,6 +285,7 @@ function rrmdir($dir) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Generate Site</title>
 	<style>
 		#myProgress {
@@ -412,7 +413,7 @@ function rrmdir($dir) {
                     <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="red"value="3" >
                     Red</label>
             </div>
-			
+
 			<div class="form-check">
                 <label class="form-check-label" for="grey">
 
@@ -421,30 +422,50 @@ function rrmdir($dir) {
             </div>
 
         </fieldset>
+        <div>
+            <img id="preview" src="images/t-green.png" width="500"/>
+        </div>
         <div class="form-group pt-5">
             <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
             <input class="btn btn-primary" onclick="move();" type="submit" value="submit" />
         </div>
     </form>
-	<?php //if ($wait == 1 ){?>
-<div id="myProgress">
-	<div id="myBar">0%</div>
-	
-</div>
 
-<br>
+            <div id="myProgress" style="display:none">
+                <div id="myBar">0%</div>
+            </div>
+                <p id="message" class="text-center" style="display:none; font-size:13px; color:red">Your website is generating. This may take 1 minute.</p>
+            <br>
+
 <script>
+
+var image = $("#preview");
+$("#green").on("click",function(){
+    image.attr("src","images/t-green.png");
+});
+$("#blue").on("click",function(){
+    image.attr("src","images/t-blue.png");
+});
+$("#red").on("click",function(){
+    image.attr("src","images/t-red.png");
+});
+$("#grey").on("click",function(){
+    image.attr("src","images/t-grey.png");
+});
+
 //move();
 function move() {
-	var elem = document.getElementById("myBar");   
+    $("#myProgress").show();
+    $("#message").show();
+	var elem = document.getElementById("myBar");
 	var width = 0;
 	var id = setInterval(frame, 600);
 	function frame() {
 		if (width >= 100) {
 			clearInterval(id);
 		} else {
-			width++; 
-			elem.style.width = width + '%'; 
+			width++;
+			elem.style.width = width + '%';
 			elem.innerHTML = width * 1  + '%';
 		}
 	}
