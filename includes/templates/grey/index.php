@@ -183,6 +183,7 @@
       </fieldset>
       <fieldset class="col-md-12 col-sm-12">
         <input type="hidden" name="method" value="sendEmail">
+        <input type="hidden" name="to" value="<?php echo $client->getClientEmail()?>">
         <input type="hidden" name="url" value="<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']; ?>">
         <input type="submit" class="button big default" value="Send Message">
       </fieldset>
