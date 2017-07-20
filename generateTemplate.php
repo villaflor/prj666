@@ -5,7 +5,6 @@ $user = new User();
 $validate = new Validate();
 $wait=0;
 $wait2=0;
-$isOK = true;
 if (!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
@@ -13,7 +12,6 @@ if(Input::exists()){
     if ($_FILES['client_logo']['size'] == 0)
     {
         $validate->addError('Logo is required');
-        $isOK = false;
         //echo "No logo uploaded";
     }
     else{
@@ -194,9 +192,9 @@ if(Input::exists()){
         }
 
 		else if ($check != 1 && $_POST['template'] == 4){
-            $source = '/data/www/default/prj/template/grey';
-            $source2 = '/data/www/default/prj/template/grey/images';
-            $source3 = '/data/www/default/prj/template/grey/css';
+            $source = '/data/www/default/wecreu/includes/templates/grey';
+            $source2 = '/data/www/default/wecreu/includes/templates/grey/images';
+            $source3 = '/data/www/default/wecreu/includes/templates/grey/css';
             if($check==0){
                 recurse_copy($source,$destination);
                 recurse_copy($source2,$destination2);
@@ -433,20 +431,11 @@ function rrmdir($dir) {
         </div>
     </form>
 
-	<?php //if ($wait == 1 ){?>
-        <?php
-        if (isset($_POST['template']) && $isOK){
-            ?>
-            <div id="myProgress">
+            <div id="myProgress" style="display:none">
                 <div id="myBar">0%</div>
             </div>
-
-            <p id="message" class="text-center" style="font-size:13px; color:red">Your website is generating. This may take 1 minute.</p>
+                <p id="message" class="text-center" style="display:none; font-size:13px; color:red">Your website is generating. This may take 1 minute.</p>
             <br>
-            <?php
-
-        }
-         ?>
 
 <script>
 
@@ -466,6 +455,8 @@ $("#grey").on("click",function(){
 
 //move();
 function move() {
+    $("#myProgress").show();
+    $("#message").show();
 	var elem = document.getElementById("myBar");
 	var width = 0;
 	var id = setInterval(frame, 600);
