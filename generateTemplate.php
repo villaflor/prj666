@@ -5,6 +5,7 @@ $user = new User();
 $validate = new Validate();
 $wait=0;
 $wait2=0;
+$isOK = true;
 if (!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
@@ -12,6 +13,7 @@ if(Input::exists()){
     if ($_FILES['client_logo']['size'] == 0)
     {
         $validate->addError('Logo is required');
+        $isOK = false;
         //echo "No logo uploaded";
     }
     else{
@@ -432,12 +434,20 @@ function rrmdir($dir) {
     </form>
 
 	<?php //if ($wait == 1 ){?>
-<div id="myProgress">
-	<div id="myBar" style="display:none">0%</div>
-</div>
+        <?php
+        if (isset($_POST['template']) && $isOK){
+            ?>
+            <div id="myProgress">
+                <div id="myBar">0%</div>
+            </div>
 
-<p id="message" class="text-center" style="display:none; margin: 0 auto; font-size:13px; color:red">Your website is generating. This may take 1 minute.</p>
-<br>
+            <p id="message" class="text-center" style="font-size:13px; color:red">Your website is generating. This may take 1 minute.</p>
+            <br>
+            <?php
+
+        }
+         ?>
+
 <script>
 
 var image = $("#preview");
