@@ -466,8 +466,6 @@ $("#grey").on("click",function(){
 
 //move();
 function move() {
-    $("#message").show();
-    $("#myBar").show();
 	var elem = document.getElementById("myBar");
 	var width = 0;
 	var id = setInterval(frame, 600);
