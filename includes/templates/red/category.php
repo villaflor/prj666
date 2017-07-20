@@ -8,7 +8,7 @@
 			//create an object
 		    $category = new Category($db, $clientId);
 
-        	$alldata = $category->getAllAvaliable();
+        	$alldata = $category->getAll();
           if(mysqli_num_rows($alldata) == 0 ){
             echo "<p>It seems you don't have any category. <a href='/wecreu/addCategoryForm.php'>Click here to add.</a></p>";
           }else{

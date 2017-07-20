@@ -20,7 +20,7 @@
 <div class="container mb-5">
     <nav class="nav nav-pills nav-fill">
         <?php
-        $alldata = $category->getAllAvaliable();
+        $alldata = $category->getAll();
         $active="";
         if(!isset($_GET['cid'])){
             $active = 'active';

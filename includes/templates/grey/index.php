@@ -31,7 +31,7 @@
       <script>
         $(document).ready(function(){
          <?php
-         $cClick = $category->getAllAvaliable();
+         $cClick = $category->getAll();
          while ($row = mysqli_fetch_assoc($cClick)) {
            ?>
            $("<?php echo "#c$row[category_id]"; ?>").click(function(){
@@ -86,7 +86,7 @@
             <li class="dropdown"><a href="#products"><i class="fa fa-star"></i>Products</a>
               <ul class="dropdown-content ">
                <?php
-               $side = $category->getAllAvaliable();
+               $side = $category->getAll();
                while ($row = mysqli_fetch_assoc($side)) {
                  echo "<li id='c$row[category_id]'"."><a href='#products'>$row[category_name]"."</a></li>";
                }
