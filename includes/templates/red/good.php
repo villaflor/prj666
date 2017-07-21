@@ -16,29 +16,25 @@
   $offSet=0;
   $search = new Search($db,$clientId);
   $alldata = $search->getAll($limit,$offSet);
-  if(mysqli_num_rows($alldata) == 0 ){
-    echo "<p>It seems you don't have any product. <a href='/wecreu/create-good.php'>Click here to add.</a></p>";
-  }else{
-    while ($row = mysqli_fetch_assoc($alldata)) {
-      ?>
-      <div class="item col-md-12 col-sm-4 col-xs-4">
-        <a href='detail.php?id=<?php echo $row['good_id'];?>'>
-           <img src="http://th25.st.depositphotos.com/5142301/7567/v/450/depositphotos_75677235-stock-illustration-lion-head-logo.jpg" class="img-responsive" alt="Cinque Terre">
-          <p>
-            <?php
-            $name = $row['good_name'];
-            $length = strlen($name);
-            if ($length > 16){
-              $name = substr($name, 1 ,16)."...";
-            }
-            echo $name;
-            ?>
-          </p> <p>$<?php echo $row['good_price'];?></p>
-        </a>
+  while ($row = mysqli_fetch_assoc($alldata)) {
+    ?>
+    <div class="item col-md-12 col-sm-4 col-xs-4">
+      <a href='detail.php?id=<?php echo $row['good_id'];?>'>
+         <img src="http://th25.st.depositphotos.com/5142301/7567/v/450/depositphotos_75677235-stock-illustration-lion-head-logo.jpg" class="img-responsive" alt="Cinque Terre">
+        <p>
+          <?php
+          $name = $row['good_name'];
+          $length = strlen($name);
+          if ($length > 16){
+            $name = substr($name, 1 ,16)."...";
+          }
+          echo $name;
+          ?>
+        </p> <p>$<?php echo $row['good_price'];?></p>
+      </a>
     </div>
     <?php
     }
-  }
   ?>
   </div>
     <div class="row">

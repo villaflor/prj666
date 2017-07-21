@@ -1,0 +1,1 @@
+<p style="text-align: center;">Monday ~ Friday : 6AM - 10 PM</p><p style="text-align: center;">Staturday : 6AM - 8PM</p><p style="text-align: center;">Sunday : 6AM - 6PM</p>

@@ -2,7 +2,45 @@
 require_once 'core/init.php';
 
 $user = new User();
+$validate = new Validate();
 
+if (!$user->isLoggedIn()){
+    Redirect::to('index.php');
+}
+
+if(Input::exists()) {
+    if (Token::check(Input::get('token'))) {
+
+
+            try {
+                include_once('tools/page.php');
+                include_once("tools/sql.php");
+
+                $db = Database::getInstance();
+                $clientId = $user->data()->client_id;
+                //create an object
+                $page = new Page($db, $clientId);
+
+                // add one
+                if ($page->add($_POST['name'])) {
+                    // create file and folder to store pages.
+                    $path = "companyInfo/page/" . $clientId;
+                    if(!is_readable($path)){
+                        is_file($path) or mkdir($path,0777);
+                    }
+                    Session::flash('page', 'New page '. $_POST['name'] .' has been added!');
+                    Redirect::to('pageList.php');
+
+                } else {
+                    $validate->addError('Sorry, adding new page failed. Please try again.');
+                    //echo "add #1 fail<br>";
+                }
+            } catch (Exception $e) {
+                die($e->getMessage()); //or you can redirect to other page.
+            }
+
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,14 +50,9 @@ $user = new User();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Wecrue</title>
+    <title>Wecrue - Add Category</title>
 </head>
 <body>
-<header class="clearfix " style="height: 30vh; background: url(images/cover.jpg) no-repeat center center; background-size: cover;">
-    <div class="container pt-3">
-        <img src="images/logo.png" alt="Wecreu Logo" class="rounded-circle" style="width: 100px; display: block;">
-    </div>
-</header>
 
 <nav class="navbar bg-primary navbar-inverse navbar-toggleable-sm sticky-top">
     <div class="container">
@@ -28,11 +61,7 @@ $user = new User();
         </button>
         <div class="collapse navbar-collapse" id="menuContent">
             <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link active" href="index.php">Home</a>
-                <?php
-
-                if($user->isLoggedIn()) {
-                ?>
+                <a class="nav-item nav-link" href="index.php">Home</a>
                 <a class="nav-item nav-link" href="generateTemplate.php">Generate site</a>
                 <a class="nav-item nav-link" href="profile.php?user=<?php echo escape($user->data()->username); ?>">Profile</a>
 
@@ -52,7 +81,7 @@ $user = new User();
                 </div>
 
                 <div class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle" href="#"
+                    <a class="nav-item nav-link dropdown-toggle active" href="#"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        id="pageDropdown"
                     >Page</a>
@@ -104,58 +133,37 @@ $user = new User();
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
         </div>
-
         <h1 class="navbar-brand mb-0 mr-3">Hello <a class="text-white" href="profile.php?user=<?php echo escape($user->data()->username); ?>"><?php echo escape($user->data()->username); ?></a>!</h1>
-
-        <?php
-        } else{
-        ?>
-        <a class="nav-item nav-link" href="aboutus.php">About us</a>
-        <a class="nav-item nav-link" href="login.php">Log in</a>
-        <a class="nav-item nav-link" href="register.php">Register</a>
-    </div>
-    </div>
-
-    <h1 class="navbar-brand mb-0 mr-3">Hi there!</h1>
-
-    <?php
-    }
-    ?>
-
     </div>
 </nav>
 
-<div class="container bg-faded py-5" style="min-height: 65vh">
-    <h2 class="mb-4 text-center">Templates</h2>
-    <div class="row">
-        <div class="col-sm-12 col-md-6 pb-3">
-            <a href="includes/templates/green/index.php">
-                <img src="images/t-green.png" alt="Green Template" class="img-thumbnail">
-                <h5 class="pt-1 mb-4 text-center">Green</h5>
-            </a>
-            <p>A very simple site to display all your products. It has responsive display feature. It is green.</p>
+<div class="container bg-faded py-5">
+    <h2 class="mb-4">Create Addtional Page</h2>
+    <?php
+    if(Session::exists('createC')) {
+        echo '<p class="text-success">' . Session::flash('createC') . '</p>';
+    }
+
+    if($validate->errors()) {
+        foreach ($validation->errors() as $error) {
+            echo '<small class="text-warning">' . $error . '</small><br />';
+        }
+    }
+    ?>
+
+    <form action="" method="post">
+        <fieldset class="form-group">
+            <legend></legend>
+            <div class="form-group col-md-6">
+                <label class="form-control-label" for="name"><span class="text-danger">*</span> Name</label>
+                <input class="form-control" type="text" id="name" name="name" value="">
+            </div>
+        </fieldset>
+        <div class="form-group">
+            <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
+            <input class="btn btn-primary" type="submit" value="Add" />
         </div>
-        <div class="col-sm-12 col-md-6 pb-3">
-            <a href="includes/templates/red/index.php">
-                <img src="images/t-red.png" alt="Red Template" class="img-thumbnail" style="display: block">
-                <h5 class="pt-1 mb-4 text-center">Red</h5>
-            </a>
-            <p>A standard site for unlimited categories or goods. It shows the all sales items on the index page. It's red.</p>
-        </div>
-        <div class="col-sm-12 col-md-6 pb-3">
-            <a href="includes/templates/blue/index.php">
-                <img src="images/t-blue.png" alt="Blue Template" class="img-thumbnail" style="display: block">
-                <h5 class="pt-1 mb-4 text-center">Blue</h5>
-            </a>
-        </div>
-        <div class="col-sm-12 col-md-6 pb-3">
-            <a href="includes/templates/grey/index.php">
-                <img src="images/t-grey.png" alt="Grey Template" class="img-thumbnail" style="display: block">
-                <h5 class="pt-1 mb-4 text-center">Grey</h5>
-            </a>
-            <p>This template is designed for limited goods and categories. It doesn't support search function. When customers move to another page( from good list to good detail), it will not refresh the whole page. At the bottom of the template, it allows customers connect quickly with client. It is good for selling services.</p>
-        </div>
-    </div>
+    </form>
 </div>
 
 <?php include('includes/footer.inc'); ?>
@@ -163,5 +171,6 @@ $user = new User();
 <script src="js/jquery-3.1.1.slim.min.js"></script>
 <script src="js/tether.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>

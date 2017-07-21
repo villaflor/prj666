@@ -1,0 +1,1 @@
+<p style="text-align: center;">This is the first page for dynamic menu</p><p style="text-align: center;"><img src="/ueditor/php/upload/image/20170722/1500670409833793.jpg" title="1500670409833793.jpg" alt="捕获.JPG" width="197" height="197" style="width: 197px; height: 197px;"/></p>
