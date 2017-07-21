@@ -20,10 +20,14 @@ if (Input::exists()) {
             $remember = (Input::get('remember') === 'on') ? true : false;
             $login = $user->login(Input::get('username'), Input::get('password'), $remember);
 
-            if ($login) {
-                Redirect::to('index.php');
-            } else {
-                $validate->addError('Sorry, you entered wrong password.');
+            if ($user->data()->validated) {
+                if ($login) {
+                    Redirect::to('index.php');
+                } else {
+                    $validate->addError('Sorry, you entered wrong password.');
+                }
+            } else{
+                $validate->addError('Sorry, you cannot login unless you verified your email address');
             }
         }
     }
