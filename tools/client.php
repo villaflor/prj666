@@ -9,7 +9,7 @@ class Client {
 
 	private $mysqli;
 	private $client_id;
-	
+
 	public function getClientName() {
 		$sql_query = "SELECT client_name FROM client WHERE client_id = $this->client_id";
 	    $result = $this->mysqli->query($sql_query);
@@ -38,7 +38,7 @@ class Client {
 	    $result = mysqli_fetch_assoc($result);
 	    return $result['username'];
 	}
-	
+
 	public function getClientEmail() {
 		$sql_query = "SELECT * FROM client WHERE client_id = $this->client_id";
 	    $result = $this->mysqli->query($sql_query);
@@ -51,7 +51,7 @@ class Client {
 		$this->mysqli = $db->getConnection();
         $this->client_id = $client_id;
 	}
-	
+
 	// Magic method clone is empty to prevent duplication of connection
 	private function __clone() { }
 }
