@@ -7,6 +7,30 @@ $validate = new Validate();
 if(!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
+if (!isset($_GET['id'])){
+    Redirect::to('index.php');
+}
+
+$clientId = escape($user->data()->client_id);
+
+include_once('tools/page.php');
+include_once("tools/sql.php");
+
+$db = Database::getInstance();
+//create an object
+$page = new Page($db, $clientId);
+$page_id = $_GET['id'];
+$alldata = $page->getAll();
+$isFoundPageId = false;
+while ($row = mysqli_fetch_assoc($alldata)) {
+  if($row['id'] == $page_id){
+    $isFoundPageId = true;
+  }
+}
+
+if(!$isFoundPageId){
+  Redirect::to('index.php');
+}
 
 if(Input::exists()){
     if(Token::check(Input::get('token'))){
@@ -117,6 +141,18 @@ if(Input::exists()){
                   </div>
 
                   <div class="dropdown">
+                      <a class="nav-item nav-link dropdown-toggle active" href="#"
+                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                         id="pageDropdown"
+                      >Page</a>
+
+                      <div class="dropdown-menu" aria-labelledby="pageDropdown">
+                          <a class="dropdown-item" href="pageList.php">View pages</a>
+                          <a class="dropdown-item" href="addPage.php">Create page</a>
+                      </div>
+                  </div>
+
+                  <div class="dropdown">
                       <a class="nav-item nav-link dropdown-toggle" href="#"
                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                          id="categoryDropdown"
@@ -189,30 +225,8 @@ if(Input::exists()){
  <div>
     <script id="editor" type="text/plain" style="width:1024px;height:500px;">
     <?php
-    if (!isset($_GET['id'])){
-      exit;
-    }
-    $clientId = escape($user->data()->client_id);
 
-    include_once('tools/page.php');
-    include_once("tools/sql.php");
 
-    $db = Database::getInstance();
-    $clientId = $user->data()->client_id;
-    //create an object
-    $page = new Page($db, $clientId);
-    $page_id = $_GET['id'];
-    $alldata = $page->getAll();
-    $isFoundPageId = false;
-    while ($row = mysqli_fetch_assoc($alldata)) {
-      if($row['id'] == $page_id){
-        $isFoundPageId = true;
-      }
-    }
-
-    if(!$isFoundPageId){
-      exit;
-    }
 
     $url = "companyInfo/page/".$clientId."/".$page_id.".txt";
     if (file_exists($url)) {

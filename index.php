@@ -54,6 +54,18 @@ $user = new User();
                 <div class="dropdown">
                     <a class="nav-item nav-link dropdown-toggle" href="#"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       id="pageDropdown"
+                    >Page</a>
+
+                    <div class="dropdown-menu" aria-labelledby="pageDropdown">
+                        <a class="dropdown-item" href="pageList.php">View pages</a>
+                        <a class="dropdown-item" href="addPage.php">Create page</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle" href="#"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                        id="categoryDropdown"
                     >Category</a>
 

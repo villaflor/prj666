@@ -3,11 +3,13 @@
     include_once('/data/www/default/wecreu/tools/category.php');
     include_once("/data/www/default/wecreu/tools/sql.php");
     include_once("/data/www/default/wecreu/tools/client.php");
+    include_once('/data/www/default/wecreu/tools/page.php');
 
 	//create an object
     $db = Database::getInstance();
     $category = new Category($db,$clientId);
     $client = new Client($db,$clientId);
+    $page = new Page($db,$clientId);
     ?>
     <!DOCTYPE html>
     <html class="no-js">
@@ -95,6 +97,12 @@
            </li>
            <li id="shoppingCart"><a href="#products"><i class="fa fa-shopping-cart"></i>Cart</a></li>
            <li><a href="#aboutUs"><i class="fa fa-pencil"></i>About us</a></li>
+           <?php
+           $alldata = $page->getAll();
+           while ($row = mysqli_fetch_assoc($alldata)) {
+              echo '<li><a href="#' . $row['id'] . '"><i class="fa fa-link"></i>' . $row['page_name'] . '</a></li>';
+           }
+           ?>
            <li><a href="#contact"><i class="fa fa-link"></i>Contact us</a></li>
          </ul>
        </div> <!-- .main-navigation -->
@@ -159,6 +167,37 @@
       </div>
     </div>
     <hr>
+
+    <!-- dynamic page -->
+    <?php
+    $alldata = $page->getAll();
+    while ($row = mysqli_fetch_assoc($alldata)) {
+        ?>
+
+        <div class="page-section" id="<?php echo $row['id'];?>">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="widget-title"><?php echo $row['page_name'];?></h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <?php
+                    $url = "/data/www/default/wecreu/companyInfo/page/".$clientId."/".$row['id'].".txt";
+                    if (file_exists($url)) {
+                        $content = file_get_contents($url);
+                        echo $content;
+                    }else{
+                        echo "<h1>Page not found</h1>";
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <?php
+    }
+    ?>
 
     <!-- CONTACT -->
     <div class="page-section" id="contact">

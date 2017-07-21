@@ -29,7 +29,7 @@ if(Input::exists()) {
                         is_file($path) or mkdir($path,0777);
                     }
                     Session::flash('page', 'New page '. $_POST['name'] .' has been added!');
-                    Redirect::to('page.php');
+                    Redirect::to('pageList.php');
 
                 } else {
                     $validate->addError('Sorry, adding new page failed. Please try again.');
@@ -83,10 +83,10 @@ if(Input::exists()) {
                 <div class="dropdown">
                     <a class="nav-item nav-link dropdown-toggle active" href="#"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                       id="categoryDropdown"
+                       id="pageDropdown"
                     >Page</a>
 
-                    <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+                    <div class="dropdown-menu" aria-labelledby="pageDropdown">
                         <a class="dropdown-item" href="pageList.php">View pages</a>
                         <a class="dropdown-item" href="addPage.php">Create page</a>
                     </div>

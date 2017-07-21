@@ -46,6 +46,8 @@ if(!$user->isLoggedIn()){
                     </div>
                 </div>
 
+                
+
                 <div class="dropdown">
                     <a class="nav-item nav-link dropdown-toggle active" href="#"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -125,7 +127,7 @@ if(!$user->isLoggedIn()){
         while ($row = mysqli_fetch_assoc($alldata)) {
             echo '<tr>';
             echo '<td>'. $row['page_name'] .'</td>';
-            echo '<td><a href="editPage.php?'. $row['id'] .'">Edit</a> | <a href="?delete='. $row['id'] .'">Delete</a></td>';
+              echo '<td><a href="editPage.php?id='. $row['id'] .'">Edit</a> | <a href="?delete='. $row['id'] .'">Delete</a></td>';
             echo '</tr>';
         }
 
