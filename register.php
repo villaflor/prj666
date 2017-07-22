@@ -1,5 +1,6 @@
 <?php
 require_once 'core/init.php';
+require_once 'classes/email/send.php';
 
 $user = new User();
 $validate = new Validate();
@@ -56,6 +57,9 @@ if(Input::exists()){
         if ($validation->passed()) {
             $user = new User();
             $salt = Hash::salt(32);
+            $validateHash = Hash::string(255);
+            $date = new DateTime();
+            $date->add(new DateInterval('PT24H'));
 
             try{
                 $user->create(array(
@@ -71,10 +75,19 @@ if(Input::exists()){
                     'username' => Input::get('username'),
                     'password' => Hash::make(Input::get('password'), $salt),
                     'salt' => $salt,
-                    'client_admin_email' => Input::get('client_admin_email')
+                    'client_admin_email' => Input::get('client_admin_email'),
+                    'validate_hash' => $validateHash,
+                    'validate_email_expire' => $date->format('Y-m-d H:i:s')
                 ));
 
-                Session::flash('login', 'You have been registered and can now log in!');
+                ob_start();
+                include('includes/templates/email_validateemail.inc');
+                $emailBody = ob_get_contents();
+                ob_end_clean();
+
+                sendEmail(escape(Input::get('client_admin_email')), 'Wecreu', 'Validate email address', $emailBody, escape(Input::get('client_name')));
+
+                Session::flash('login', 'You have been registered! Please verify your email first before logging in.');
                 Redirect::to('login.php');
 
             } catch (Exception $e){
@@ -121,6 +134,14 @@ if(Input::exists()){
 <div class="container bg-faded py-5">
     <h2 class="mb-4">Registration form</h2>
     <?php
+    if(Session::exists('register')) {
+        echo '<p class="text-success">' . Session::flash('register') . '</p>';
+    }
+
+    if(Session::exists('registerError')) {
+        echo '<p class="text-danger">' . Session::flash('registerError') . '</p>';
+    }
+
     if($validate->errors()) {
         foreach ($validation->errors() as $error) {
             echo '<small class="text-warning">' . $error . '</small><br />';
