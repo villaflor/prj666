@@ -12,9 +12,24 @@ $user = new User();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-scrollto/1.4.6/jquery-scrollto.min.js"></script>
     <title>Wecrue</title>
+    <style>
+    .rTop{
+        width:100px; height:25px;
+        background: white;
+        text-align:center; font-size:small;
+        line-height:25px; border:1px solid #999;
+        position:fixed; left:1%; top: 80%;
+        border-bottom-color:#333;
+        border-right-color:#333; margin:5px;
+        cursor:pointer; display:none
+    }
+    </style>
 </head>
 <body>
+
 <header class="clearfix " style="height: 30vh; background: url(images/cover.jpg) no-repeat center center; background-size: cover;">
     <div class="container pt-3">
         <img src="images/logo.png" alt="Wecreu Logo" class="rounded-circle" style="width: 100px; display: block;">
@@ -124,6 +139,7 @@ $user = new User();
 
     </div>
 </nav>
+<div class="rTop" id="rTop" onClick="toTop()">Back To Top</div>
 
 <div class="container bg-faded py-5" style="min-height: 65vh">
     <h2 class="mb-4 text-center">Templates</h2>
@@ -157,7 +173,7 @@ $user = new User();
         </div>
     </div>
     <hr/>
-    <div class="col-md-12">
+    <div id="feature" class="col-md-12">
         <h1 style="color:#186bd6" class="text-center pb-3"><b><i>Featured</i></b></h1>
         <hr/>
         <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">
@@ -191,6 +207,21 @@ $user = new User();
 <?php include('includes/footer.inc'); ?>
 
 <script src="js/jquery-3.1.1.slim.min.js"></script>
+<script>
+   window.onscroll=function(){
+     if(document.body.scrollTop||document.documentElement.scrollTop>0){
+       document.getElementById('rTop').style.display="block"
+     }else{
+       document.getElementById('rTop').style.display="none"
+     }
+   }
+   function toTop(){
+     $('html, body').animate({
+       scrollTop: 0
+     }, 500);
+     document.getElementById('rTop').style.display="none"
+   }
+ </script>
 <script src="js/tether.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 </body>
