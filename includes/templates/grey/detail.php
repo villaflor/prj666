@@ -32,45 +32,72 @@
 
 
   <div class="container-m bg-faded pt-5 goodlist cf col-md-9 col-sm-12 col-xs-12">
+
+
+    <?php
+    if(!isset($_GET['id'])){
+      header("Location: index.php");
+      exit;
+    }
+
+    $clientId = file_get_contents('conf.ini');
+    include_once("/data/www/default/wecreu/tools/sql.php");
+    include_once('/data/www/default/wecreu/tools/good.php');
+    $db = Database::getInstance();
+    $good = new Good($db,$clientId);
+
+
+    // items
+    $alldata = $good->getGoodDetail($_GET['id']);
+    if(mysqli_num_rows($alldata) == 0){
+      echo "<p class='text-center'>Product not found</p>";
+    } else{
+      $row = mysqli_fetch_assoc($alldata);
+    ?>
+
+    <div class="col-md-9 col-sm-9 col-xs-9">
       <div class="row">
         <div class="col-xs-4"></div>
         <div class="nnn col-lg-3 col-md-4 col-sm-4 col-xs-3 img-circle float-right clearfix">
-          <img src="http://th25.st.depositphotos.com/5142301/7567/v/450/depositphotos_75677235-stock-illustration-lion-head-logo.jpg" class="img-responsive" alt="Cinque Terre" >
-        </div>
+          <img src="<?php echo $row['good_image'];?>" class="img-responsive" alt="Cinque Terre" >
+          </div>
       </div>
-
       <br>
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 clearfix ">
-        <table class="table-bordered" width="100%" height="100px">
-            <tr>
-              <th>Product Name</th>
-              <th>Category</th>
-              <th>Quantity</th>
-            </tr>
-          <tbody>
-            <tr height="50px">
-              <td>Lion</td>
-              <td>Animal</td>
-              <td>6</td>
-            </tr>
-            <tr>
-              <th>Description</th>
-              <th>Weight</th>
-              <th>Price</th>
-            </tr>
-            <tr height="50px"> 
-              <td>Very Friendly</td>
-              <td>50 lbs</td>
-              <td>$100.00</td>
-            </tr> 
-          </tbody>
-        </table>
-      <br>
-      <div class="clearfix centeredImage">
-        <button class="btn addToCart btn-lg btn-block">Add To Cart</button>
-      </div>
-      <a href="#" onclick="history.back();">Back</a>
-      </div>
+            <table class="table-bordered" width="100%" height="100px">
+                <tr>
+                  <th class="col-md-4">Product Name</th>
+                  <th class="col-md-4">Category</th>
+                  <th class="col-md-4">Quantity</th>
+                </tr>
+              <tbody>
+                <tr height="50px">
+                  <td class="text-center"><?php echo $row['good_name'];?></td>
+                  <td class="text-center"><?php echo $row['category_name'];?></td>
+                  <td class="text-center"><?php echo $row['good_in_stock'];?></td>
+                </tr>
+                <tr>
+                  <th  class="col-md-4">Description</th>
+                  <th  class="col-md-4">Weight</th>
+                  <th  class="col-md-4">Price</th>
+                </tr>
+                <tr height="50px">
+                  <td class="text-center"><?php echo $row['good_description'];?></td>
+                  <td class="text-center"><?php echo $row['good_weight'];?></td>
+                  <td class="text-center">$<?php echo $row['good_price'];?></td>
+                </tr>
+              </tbody>
+            </table>
+          <br>
+          <div class="clearfix centeredImage">
+            <button class="btn addToCart btn-lg btn-block">Add To Cart</button>
+          </div>
+          <a class="pull-left" href="good.php" >Back</a>
+          </div>
+<?php
+}
+ ?>
+
   </div>
     </div>
   </div>

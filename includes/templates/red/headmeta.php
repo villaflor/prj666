@@ -3,10 +3,12 @@
   include_once("/data/www/default/wecreu/tools/sql.php");
   include_once('/data/www/default/wecreu/tools/client.php');
   include_once('/data/www/default/wecreu/tools/page.php');
+  include_once('/data/www/default/wecreu/tools/good.php');
   //create an object
   $db = Database::getInstance();
   $client = new Client($db,$clientId);
   $page = new Page($db,$clientId);
+  $good = new Good($db,$clientId);
 ?>
 
 <head>
