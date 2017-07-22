@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 20, 2017 at 10:11 AM
+-- Generation Time: Jul 22, 2017 at 10:10 PM
 -- Server version: 5.7.18
 -- PHP Version: 7.1.5
 
@@ -21,6 +21,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `wecreu`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin`
+--
+
+CREATE TABLE `admin` (
+  `admin_id` bigint(20) NOT NULL,
+  `admin_name` varchar(50) NOT NULL,
+  `admin_username` varchar(15) NOT NULL,
+  `admin_password` varchar(64) NOT NULL,
+  `salt` varchar(32) NOT NULL,
+  `admin_email` varchar(150) NOT NULL,
+  `recovery_hash` varchar(255) DEFAULT NULL,
+  `recovery_expire` datetime DEFAULT NULL,
+  `validate_hash` varchar(255) DEFAULT NULL,
+  `validate_expire` datetime DEFAULT NULL,
+  `validated` tinyint(1) DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -85,7 +105,17 @@ INSERT INTO `category` (`category_id`, `category_name`, `category_description`, 
 (184, 'Webcam', 'Webcams for your computer', 1, 30),
 (185, 'Category 1', 'Category 1', 1, 1),
 (186, 'Category 2', 'Category 2', 1, 1),
-(187, 'Category 3', 'Category 3', 1, 1);
+(187, 'Category 3', 'Category 3', 1, 1),
+(188, ' Blonde Vanilla Latte', ' Blonde Vanilla Latte', 0, 57),
+(189, 'Drinks', 'Drinks', 1, 57),
+(190, 'Food', 'Food', 0, 57),
+(191, 'Breakfast Sandwiches', 'Breakfast Sandwiches', 1, 57),
+(192, 'Wholesome Grains', 'Wholesome Grains', 0, 57),
+(193, 'Fruit and Yogurt', 'Fruit and Yogurt', 1, 57),
+(194, 'Laptop', 'Laptop', 1, 60),
+(195, 'TV', 'TV', 1, 60),
+(196, 'Desktop', 'Desktop', 1, 60),
+(197, 'Printer', 'Printer', 1, 60);
 
 -- --------------------------------------------------------
 
@@ -108,43 +138,55 @@ CREATE TABLE `client` (
   `password` varchar(64) NOT NULL,
   `salt` varchar(32) NOT NULL,
   `client_admin_email` varchar(150) NOT NULL,
-  `recovery_hash` varchar(255) DEFAULT NULL
+  `recovery_hash` varchar(255) DEFAULT NULL,
+  `validated` tinyint(1) DEFAULT '0',
+  `validate_hash` varchar(255) DEFAULT NULL,
+  `reset_password_expire` datetime DEFAULT NULL,
+  `validate_email_expire` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `client`
 --
 
-INSERT INTO `client` (`client_id`, `client_name`, `client_site_title`, `client_logo`, `client_information`, `client_tax`, `payment_option_paypal`, `payment_option_visa`, `payment_option_mastercard`, `payment_option_ae`, `username`, `password`, `salt`, `client_admin_email`, `recovery_hash`) VALUES
-(1, 'Template', 'Wecreu', '/data/default/wecreu/logo.png', 'We sale magical items and broom sticks.', 50.00, 1, 1, 1, 1, 'Wecreu', 'Password123', '', 'admin@magicalitem.com', NULL),
-(2, 'Olivander', 'Olivander\'s finest wands ', '/data/default/logo.png', 'I sale wands for witches and wizards', 13.00, 1, 1, 1, 1, 'wand', 'Password123', '', 'admin@olivander.com', NULL),
-(5, 'Brian', '', '/data/default/logo.png', 'Its secret', 23.00, 0, 1, 1, 0, 'wecreu', '41c8f3fd9abc63d10822504f0d45f569d91761a7868eff9431bc05e2c5a3d53e', 'vÎuy»0sH Ïëå¹·\'IÈE-&ú€ÀjÎBýñ', 'brian@pying.ca', NULL),
-(21, 'Mark Anthony', 'tesing site', '', '', 0.00, 0, 0, 0, 0, 'mavillaflor', '4d9622dbfd993a14c668c984e5ae20b56843d9e1f99f2f946e51d37d3b528c6e', '’ê›IlcVY_Hõ¨|2ˆÀLÕ3ôx”©§î?K1Èœrù', 'Password123@testing.com', NULL),
-(22, 'Christopher', 'Group 4 member', '', '', 0.00, 0, 0, 0, 0, 'testingclient', '7a3487f5adcc1ca6f3f47bb358dc5cd11befeb220246ed08ebc85c7ba351058d', 'tŠ”4rr„¬›ÛÑÈ…‘KÄ+»è²=(G¤É', 'admin@testng.com', NULL),
-(23, 'Mark Testing', 'mark testing site', '', '', 0.00, 0, 0, 0, 0, 'marktesting', '0b3bc4a1cc1c473901616421ab3fa78ddbc02e492f3ee6867887c2fee7c5bda3', '¸ñ[´É˜G<£`c€<ˆY¸¥\0Íƒm÷LhKg', 'admin@asdasd.com', NULL),
-(24, 'Mark Anthony Villaflor', 'Mark Anthony Villaflor', '', 'The ', 13.00, 0, 1, 1, 0, 'mavillaflor1', '4c742d0978af19997e28685e697f8f7aa2f0e2324b73ad9ea1e500c3f9ee2820', 'êñnà>U…>VÍ(Ë=HW&‘(W9oð—~ÕE', 'admin@myseneca.ca', NULL),
-(25, 'Quang', 'Hello World', '', 'ass', 0.00, 0, 0, 0, 0, 'nhquang', '0e0ea1caef9c7d0db2b62ca93af827e1d1317b8ce3988e78c37a6690328780d2', 'Eˆ [þPYäÆ]6¬åK;', 'nhquang@myseneca.ca', NULL),
-(26, 'mark', 'mark', '', '', 0.00, 0, 0, 0, 0, 'testing', 'a120af836f69e4a6d20ac323a9c4b1d350da659d87762d691dafd781d2591894', '§LÿÑ2-]K’‹ZûøO5Ù¹	8ÀPB£Ãˆ­=¹', 'nhquang@myseneca.ca', NULL),
-(27, 'testing2', 'testing2', '', '', 0.00, 0, 0, 0, 0, 'testing2', '396d21583fdfe11f710269d88059df9514ce570e4a503a476fd41fe747202e04', 'Ö¯³–äÃfúQ`\\‡tcÿ\'!ÌÀ8¶n(ì€û5Ô', 'nhquang@myseneca.ca', NULL),
-(28, 'Mark Anthony Villaflor', 'Mark Anthony Villaflor2', '', '', 0.00, 0, 0, 0, 0, 'Wecreu123', 'f57ae6707ac8bbc61ccce362d14ce420dc40474af1308f56f0c6f2af7a3c6e1a', '&yŒë	2ÙÌ¹Å¸\',3‚U™!>ðg×˜Â+Ïör×', 'wecreu123@yopmail.com', 'SjaWSyi42prpEBBSvkL5CGeJXKKIr8Ai37f9jcgy9nY95rueHKsj2H0jWUNDfKMeFd7WLiXTepRf47r4LJx2fHef2pJSTayyZe4Ao2H4XkUTCC0uXrZPoCyFw3aSYHyWBUb1iC8r80sLZ3thgKeEjDuhDR6dUYnEvCn1rZKZk4mk5eadskFk6ZWZFYHG0MzHZjV6aALYuPnGuFPszlLt1iGCKaXdVnadAql9fyRm4oh3g1IZWptNfOHRRd6L4p6'),
-(29, 'Wecreu001', 'Wecreu001', '', 'Wecreu001', 0.00, 0, 0, 0, 0, 'Wecreu001', 'a9e93f8b849e71883ac2df991ba7a92942ce4d9dd9467102b8b51bc06dab5487', '9§¹Û^á\r¾/iÓ/ž‹­[6I+‡ ŽbŸõ(©', 'Wecreu001@asdasd.com', NULL),
-(30, 'Testing user', 'Wecreu911', '', 'This is only a testing account', 15.00, 0, 1, 1, 1, 'Wecreu911', '60779a351eab4bddb752ca028a45831ad3de7c14fdd643eb4913987a8f72f7f7', 'a‰ÀqÈW6ë‡ˆÄT8jd†Y/\'-¢¯ªjÓ[\Z¿ú`', 'admin@wecreu.com', NULL),
-(31, 'test3', 'test3', '', '', 0.00, 0, 0, 0, 0, 'testing3', '5bc7ec6bc4070ebed57f079710f33b47beae88031a6c207d365ff92d49ae9400', '/Åá·lTÞ:hcm/4˜‡¿¾¨ÐÍ‡–håá¹ëè1', 'nhquang@myseneca.ca', NULL),
-(32, 'test4', 'test4', '', '', 0.00, 0, 0, 0, 0, 'testing4', '1fef13d761e3730f85ff03d216c9650d5a4c3be8bb1db7f5dd4ee6a801971b3c', '…½ÎoåFA ïS)HÎ®LCÅfBLI·ú_Ÿ1a?­', 'quangpersie1@gmail.com', NULL),
-(34, 'test6', 'test6', '', '', 0.00, 0, 0, 0, 0, 'testing6', 'bd34223b55e4e45b2be3fff31f509b2c0b866bb89cdc9fe2aa57fa79ce6736dc', 'à‘ÑWþVFzŽ«¹£@É\nñ˜Œµì#¡jdqŠ', 'the_arsenal2@yahoo.com.vn', NULL),
-(35, 'Wecreu912', 'Wecreu912', '', 'Wecreu912', 0.00, 0, 0, 0, 0, 'Wecreu912', '883f9658e5e9786c4d089aacae21561c907658a666b72066fab8c20be9f3b7fa', 'Ü4ÉeÏ\00sÁ²ëÕ].§ÆÐeav)|b»À!h', 'admin@Wecreu912.com', NULL),
-(37, 'brian', 'brian', '', 'asjdashd', 13.00, 1, 1, 0, 0, 'briantest', '5d11e7f2663c92981275512f489f27ad19e1c09c91336f81197ff0d1308704a0', '+Ì«@3D‡…Ñ9KÔgE7š‡ÇìgÍÐV·?3É®ÛÉÔ', 'briantest@briantest.com', NULL),
-(41, 'Wecreu888', 'Demo', '', 'This is for demo', 0.00, 1, 1, 1, 1, 'Wecreu888', '369ba6aa51bf71207ebd6ae5bd31c3686c91a640a7041b74c9d2176d45a8d0e9', 'Oð²87õ‰*ÈòÐÒè´‡àV™ª8¹ƒ½ÿ×Q„', 'mavillaflor@myseneca.ca', 'pRoKRuld4nM2nuVWNe2iN7wh392LevOcSoMxspp7zartYbJ72yw1sg3XkSQxm6uNQtHbmW6oUV3xkw5CWLObaaxcq6sW93LxKj4IY7BWznG5xtBVhSLBbBN5nAnepf5VMvWq7zDzBXDcP4rf3JeutkODmLBT5Z39YUioJprFYAhLyAbXwhIYQCtc4v8XRvA4HBmrWnERx1LQagoCM7KSKMIVRjGHh8LukHpiVLT9t5LIblHalnOyk0cZx2nX3Uj'),
-(46, 'testing17', 'testing17', '', '', 0.00, 0, 0, 0, 0, 'testing17', '2ddd25e1f1ded405abfde21abfd5255ce9aca4b03489819b2c6a858d0057bf20', '”?pðÔ/’ýãØ¼JÖû[¦y¥`n#÷…ÜžIjï•', 'testing17@gmail.com', NULL),
-(47, 'Christopher Lopez', 'Fruite', '', 'We sell only fruits and vegetables', 0.00, 0, 0, 0, 0, 'TestOne', '4632deb622aada18fff2a113ee3ba4412b317ec840caba56b1a58ad9364ac654', 'ðI\\°\0‰¢ÎÅ×§—c0ªEÀ<$Ü°Ž¢3%‹Â¹', 'yopeyone@gmail.com', NULL),
-(48, 'testing20', 'testing20', '', '', 0.00, 0, 0, 0, 0, 'testing20', '6e276a2d84944b0d150195bb2ae183d4bdff2e2be2db63de27718dfcef786fb7', 'žûI‚˜H­b¶ØÂ\'=9Ü­Áë¯XV>Óð…2Æí', 'testing20@gmail.com', NULL),
-(49, 'testing1', 'testing1', '', '', 0.00, 0, 0, 0, 0, 'testing1', '97e57cf65005776147dbcc957091518c18453d682a34f072778b2377b26aa27d', '0Ðt6:#¶Â»(^=Jñ§äŒW_æ[ÚNîù	®', 'testing1@gmail.com', NULL),
-(50, 'testingQ', 'testingQ', '', '', 0.00, 0, 0, 0, 0, 'testingQ', '7e6c3b777b9d5ce8b758e40ebd7d84f8a1613d52e1cbc3dec890fb7bd1d47cd4', 'CkR©,GjñÖ<ÁÆŽðã_Š.—©3;ìK´,', 'testingQ@gmail.com', NULL),
-(51, 'testingN', 'testingN', '', '', 0.00, 0, 0, 0, 0, 'testingN', 'd1cfd64d30e8fff8d147328a16e192a7c56dd790100032acecaa80e10efa7c20', '·¤N|Â:ZÕWú›¤.ŸZî©š¤¢‹6qPÔ\\N¸ë ', 'testingN@gmail.com', NULL),
-(52, 'testingH', 'testingH', '', '', 0.00, 0, 0, 0, 0, 'testingH', 'c9ae125eb2f28716223b4549efb6de78ebad7fa1c94482063286ef6f7b191160', 'k¾j¹äâËô‡ò¸šîÏ[’3¬Ã{ÚjòZmÏ', 'testingH@gmail.com', NULL),
-(53, 'Emile', 'Test', '', '      ', 0.00, 0, 0, 0, 0, 'emile1', '8e252026c0cbcf73d2e241364924068c9b8de30f0d41bf2ac27a056a127f2e7c', '£’˜ý\r_Ê¾¹Ö\"[´ß¥¯ç4û§|E­ÚŠî@“É', 'emile.ohan@senecacollege.ca', NULL),
-(54, 'testingY', 'testingY', '', '', 0.00, 0, 0, 0, 0, 'testingY', '4db977a9571c1c2c01fde7f951a0c5c059baae7d29b06c9ce739b674f6e7e4f6', 'º˜w×z…ñû47„áá’=<\nb0W\Z»¨ã÷s³', 'testingY@gmail.com', NULL),
-(55, 'testingR', 'testingR', '', '', 0.00, 0, 0, 0, 0, 'testingR', '8b07d2d6ca0645cb5d46c2b0b51ff69df728b13cca9f8b0c703ee5ed2cd829d7', 'ª3‡)á»1ÖßàÉi8°-d9ªü?Ï©<jHÚ;|Þí', 'testingR@gmail.com', NULL);
+INSERT INTO `client` (`client_id`, `client_name`, `client_site_title`, `client_logo`, `client_information`, `client_tax`, `payment_option_paypal`, `payment_option_visa`, `payment_option_mastercard`, `payment_option_ae`, `username`, `password`, `salt`, `client_admin_email`, `recovery_hash`, `validated`, `validate_hash`, `reset_password_expire`, `validate_email_expire`) VALUES
+(1, 'Template', 'Wecreu', '/data/default/wecreu/logo.png', 'We sale magical items and broom sticks.', 50.00, 1, 1, 1, 1, 'Wecreu', 'Password123', '', 'admin@magicalitem.com', NULL, 1, NULL, NULL, NULL),
+(2, 'Olivander', 'Olivander\'s finest wands ', '/data/default/logo.png', 'I sale wands for witches and wizards', 13.00, 1, 1, 1, 1, 'wand', 'Password123', '', 'admin@olivander.com', NULL, 1, NULL, NULL, NULL),
+(5, 'Brian', '', '/data/default/logo.png', 'Its secret', 23.00, 0, 1, 1, 0, 'wecreu', '41c8f3fd9abc63d10822504f0d45f569d91761a7868eff9431bc05e2c5a3d53e', 'vÎuy»0sH Ïëå¹·\'IÈE-&ú€ÀjÎBýñ', 'brian@pying.ca', NULL, 1, NULL, NULL, NULL),
+(21, 'Mark Anthony', 'tesing site', '', '', 0.00, 0, 0, 0, 0, 'mavillaflor', '4d9622dbfd993a14c668c984e5ae20b56843d9e1f99f2f946e51d37d3b528c6e', '’ê›IlcVY_Hõ¨|2ˆÀLÕ3ôx”©§î?K1Èœrù', 'Password123@testing.com', NULL, 1, NULL, NULL, NULL),
+(22, 'Christopher', 'Group 4 member', '', '', 0.00, 0, 0, 0, 0, 'testingclient', '7a3487f5adcc1ca6f3f47bb358dc5cd11befeb220246ed08ebc85c7ba351058d', 'tŠ”4rr„¬›ÛÑÈ…‘KÄ+»è²=(G¤É', 'admin@testng.com', NULL, 1, NULL, NULL, NULL),
+(23, 'Mark Testing', 'mark testing site', '', '', 0.00, 0, 0, 0, 0, 'marktesting', '0b3bc4a1cc1c473901616421ab3fa78ddbc02e492f3ee6867887c2fee7c5bda3', '¸ñ[´É˜G<£`c€<ˆY¸¥\0Íƒm÷LhKg', 'admin@asdasd.com', NULL, 1, NULL, NULL, NULL),
+(24, 'Mark Anthony Villaflor', 'Mark Anthony Villaflor', '', 'The ', 13.00, 0, 1, 1, 0, 'mavillaflor1', '4c742d0978af19997e28685e697f8f7aa2f0e2324b73ad9ea1e500c3f9ee2820', 'êñnà>U…>VÍ(Ë=HW&‘(W9oð—~ÕE', 'admin@myseneca.ca', NULL, 1, NULL, NULL, NULL),
+(25, 'Quang', 'Hello World', '', 'ass', 0.00, 0, 0, 0, 0, 'nhquang', '0e0ea1caef9c7d0db2b62ca93af827e1d1317b8ce3988e78c37a6690328780d2', 'Eˆ [þPYäÆ]6¬åK;', 'nhquang@myseneca.ca', NULL, 1, NULL, NULL, NULL),
+(26, 'mark', 'mark', '', '', 0.00, 0, 0, 0, 0, 'testing', 'a120af836f69e4a6d20ac323a9c4b1d350da659d87762d691dafd781d2591894', '§LÿÑ2-]K’‹ZûøO5Ù¹	8ÀPB£Ãˆ­=¹', 'nhquang@myseneca.ca', NULL, 1, NULL, NULL, NULL),
+(27, 'testing2', 'testing2', '', '', 0.00, 0, 0, 0, 0, 'testing2', '396d21583fdfe11f710269d88059df9514ce570e4a503a476fd41fe747202e04', 'Ö¯³–äÃfúQ`\\‡tcÿ\'!ÌÀ8¶n(ì€û5Ô', 'nhquang@myseneca.ca', NULL, 1, NULL, NULL, NULL),
+(28, 'Mark Anthony Villaflor', 'Mark Anthony Villaflor2', '', '', 0.00, 0, 0, 0, 0, 'Wecreu123', 'f57ae6707ac8bbc61ccce362d14ce420dc40474af1308f56f0c6f2af7a3c6e1a', '&yŒë	2ÙÌ¹Å¸\',3‚U™!>ðg×˜Â+Ïör×', 'wecreu123@yopmail.com', 'SjaWSyi42prpEBBSvkL5CGeJXKKIr8Ai37f9jcgy9nY95rueHKsj2H0jWUNDfKMeFd7WLiXTepRf47r4LJx2fHef2pJSTayyZe4Ao2H4XkUTCC0uXrZPoCyFw3aSYHyWBUb1iC8r80sLZ3thgKeEjDuhDR6dUYnEvCn1rZKZk4mk5eadskFk6ZWZFYHG0MzHZjV6aALYuPnGuFPszlLt1iGCKaXdVnadAql9fyRm4oh3g1IZWptNfOHRRd6L4p6', 1, NULL, NULL, NULL),
+(29, 'Wecreu001', 'Wecreu001', '', 'Wecreu001', 0.00, 0, 0, 0, 0, 'Wecreu001', 'a9e93f8b849e71883ac2df991ba7a92942ce4d9dd9467102b8b51bc06dab5487', '9§¹Û^á\r¾/iÓ/ž‹­[6I+‡ ŽbŸõ(©', 'Wecreu001@asdasd.com', NULL, 1, NULL, NULL, NULL),
+(30, 'Testing user', 'Wecreu911', '', 'This is only a testing account', 15.00, 0, 1, 1, 1, 'Wecreu911', '60779a351eab4bddb752ca028a45831ad3de7c14fdd643eb4913987a8f72f7f7', 'a‰ÀqÈW6ë‡ˆÄT8jd†Y/\'-¢¯ªjÓ[\Z¿ú`', 'admin@wecreu.com', NULL, 1, NULL, NULL, NULL),
+(31, 'test3', 'test3', '', '', 0.00, 0, 0, 0, 0, 'testing3', '5bc7ec6bc4070ebed57f079710f33b47beae88031a6c207d365ff92d49ae9400', '/Åá·lTÞ:hcm/4˜‡¿¾¨ÐÍ‡–håá¹ëè1', 'nhquang@myseneca.ca', NULL, 1, NULL, NULL, NULL),
+(32, 'test4', 'test4', '', '', 0.00, 0, 0, 0, 0, 'testing4', '1fef13d761e3730f85ff03d216c9650d5a4c3be8bb1db7f5dd4ee6a801971b3c', '…½ÎoåFA ïS)HÎ®LCÅfBLI·ú_Ÿ1a?­', 'quangpersie1@gmail.com', NULL, 1, NULL, NULL, NULL),
+(34, 'test6', 'test6', '', '', 0.00, 0, 0, 0, 0, 'testing6', 'bd34223b55e4e45b2be3fff31f509b2c0b866bb89cdc9fe2aa57fa79ce6736dc', 'à‘ÑWþVFzŽ«¹£@É\nñ˜Œµì#¡jdqŠ', 'the_arsenal2@yahoo.com.vn', NULL, 1, NULL, NULL, NULL),
+(35, 'Wecreu912', 'Wecreu912', '', 'Wecreu912', 0.00, 0, 0, 0, 0, 'Wecreu912', '883f9658e5e9786c4d089aacae21561c907658a666b72066fab8c20be9f3b7fa', 'Ü4ÉeÏ\00sÁ²ëÕ].§ÆÐeav)|b»À!h', 'admin@Wecreu912.com', NULL, 1, NULL, NULL, NULL),
+(37, 'brian', 'brian', '', 'asjdashd', 13.00, 1, 1, 0, 0, 'briantest', '5d11e7f2663c92981275512f489f27ad19e1c09c91336f81197ff0d1308704a0', '+Ì«@3D‡…Ñ9KÔgE7š‡ÇìgÍÐV·?3É®ÛÉÔ', 'briantest@briantest.com', NULL, 1, NULL, NULL, NULL),
+(41, 'Wecreu888', 'Demo', '', 'This is for demo', 0.00, 1, 1, 1, 1, 'Wecreu888', '369ba6aa51bf71207ebd6ae5bd31c3686c91a640a7041b74c9d2176d45a8d0e9', 'Oð²87õ‰*ÈòÐÒè´‡àV™ª8¹ƒ½ÿ×Q„', 'mavillaflor@myseneca.ca', 'pRoKRuld4nM2nuVWNe2iN7wh392LevOcSoMxspp7zartYbJ72yw1sg3XkSQxm6uNQtHbmW6oUV3xkw5CWLObaaxcq6sW93LxKj4IY7BWznG5xtBVhSLBbBN5nAnepf5VMvWq7zDzBXDcP4rf3JeutkODmLBT5Z39YUioJprFYAhLyAbXwhIYQCtc4v8XRvA4HBmrWnERx1LQagoCM7KSKMIVRjGHh8LukHpiVLT9t5LIblHalnOyk0cZx2nX3Uj', 1, NULL, NULL, NULL),
+(46, 'testing17', 'testing17', '', '', 0.00, 0, 0, 0, 0, 'testing17', '2ddd25e1f1ded405abfde21abfd5255ce9aca4b03489819b2c6a858d0057bf20', '”?pðÔ/’ýãØ¼JÖû[¦y¥`n#÷…ÜžIjï•', 'testing17@gmail.com', NULL, 1, NULL, NULL, NULL),
+(47, 'Christopher Lopez', 'Fruite', '', 'We sell only fruits and vegetables', 0.00, 0, 0, 0, 0, 'TestOne', '4632deb622aada18fff2a113ee3ba4412b317ec840caba56b1a58ad9364ac654', 'ðI\\°\0‰¢ÎÅ×§—c0ªEÀ<$Ü°Ž¢3%‹Â¹', 'yopeyone@gmail.com', NULL, 1, NULL, NULL, NULL),
+(48, 'testing20', 'testing20', '', '', 0.00, 0, 0, 0, 0, 'testing20', '6e276a2d84944b0d150195bb2ae183d4bdff2e2be2db63de27718dfcef786fb7', 'žûI‚˜H­b¶ØÂ\'=9Ü­Áë¯XV>Óð…2Æí', 'testing20@gmail.com', NULL, 1, NULL, NULL, NULL),
+(49, 'testing1', 'testing1', '', '', 0.00, 0, 0, 0, 0, 'testing1', '97e57cf65005776147dbcc957091518c18453d682a34f072778b2377b26aa27d', '0Ðt6:#¶Â»(^=Jñ§äŒW_æ[ÚNîù	®', 'testing1@gmail.com', NULL, 1, NULL, NULL, NULL),
+(50, 'testingQ', 'testingQ', '/data/www/default/testingQ/images//logo.jpg', '', 0.00, 0, 0, 0, 0, 'testingQ', '7e6c3b777b9d5ce8b758e40ebd7d84f8a1613d52e1cbc3dec890fb7bd1d47cd4', 'CkR©,GjñÖ<ÁÆŽðã_Š.—©3;ìK´,', 'testingQ@gmail.com', NULL, 1, NULL, NULL, NULL),
+(51, 'testingN', 'testingN', '', '', 0.00, 0, 0, 0, 0, 'testingN', 'd1cfd64d30e8fff8d147328a16e192a7c56dd790100032acecaa80e10efa7c20', '·¤N|Â:ZÕWú›¤.ŸZî©š¤¢‹6qPÔ\\N¸ë ', 'testingN@gmail.com', NULL, 1, NULL, NULL, NULL),
+(52, 'testingH', 'testingH', '', '', 0.00, 0, 0, 0, 0, 'testingH', 'c9ae125eb2f28716223b4549efb6de78ebad7fa1c94482063286ef6f7b191160', 'k¾j¹äâËô‡ò¸šîÏ[’3¬Ã{ÚjòZmÏ', 'testingH@gmail.com', NULL, 1, NULL, NULL, NULL),
+(53, 'Emile', 'Test', '', '      ', 0.00, 0, 0, 0, 0, 'emile1', '8e252026c0cbcf73d2e241364924068c9b8de30f0d41bf2ac27a056a127f2e7c', '£’˜ý\r_Ê¾¹Ö\"[´ß¥¯ç4û§|E­ÚŠî@“É', 'emile.ohan@senecacollege.ca', NULL, 1, NULL, NULL, NULL),
+(54, 'testingY', 'testingY', '', '', 0.00, 0, 0, 0, 0, 'testingY', '4db977a9571c1c2c01fde7f951a0c5c059baae7d29b06c9ce739b674f6e7e4f6', 'º˜w×z…ñû47„áá’=<\nb0W\Z»¨ã÷s³', 'testingY@gmail.com', NULL, 1, NULL, NULL, NULL),
+(55, 'testingR', 'testingR', '/data/www/default/testingR/images//logo.jpg', '', 0.00, 0, 0, 0, 0, 'testingR', '8b07d2d6ca0645cb5d46c2b0b51ff69df728b13cca9f8b0c703ee5ed2cd829d7', 'ª3‡)á»1ÖßàÉi8°-d9ªü?Ï©<jHÚ;|Þí', 'testingR@gmail.com', NULL, 1, NULL, NULL, NULL),
+(56, 'formati', 'formati', '', 'formati', 13.00, 0, 0, 0, 0, 'formati', '0853f10476988a6da64bdab9e0ad8143116549781f28bbdc969aeaaad9a01f2a', 'å ª‰O­¶ßUÉÀûEUµ”%-µõG²øšÖ¿3©´', 'formati@asd.com', NULL, 1, NULL, NULL, NULL),
+(57, 'Brian', 'StarStar', '', 'An amazing coffice shop.', 13.00, 0, 1, 0, 0, 'brianred', 'b95396a5849b9a9c6657821c4abfada7c31dee372aa011fd7e574f29b6c6d89f', ' ŠÆ@uèôE†üFœu>ççJHÎF…FÃö[òã~Õ', 'pyang16@myseneca.ca', NULL, 1, NULL, NULL, NULL),
+(59, 'ueditor', 'sdasdasd', '/data/default/logo.png', NULL, NULL, 0, 0, 0, 0, '', '', '', '', NULL, 1, NULL, NULL, NULL),
+(60, 'briangrey', 'BITS', '', 'Brian\'s IT shop', 8.00, 0, 1, 1, 0, 'briangrey', 'd63d4b3088861b52923383426d0d9cfbe0903a86a29bf3278e48fadeb2d4189b', '-\"{]fÏûáÌä%óÜK¥^*L1CzQ·ð¸ù', 'pyang16@myseneca', NULL, 1, NULL, NULL, NULL),
+(61, 'Filling all fields', 'All', '', 'All', 10.00, 1, 1, 1, 1, 'allfieldsfilled', '5a8a8b65bc608bc321bd73222f407399949cc2842ea04d7d1287876eaa0037fa', '“xƒ£Ú™%MIÖrQ@ÙÜÑ±`\0Šw ®ó', 'admin@admin.com', NULL, 1, NULL, NULL, NULL),
+(69, 'testingit', 'testingit', '', '', 0.00, 0, 0, 0, 0, 'testingit', '85fe9205d348f2cf88aa3c70a8753e95c76144108309aea5d7dc42b34304666f', '+ÃŠo¢C×¸¸fŸÖ0ô‡€ü+¬³’B\n/«ÕÆÖ¿', 'testingit@yopmail.com', NULL, 1, NULL, NULL, NULL),
+(70, 'testingP', 'testingP', '', 'here is the info', 5.52, 1, 1, 1, 0, 'testingP', '0d89f6d2de620401ab1d914795ba8321ef6595d20eb77b0a55a8b009ceee83df', 'J´ô²8ÒÀ\"ÇvLKÃ®xïpÆÞô¾ßíG/\05', 'testingP123@gmail.com', NULL, 0, NULL, NULL, NULL),
+(71, 'Information', 'Information', '', 'Information', 13.00, 1, 1, 0, 0, 'Information', '5a5236d4be502d016699be155461b6c4aa3633738a091de7dd46a922ff382a06', 'tIÌ[Ëûªm5o`ÂÎy\\ò‰˜¼€[ªÉE\rfµ(ƒ¤', 'Information@asd.com', NULL, 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -263,9 +305,14 @@ INSERT INTO `good` (`good_id`, `good_name`, `good_image`, `good_description`, `g
 (409, 'Flowers', '../../../images/Flowers.png', 'Flower test', 0.02, 300, 0.03, 0, 0, 1, 16),
 (417, 'Apple Macbook Pro 15', '../../../images/Computer2.PNG', 'Apple Macbook Pro 2017 15 inches screen', 4999.00, 5, 15.00, 0, 0, 181, NULL),
 (418, 'Red mouse', '/data/default/good.png', 'is a red mouse', 90.00, 10, 1.00, 1, 1, 182, NULL),
-(419, 'ICU Webcam', '', 'webcam that sees everything', 20.03, 3000, 200.02, 1, 1, 184, NULL),
-(420, 'wrasa', '', 'ui', 0.02, 2, 0.02, 1, 1, 182, 1),
-(421, 'Red Keyboard', '/data/default/good.png', 'Search this', 10.00, 10, 10.00, 1, 1, 183, NULL);
+(421, 'Red Keyboard', '/data/default/good.png', 'Search this', 10.00, 10, 10.00, 1, 1, 183, NULL),
+(423, 'Blonde Vanilla Latte', '../../../images/1505ec8d423c4d77b5c04911dc4dd925.jpg', 'Blonde Vanilla Latte', 3.00, 999, 1.00, 1, 1, 189, 16),
+(424, 'Blonde Almondmilk Vanilla Latte', '../../../images/24d7ca0b7ea74873aabecb365ac0cffd.jpg', 'Blonde Vanilla Latte', 1.00, 999, 1.00, 1, 1, 189, 16),
+(425, 'Reduced-Fat Bacon-style Turkey', '../../../images/1dcffe6a5e6943e7b44942d2d6070d91.jpg', 'Reduced-Fat Bacon-style Turkey', 6.99, 999, 1.00, 1, 1, 191, 16),
+(426, 'Sausage, Egg &amp; Cheese on English Muffin', '../../../images/bb7757ae41f947918f056a78b11686d9.jpg', 'Sausage, Egg &amp; Cheese on English Muffin', 4.99, 999, 1.00, 1, 1, 191, 16),
+(427, 'Deluxe Fruit Blend', '../../../images/16e6abe01e024531b6e946b0b037eca1.jpg', 'Deluxe Fruit Blend', 3.99, 999, 1.00, 1, 1, 193, 16),
+(428, 'Peach &amp; Raspberry Yogurt Parfait', '../../../images/990a15e74f2545feb834203f9ecf269f.jpg', 'Peach &amp; Raspberry Yogurt Parfait', 11.99, 999, 1.00, 1, 1, 193, 16),
+(429, 'ASUS Rog GX501VI', '../../../images/1.jpg', 'ASUS Rog GX501VI', 3499.99, 300, 15.00, 1, 1, 194, 16);
 
 -- --------------------------------------------------------
 
@@ -395,6 +442,28 @@ INSERT INTO `order_line` (`invoice_id`, `order_line_id`, `good_id`, `good_quanti
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `page`
+--
+
+CREATE TABLE `page` (
+  `id` int(11) NOT NULL,
+  `page_name` varchar(100) NOT NULL,
+  `client_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `page`
+--
+
+INSERT INTO `page` (`id`, `page_name`, `client_id`) VALUES
+(9, 'Careers', 60),
+(10, 'Contact us', 60),
+(11, 'Openning hours', 57),
+(12, 'Map', 57);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sale`
 --
 
@@ -412,7 +481,7 @@ CREATE TABLE `sale` (
 --
 
 INSERT INTO `sale` (`sale_id`, `sale_name`, `sale_description`, `discount`, `end_date`, `start_date`) VALUES
-(1, 'Cheesy Promo 50% ', 'Cheesy Promo 50% off by tomorrow!! Get your cows now! New Cows in stock! Get it while they last! Also, chickens coming for Canada Day!', 50.00, '2017-07-30 00:00:00', '2017-06-09 16:09:42'),
+(1, 'Cheesy Promo 50% ', 'Cheesy Promo 50% off by tomorrow!! Get your cows now! New Cows in stock! Get it while they last! Also, chickens coming for Canada Day!', 50.00, '2017-06-30 00:00:00', '2017-06-09 16:09:42'),
 (2, 'Testing', 'This is only a test', 20.00, NULL, NULL),
 (3, 'Testing2', 'Testing2', 60.00, '2017-07-18 00:00:00', '2017-06-18 00:00:00'),
 (4, 'Testing22', 'Testing22', 80.00, '2017-08-17 00:00:00', '2017-07-17 00:00:00'),
@@ -500,6 +569,14 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`admin_id`),
+  ADD UNIQUE KEY `UNIQUE_USERNAME` (`admin_username`),
+  ADD UNIQUE KEY `UNIQUE_EMAIL` (`admin_email`);
+
+--
 -- Indexes for table `category`
 --
 ALTER TABLE `category`
@@ -550,6 +627,12 @@ ALTER TABLE `order_line`
   ADD KEY `fk_order_line_good_id` (`good_id`);
 
 --
+-- Indexes for table `page`
+--
+ALTER TABLE `page`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sale`
 --
 ALTER TABLE `sale`
@@ -561,15 +644,20 @@ ALTER TABLE `sale`
 --
 
 --
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `admin_id` bigint(20) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
+  MODIFY `category_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
 --
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `client_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `client_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 --
 -- AUTO_INCREMENT for table `client_session`
 --
@@ -584,7 +672,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `good`
 --
 ALTER TABLE `good`
-  MODIFY `good_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=422;
+  MODIFY `good_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=430;
 --
 -- AUTO_INCREMENT for table `invoice`
 --
@@ -595,6 +683,11 @@ ALTER TABLE `invoice`
 --
 ALTER TABLE `order_line`
   MODIFY `order_line_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+--
+-- AUTO_INCREMENT for table `page`
+--
+ALTER TABLE `page`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `sale`
 --
