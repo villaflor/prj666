@@ -65,12 +65,12 @@
                                 <td class="content-cell"
                                     style="box-sizing: border-box; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; padding: 35px; word-break: break-word;">
                                     <h1 style="box-sizing: border-box; color: #2F3133; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 19px; font-weight: bold; margin-top: 0;"
-                                        align="left">Hi <?= $user->data()->client_name ?>,</h1>
+                                        align="left">Hi <?= Input::get('username') ?>,</h1>
                                     <p style="box-sizing: border-box; color: #74787E; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; line-height: 1.5em; margin-top: 0;"
-                                       align="left">You recently requested to reset your password for your Wecreu
-                                        account. Use the button below to reset it. <strong
+                                       align="left">You recently register for your Wecreu
+                                        account. We need to verify your email address. Use the button below to verify it. <strong
                                                 style="box-sizing: border-box; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;">This
-                                            password reset is only valid for the next 24 hours.</strong></p>
+                                            verification email is only valid for the next 24 hours.</strong></p>
                                     <table class="body-action" align="center" width="100%" cellpadding="0"
                                            cellspacing="0"
                                            style="box-sizing: border-box; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; margin: 30px auto; padding: 0; text-align: center; width: 100%;">
@@ -87,7 +87,7 @@
                                                                    style="box-sizing: border-box; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;">
                                                                 <tr>
                                                                     <td style="box-sizing: border-box; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; word-break: break-word;">
-                                                                        <a href="http://myvmlab.senecacollege.ca:5726/wecreu/passwordreset.php?email=<?=escape(Input::get('email'))?>&identifier=<?=$identifier?>"
+                                                                        <a href="http://myvmlab.senecacollege.ca:5726/wecreu/validateEmailAdd.php?email=<?= escape(Input::get('client_admin_email'))?>&validateCode=<?=$validateHash?>"
                                                                            class="button button--green" target="_blank"
                                                                            style="-webkit-text-size-adjust: none; background: #22BC66; border-color: #22bc66; border-radius: 3px; border-style: solid; border-width: 10px 18px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16); box-sizing: border-box; color: #FFF; display: inline-block; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; text-decoration: none;">Reset
                                                                             your password</a>
@@ -101,7 +101,7 @@
                                         </tr>
                                     </table>
                                     <p style="box-sizing: border-box; color: #74787E; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; line-height: 1.5em; margin-top: 0;"
-                                       align="left">If you did not request a password reset, please
+                                       align="left">If you did not register for Wecreu account, please
                                         ignore this email.</p>
                                     <p style="box-sizing: border-box; color: #74787E; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; line-height: 1.5em; margin-top: 0;"
                                        align="left">Thanks,
@@ -119,7 +119,7 @@
                                                 <p class="sub"
                                                    style="box-sizing: border-box; color: #74787E; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 12px; line-height: 1.5em; margin-top: 0;"
                                                    align="left">
-                                                    http://myvmlab.senecacollege.ca:5726/wecreu/passwordreset.php?email=<?=escape(Input::get('email'))?>&identifier=<?=$identifier?>
+                                                    http://myvmlab.senecacollege.ca:5726/wecreu/validateEmailAdd.php?email=<?= escape(Input::get('client_admin_email'))?>&validateCode=<?=$validateHash?>
                                                 </p>
                                             </td>
                                         </tr>

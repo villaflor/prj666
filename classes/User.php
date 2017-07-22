@@ -136,4 +136,8 @@ class User{
     public function isLoggedIn(){
         return $this->_isLoggedIn;
     }
+
+    public function deleteUser(){
+        $this->_db->delete('client', array('client_id', '=', $this->data()->client_id));
+    }
 }
