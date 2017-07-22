@@ -156,6 +156,36 @@ $user = new User();
             <p>This template is designed for limited goods and categories. It doesn't support search function. When customers move to another page( from good list to good detail), it will not refresh the whole page. At the bottom of the template, it allows customers connect quickly with client. It is good for selling services.</p>
         </div>
     </div>
+    <hr/>
+    <div class="col-md-12">
+        <h1 style="color:#186bd6" class="text-center pb-3"><b><i>Featured</i></b></h1>
+        <hr/>
+        <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">
+            <h2 class="pl-1" style="color:#186bd6"><i>Create your site</i></h2>
+            <p class="pb-3 pl-3">Generate with two clicks.</p>
+            <img class="col-md-12" src="images/generate.jpg" />
+        </div>
+        <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">
+            <h2 class="pr-1 text-right" style="color:#186bd6"><i>Templates change</i></h2>
+            <p class="pb-3 pr-3 text-right">Change your site's style.</p>
+            <img class="col-md-12" src="images/template.jpg" />
+        </div>
+            <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">
+            <h2 class="pl-1" style="color:#186bd6"><i>Inventory control</i></h2>
+            <p class="pb-3 pl-3">Manage your products and sell them.</p>
+            <img class="col-md-12" src="images/inventory.jpg" />
+        </div>
+        <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">
+            <h2 class="pr-1 text-right" style="color:#186bd6"><i>Promotion sales</i></h2>
+            <p class="pb-3 pr-3 text-right">Recomand products to your customers.</p>
+            <img class="col-md-12" src="images/promotion.jpg" />
+        </div>
+        <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">
+            <h2 class="pl-1" style="color:#186bd6"><i>Dynamic page</i></h2>
+            <p class="pb-3 pl-3">Custom your site in a easy way.</p>
+            <img class="col-md-12" src="images/page.jpg" />
+        </div>
+    </div>
 </div>
 
 <?php include('includes/footer.inc'); ?>
