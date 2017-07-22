@@ -152,7 +152,7 @@ if(Input::exists()){
 </nav>
 <div class="container bg-faded py-5">
     <h2 class="mb-4">Edit cover</h2>
-    <p class="mb-4 red"><b>This feature only for grey template. If you cannot see the change, you need to clean the cache</b></p>
+    <p class="mb-4 red"><b>This feature is only for grey template. If you cannot see the change, you need to clean the cache.</b></p>
     <?php
     if($validate->errors()) {
         foreach ($validation->errors() as $error) {
