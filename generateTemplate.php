@@ -18,7 +18,7 @@ if(Input::exists()){
         $client_name = $user->data()->username;
         $com_title = $user->data()->client_site_title;
 		$client_id = $user->data()->client_id;
-        $target_dir = '/data/www/default/' . $client_name . '/images/';
+        $target_dir = '/data/www/default/' . $client_name . '/images';
         $target_file = $target_dir . "/logo.jpg";
         $uploadOk = 1;
 // Desired folder structure
@@ -233,7 +233,7 @@ if(Input::exists()){
 
             }
         }
-
+		$user->update(array('client_logo' => $target_file));
 		if($wait == 1){
 			sleep(60);
 			//$wait2 = 1;
