@@ -123,42 +123,59 @@ if(!$username = Input::get('user')){
         <div class="container mb-4">
             <section class="container py-5 bg-primary rounded mb-4">
                 <div class="row mb-5">
-                    <div class="col-2">Logo here</div>
+                    <div class="col-2"><img src="<?php
+                        if ($logo = $user->data()->client_logo){
+                            echo $logo;
+                        } else {
+                            echo 'images/defaultlogo.jpg';
+                        }
+                        ?>" alt="logo" class="img-thumbnail" width="250px" height="250px"></div>
                     <div class="container col-5">
                         <div class="col mb-5">
-                            <p>Client name</p>
-                            <h3>
+                            <p>Client name</p><hr>
+                            <h3 class="text-white">
                                 <?php
                                 echo $user->data()->client_name;
                                 ?>
                             </h3>
                         </div>
                         <div class="col">
-                            <p>Client link</p>
-                            <h3><a class="text-gray-dark" href="<?php
-                                echo "/" . $user->data()->username;
-                                ?>">
-                                    Link to your site
-                                </a>
+                            <p>Client link</p><hr>
+                            <h3 class="text-white"><?php
+                                if (file_exists('/data/www/default/' . $user->data()->username)){
+                                    ?><a class="text-white" href="<?php
+                                    echo "/" . $user->data()->username;
+                                    ?>">
+                                        Go to my site
+                                    </a>
+                                    <?php
+                                } else {
+                                    ?><a class="text-white" href="generateTemplate.php">
+                                        Generate my site
+                                    </a>
+                                    <?
+                                }
+                                ?>
+
                             </h3>
                         </div>
                     </div>
                     <div class="container col-5">
                         <div class="col mb-5">
-                            <p>Site title</p>
-                            <h3>
+                            <p>Site title</p><hr>
+                            <h3 class="text-white">
                                 <?php
                                 echo $user->data()->client_site_title;
                                 ?>
                             </h3>
                         </div>
                         <div class="col">
-                            <p>Acceptable payment</p>
+                            <p>Acceptable payment</p><hr>
                             <?php
-                            if($user->data()->payment_option_visa) echo "<h3>Visa card</h3>";
-                            if($user->data()->payment_option_mastercard) echo "<h3>Master card</h3>";
-                            if($user->data()->payment_option_ae) echo "<h3>American Express</h3>";
-                            if($user->data()->payment_option_paypal) echo "<h3>Paypal</h3>";
+                            if($user->data()->payment_option_visa) echo "<h3 class=\"text-white\">Visa card</h3>";
+                            if($user->data()->payment_option_mastercard) echo "<h3 class=\"text-white\">Master card</h3>";
+                            if($user->data()->payment_option_ae) echo "<h3 class=\"text-white\">American Express</h3>";
+                            if($user->data()->payment_option_paypal) echo "<h3 class=\"text-white\">Paypal</h3>";
                             ?>
                         </div>
                     </div>
@@ -321,10 +338,10 @@ if(!$username = Input::get('user')){
                 </div>
             </section>
         </div>
-		<form action="" method="post">
-			<input class="btn btn-primary float-right" type="submit" name="submitBtn" value="Delete your website">
-		</form>
-		
+        <form action="" method="post">
+            <input class="btn btn-primary float-right" type="submit" name="submitBtn" value="Delete your website">
+        </form>
+
     </div>
 
 
@@ -342,50 +359,50 @@ if(!$username = Input::get('user')){
 
     <?php
 }
-	
 
-	if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-		if (isset($_POST['submitBtn'])) {
-			$deletedDir = '/data/www/default/' . $client_name;
-			$deletedDir2 = '/data/www/default/' . $client_name . '/images';
-			$deletedDir3 = '/data/www/default/' . $client_name . '/css';
-			$deletedDir4 = '/data/www/default/' . $client_name . '/js';
-			$deletedDir5 = '/data/www/default/' . $client_name . '/good';
-			$deletedDir6 = '/data/www/default/' . $client_name . '/backup';
-			if(file_exists($deletedDir)){
-				rrmdir($deletedDir2);
-				rrmdir($deletedDir3);
-				if (file_exists($deletedDir4)){
-					rrmdir($deletedDir4);
-				}
-				if(file_exists($$deletedDir5)){
-					rrmdir($deletedDir5);
-				}
-				if(file_exists($deletedDir6)){
-					rrmdir($deletedDir6);
-				}
-				rrmdir($deletedDir);
-				$check == 1;
-			}
-		}
-		if ($check == 1){
-			echo "Your site has been deleted.";
-		}
-		
-	}
 
-function rrmdir($dir) { 
-   if (is_dir($dir)) { 
-     $objects = scandir($dir); 
-     foreach ($objects as $object) { 
-       if ($object != "." && $object != "..") { 
-         if (is_dir($dir."/".$object))
-           rrmdir($dir."/".$object);
-         else
-           unlink($dir."/".$object); 
-       } 
-     }
-     rmdir($dir); 
-   } 
- }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['submitBtn'])) {
+        $deletedDir = '/data/www/default/' . $client_name;
+        $deletedDir2 = '/data/www/default/' . $client_name . '/images';
+        $deletedDir3 = '/data/www/default/' . $client_name . '/css';
+        $deletedDir4 = '/data/www/default/' . $client_name . '/js';
+        $deletedDir5 = '/data/www/default/' . $client_name . '/good';
+        $deletedDir6 = '/data/www/default/' . $client_name . '/backup';
+        if(file_exists($deletedDir)){
+            rrmdir($deletedDir2);
+            rrmdir($deletedDir3);
+            if (file_exists($deletedDir4)){
+                rrmdir($deletedDir4);
+            }
+            if(file_exists($$deletedDir5)){
+                rrmdir($deletedDir5);
+            }
+            if(file_exists($deletedDir6)){
+                rrmdir($deletedDir6);
+            }
+            rrmdir($deletedDir);
+            $check == 1;
+        }
+    }
+    if ($check == 1){
+        echo "Your site has been deleted.";
+    }
+
+}
+
+function rrmdir($dir) {
+    if (is_dir($dir)) {
+        $objects = scandir($dir);
+        foreach ($objects as $object) {
+            if ($object != "." && $object != "..") {
+                if (is_dir($dir."/".$object))
+                    rrmdir($dir."/".$object);
+                else
+                    unlink($dir."/".$object);
+            }
+        }
+        rmdir($dir);
+    }
+}
 ?>
