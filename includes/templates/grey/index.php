@@ -103,7 +103,7 @@
               echo '<li><a href="#' . $row['id'] . '"><i class="fa fa-link"></i>' . $row['page_name'] . '</a></li>';
            }
            ?>
-           <li><a href="#contact"><i class="fa fa-link"></i>Contact us</a></li>
+           <li><a href="#contact"><i class="fa fa-link"></i>Email Us</a></li>
          </ul>
        </div> <!-- .main-navigation -->
      </div> <!-- .sidebar-menu -->
@@ -203,7 +203,7 @@
     <div class="page-section" id="contact">
       <div class="row">
        <div class="col-md-12">
-        <h4 class="widget-title">CONTACT US</h4>
+        <h4 class="widget-title">EMAIL US</h4>
       </div>
     </div>
     <div class="row">
