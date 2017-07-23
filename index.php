@@ -174,7 +174,7 @@ $user = new User();
     </div>
     <hr/>
     <div id="feature" class="col-md-12">
-        <h1 style="color:#186bd6" class="text-center pb-3"><b><i>Featured</i></b></h1>
+        <h1 style="color:#186bd6" class="text-center pb-3"><b><i>Features</i></b></h1>
         <hr/>
         <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">
             <h2 class="pl-1" style="color:#186bd6"><i>Create your site</i></h2>
