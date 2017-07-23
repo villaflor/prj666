@@ -41,7 +41,8 @@
 
 .sidebar {
   border-right: solid;
-  background-color: #b1f2fe;
+  border-left: solid;
+  background-color: #ffffff;
 }
 .sidebar li {
   border-bottom: solid;
