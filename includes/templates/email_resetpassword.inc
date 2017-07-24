@@ -48,7 +48,7 @@
                     <td class="email-masthead"
                         style="box-sizing: border-box; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; padding: 25px 0; word-break: break-word;"
                         align="center">
-                        <a href="https://example.com" class="email-masthead_name"
+                        <a href="http://myvmlab.senecacollege.ca:5726" class="email-masthead_name"
                            style="box-sizing: border-box; color: #bbbfc3; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; font-weight: bold; text-decoration: none; text-shadow: 0 1px 0 white;">
                             Wecreu
                         </a>
