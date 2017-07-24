@@ -4,8 +4,8 @@ include '/data/www/default/wecreu/tools/good.php';
 include '/data/www/default/wecreu/tools/csql.php';
 
 //get rows query
-$query = $dbc->query("SELECT * FROM good ORDER BY good_id");
-$cc = $query->fetch_assoc();
+//$query = $dbc->query("SELECT * FROM good ORDER BY good_id");
+//$cc = $query->fetch_assoc();
 
 $db = Database::getInstance();
 $good = new Good($db);
@@ -13,7 +13,7 @@ $good = new Good($db);
 $alldata = $good->getGoodDetail($_GET["gid"]);
 
 $row = mysqli_fetch_assoc($alldata);
-$imagepath = $row['good_image'];
+$imagepath = "../../../images/".$row['good_image'];
 ?>
 
 <!DOCTYPE html>
@@ -38,8 +38,8 @@ $imagepath = $row['good_image'];
 <div class="container mb-5">
     <nav class="nav nav-pills nav-fill">
       <?php
-          $alldata = $category->getAll();
-          echo "<a class='nav-item nav-link text-white' href='products.php'>All categpries</a>";
+          $alldata = $category->getAllAvaliable();
+          echo "<a class='nav-item nav-link text-white' href='products.php'>All categories</a>";
           while ($row = mysqli_fetch_assoc($alldata)) {
               echo "<a class='nav-item nav-link text-white' href='products.php?cid=$row[category_id]'>$row[category_name]</a>";
           }
@@ -48,12 +48,12 @@ $imagepath = $row['good_image'];
 </div>
 <div class="container mb-5">
     <div class="text-center mb-5">
-        <img src="images/cow.jpg" alt="cow" class="rounded">
+        <img src="$imagepath" alt="cow" class="rounded">
     </div>
     <div class="container text-center mb-5">
         <div class="container row">
         <section class="col-sm-6"><button type="button" class="btn btn-primary" style="width: 150px">
-                <a class="text-white" href="cartAction.php?action=addToCart&id=<?php echo $cc["good_id"]; ?>">Add to cart</a>
+                <a class="text-white" href="cartAction.php?action=addToCart&id=<?php echo "$row[good_id]"; ?>">Add to cart</a>
             </button></section>
         <section class="col-sm-6"><button type="button" class="btn btn-default" style="width: 150px">Back</button></section>
         </div>
@@ -69,7 +69,7 @@ $imagepath = $row['good_image'];
         </div>
         <div class="container row">
             <section class="col-md-6"><p>Description: <?php echo "$row[good_description]";  ?></p></section>
-            <section class="col-md-6"><p></p></section>
+            <section class="col-md-6"><p>Price: $ <?php echo "$row[good_price]";  ?></p></section>
         </div>
     </div>
 </div>
