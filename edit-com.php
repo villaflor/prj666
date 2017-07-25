@@ -12,7 +12,7 @@ if(Input::exists()){
     if(Token::check(Input::get('token'))){
 		if  (strcmp($_POST['client_admin_email'],$user->data()->client_admin_email) == 0){
 			$validation = $validate->check($_POST, array(
-            
+
 				'client_information' => array(
 					'name' => 'Client information',
 					'max' => 256
@@ -21,7 +21,7 @@ if(Input::exists()){
 		}
 		else {
 			$validation = $validate->check($_POST, array(
-            
+
 				'client_information' => array(
 					'name' => 'Client information',
 					'max' => 256
@@ -35,9 +35,9 @@ if(Input::exists()){
 			));
 		}
 		if($validation->passed()){
-            
+
 			try{
-				
+
 					$user->update(array(
 						'client_information' => Input::get('client_information'),
 						'client_tax' => (Input::get('client_tax') ?: 0.0),
@@ -47,8 +47,8 @@ if(Input::exists()){
 						'payment_option_ae' => (Input::get('ae') ?: 0),
 						'client_admin_email' => Input::get('client_admin_email')
 					));
-				
-				
+
+
                 Session::flash('home', 'Your information have been updated.');
                 Redirect::to('index.php');
 
@@ -89,9 +89,20 @@ if(Input::exists()){
                     <div class="dropdown-menu" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="edit-com.php">Update account</a>
                         <a class="dropdown-item" href="changepassword.php">Change password</a>
+                    </div>
+                </div>
+
+                <div class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle" href="#"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        id="pageDropdown"
+                    >Page</a>
+                    <div class="dropdown-menu" aria-labelledby="pageDropdown">
                         <a class="dropdown-item" href="editCover.php">Edit cover</a>
                         <a class="dropdown-item" href="editFooter.php">Edit footer</a>
                         <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
+                        <a class="dropdown-item" href="pageList.php">View pages</a>
+                        <a class="dropdown-item" href="addPage.php">Create page</a>
                     </div>
                 </div>
 
