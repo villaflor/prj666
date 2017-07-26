@@ -387,7 +387,7 @@ function rrmdir($dir) {
         }
     }
     ?>
-    <form action="" method="post"  enctype="multipart/form-data" >
+    <form action="" method="post"  enctype="multipart/form-data" id="frm" name="frm">
         <fieldset class="form-group">
             <legend>Template</legend>
             <div class="form-group col-md-6">
@@ -427,7 +427,7 @@ function rrmdir($dir) {
         </div>
         <div class="form-group pt-5">
             <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-            <input class="btn btn-primary" onclick="move();" type="submit" value="submit" />
+            <input class="btn btn-primary" onclick="frm.submit();move();this.disabled = true;" type="submit" value="Submit" id="send"/>
         </div>
     </form>
 
@@ -436,7 +436,18 @@ function rrmdir($dir) {
             </div>
                 <p id="message" class="text-center" style="display:none; font-size:13px; color:red">Your website is generating. This may take 1 minute.</p>
             <br>
-
+			<div>
+				<table style="width:80%; margin:auto; font-size:19px;">
+					<tr>
+						<td style="width:16%;"><span class="text-danger">***</span> Notes:</td>
+						<td>You must prepare your company's logo, otherwise you can't generate your site.</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td style="padding-top:15px;">If you site is not fully loaded, refresh it!!!</td>
+					</tr>
+				</table>
+			</div>
 <script>
 
 var image = $("#preview");
@@ -455,6 +466,7 @@ $("#grey").on("click",function(){
 
 //move();
 function move() {
+	$("#send").attr("disabled", true);
     $("#myProgress").show();
     $("#message").show();
 	var elem = document.getElementById("myBar");

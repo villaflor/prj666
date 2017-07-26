@@ -51,7 +51,11 @@
     $db = Database::getInstance();
     $good = new Good($db);
     // echo "getting good object";
-    $alldata = $good->getAllGoods("*");
+    if(isset($_GET['cid'])){
+        $alldata = $good->getAllGoods($_GET['cid']);
+    } else{
+        $alldata = $good->getAllGoods("*");
+    }
     //  echo "getting goods list";
 
 //    $counter = mysqli_num_rows($alldata);
@@ -66,61 +70,14 @@
         <?php
     while ($row = mysqli_fetch_assoc($alldata)){
 
-
-
-
-
         echo '<section class="col-md-3">';
         echo '<p>' . $row["good_name"] . '</p>';
-        echo '<a href="detail.php?gid=' .$row['good_id'] .'"><img class="img-thumbnail" src=' . $row['good_image'] . ' alt="good image"></a>';
+        echo '<a href="detail.php?gid=' .$row['good_id'] .'"><img class="img-thumbnail" src="../../../images/' . $row['good_image'] . '" alt="good image"></a>';
         echo '<p>Price: $' . $row['good_price'] . ' / lb</p>';
         echo "</section>";
-//<!--        <section class="col-md-3">-->
-//<!--            <p>MEAT</p>-->
-//<!--            <a href="detail.php"><img class="img-thumbnail" src="images/cow.jpg" alt="cow"> </a>-->
-//<!--            <p>Price: $10 / lb</p>-->
-//<!--        </section>-->
-//<!--        <section class="col-md-3">-->
-//<!--            <p>HEAD</p>-->
-//<!--            <a href="detail.php"><img class="img-thumbnail" src="images/cow.jpg" alt="cow"> </a>-->
-//<!--            <p>Price: $10 / lb</p>-->
-//<!--        </section>-->
-//<!--        <section class="col-md-3">-->
-//<!--            <p>FOOT</p>-->
-//<!--            <a href="detail.php"><img class="img-thumbnail" src="images/cow.jpg" alt="cow"> </a>-->
-//<!--            <p>Price: $10 / lb</p>-->
-//<!--        </section>-->
-
-
-
-
     }
     ?>
 </div>
-
-<!--    <div class="row text-center">-->
-<!--        <section class="col-md-3">-->
-<!--            <p class="text-center">MILK</p>-->
-<!--            <a href="detail.php"><img class="img-thumbnail" src="images/cow.jpg" alt="cow"> </a>-->
-<!--            <p class="text-center">Price: $10 / lb</p>-->
-<!--        </section>-->
-<!--        <section class="col-md-3">-->
-<!--            <p>NOSE</p>-->
-<!--            <a href="detail.php"><img class="img-thumbnail" src="images/cow.jpg" alt="cow"> </a>-->
-<!--            <p>Price: $10 / lb</p>-->
-<!--        </section>-->
-<!--        <section class="col-md-3">-->
-<!--            <p>RIBS</p>-->
-<!--            <a href="detail.php"><img class="img-thumbnail" src="images/cow.jpg" alt="cow"> </a>-->
-<!--            <p>Price: $10 / lb</p>-->
-<!--        </section>-->
-<!--        <section class="col-md-3">-->
-<!--            <p>ORGANS</p>-->
-<!--            <a href="detail.php"><img class="img-thumbnail" src="images/cow.jpg" alt="cow"> </a>-->
-<!--            <p>Price: $10 / lb</p>-->
-<!--        </section>-->
-<!--    </div>-->
-
 
 </div>
 

@@ -41,9 +41,9 @@
      // if everything is ok, try to upload file
     } else {
          if (move_uploaded_file($_FILES["good_image"]["tmp_name"], $target_file)) {
-           //  echo "The file <b>" . $target_file . "</b> has been uploaded";//basename($_FILES["fileToUpload"]["name"]) . "</b> has been uploaded.";
-             //echo "image ".$image;
-             $image = "../../../images/".$_FILES["good_image"]["name"];//$target_file;
+             echo "The file <b>" . $target_file . "</b> has been uploaded";//basename($_FILES["fileToUpload"]["name"]) . "</b> has been uploaded.";
+           //  echo "image ".$image;
+             $image = /*"../../../images/".*/$_FILES["good_image"]["name"];//$target_file;
              $imageVer=true;
            //  echo " is set to ".$image." $imageVer= ".$imageVer."<br/>";
            

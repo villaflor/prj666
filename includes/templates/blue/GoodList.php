@@ -44,7 +44,7 @@
                     <div class="gooditem">
                         <a href="GoodDetail.php?gid=<?php echo "$row[good_id]";?>">
                         <?php echo "$row[good_name]";  ?>
-                        <img src=<?php echo "$row[good_image]"; ?> alt="good image" height="120" width="120" style="padding:20px 40px;"/>
+                        <img src=<?php echo "../../../images/".$row['good_image']; ?> alt="good image" height="120" width="120" style="padding:20px 40px;"/>
                         <br />
                         $<?php echo "$row[good_price]";  ?>
                         </a>
