@@ -87,7 +87,7 @@ class Good {
                             s.sale_id as sale_id, s.sale_name as sale_name
                     FROM good g join category c on g.category_id = c.category_id
                                 join sale s on g.sale_id = s.sale_id where g.good_id = $id";
-        echo "<br/>QUERY: ".$sql_query."<br/>";
+        // echo "<br/>QUERY: ".$sql_query."<br/>";
         return $this->mysqli->query($sql_query);
     }
 
