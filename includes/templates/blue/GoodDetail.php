@@ -25,8 +25,9 @@
                     $good = new Good($db);
                 //    echo "getting good object";
                     $alldata = $good->getGoodDetail($_GET["gid"]);
+                   
                     $row = mysqli_fetch_assoc($alldata);
-                    $imagepath = $row['good_image'];
+                    $imagepath = "../../../images/".$row['good_image'];
                 ?>
                 
 				<div class="goodimage" >     
@@ -41,15 +42,15 @@
 						</tr>
 						<tr>
 							<td>Category: <?php echo "$row[category_name]";  ?></td>                        
-							<td>Weight: <?php echo "$row[good_weight]";  ?></td>
+							<td>Weight: <?php echo "$row[good_weight]";  ?> lbs</td>
 						</tr>
 						<tr>
-							<td>Price: <?php echo "$row[good_price]";  ?></td>                           
+							<td>Price: $ <?php echo "$row[good_price]";  ?></td>                           
 							<td>Taxable: <?php if(isset($row['good_taxable'])){
                                                     if($row['good_taxable']==1){
-                                                        echo "Taxable $row[good_taxable]";
+                                                        echo "Taxable";
                                                     }else {
-                                                        echo "Not Taxable $row[good_taxable]";
+                                                        echo "Not Taxable";
                                                     }
                                                 }else{
                                                     echo "No information";
@@ -59,7 +60,7 @@
                             <td>Sales Applicable: <?php if(isset($row['sale_id'])){
                                                             echo "$row[sale_name]"; 
                                                         }else{
-                                                            echo "Not on Sale";
+                                                            echo "No Sale";
                                                         }?></td>     
                             <td></td>
                         </tr>
@@ -70,6 +71,7 @@
 						</tr>
 						<tr>
 							<td><a class="button" href="cartAction.php?action=addToCart&id=<?php echo $row["good_id"]; ?>">Add to cart</a></td>
+							
 						</tr>
 					</table>
 				</div>
