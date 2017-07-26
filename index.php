@@ -24,7 +24,8 @@ $user = new User();
         position:fixed; left:1%; top: 80%;
         border-bottom-color:#333;
         border-right-color:#333; margin:5px;
-        cursor:pointer; display:none
+        cursor:pointer; display:none;
+        z-index:99999;
     }
     </style>
 </head>
