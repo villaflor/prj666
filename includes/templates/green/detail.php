@@ -38,7 +38,7 @@ $imagepath = "../../../images/".$row['good_image'];
 <div class="container mb-5">
     <nav class="nav nav-pills nav-fill">
       <?php
-          $alldata = $category->getAllAvaliable();
+          $alldata = $category->getAll();
           echo "<a class='nav-item nav-link text-white' href='products.php'>All categories</a>";
           while ($row = mysqli_fetch_assoc($alldata)) {
               echo "<a class='nav-item nav-link text-white' href='products.php?cid=$row[category_id]'>$row[category_name]</a>";
