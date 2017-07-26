@@ -1,11 +1,18 @@
 <?php
 require_once 'core/init.php';
-
 $user = new User();
-
 if(!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
+
+include '/data/www/default/wecreu/tools/good.php';
+include '/data/www/default/wecreu/tools/category.php';
+include_once '/data/www/default/wecreu/tools/sql.php';
+$clientid = $user->data()->client_id;
+
+$db = Database::getInstance();
+$category = new Category($db,$clientid);
+$allcategory = $category->getAll();
 
 ?>
 <!DOCTYPE html>
@@ -39,20 +46,9 @@ if(!$user->isLoggedIn()){
                     <div class="dropdown-menu" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="edit-com.php">Update account</a>
                         <a class="dropdown-item" href="changepassword.php">Change password</a>
-                    </div>
-                </div>
-
-                <div class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle" href="#"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        id="pageDropdown"
-                    >Page</a>
-                    <div class="dropdown-menu" aria-labelledby="pageDropdown">
                         <a class="dropdown-item" href="editCover.php">Edit cover</a>
                         <a class="dropdown-item" href="editFooter.php">Edit footer</a>
                         <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
-                        <a class="dropdown-item" href="pageList.php">View pages</a>
-                        <a class="dropdown-item" href="addPage.php">Create page</a>
                     </div>
                 </div>
 
@@ -101,42 +97,103 @@ if(!$user->isLoggedIn()){
     </div>
 </nav>
 <div class="container bg-faded py-5">
-    <h2 class="mb-4">Create good form</h2>
-    <form action="" style="" method="post">
+    <?php
+
+            $taxable = $visible = 0;
+           
+            $name = $image = $description = $price = $quantity = $weight = $category = "";
+            $nameVer = $imageVer = $descVer = $priceVer = $qtyVer = $weightVer = $catVer = false; 
+            $nameErr = $imageErr = $descriptionErr = $priceErr = $quantityErr = $weightErr = $taxableErr = $visibleErr = $categoryErr = "";
+
+            if($_POST){
+                include '/data/www/default/wecreu/tools/goodValidate.php';
+         //       echo "<br/>UPDATE: create-good.php is getting ready to insert into db<br/>";
+           //     echo "$nameVer, $imageVer, $descVer, $priceVer, $qtyVer, $weightVer, $catVer Calling DB<br/>";
+
+                if($nameVer == true && $imageVer == true && $descVer == true && 
+                   $priceVer == true && $qtyVer == true && $weightVer == true && 
+                   $catVer == true){
+
+                    $good = new Good($db);
+                      
+                //    echo "adding new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
+
+                    if($good->addGood($name, $image, $description, $price, $quantity, $weight, $taxable, $visible, $category)){
+                         echo "<script type='text/javascript'>alert('New good has been created') </script>";       
+                      //  echo "added successfully new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
+                    } else {
+                        echo "<script type='text/javascript'>alert('Database error received while adding good') </script>";
+                     //   echo "error received adding new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
+                        if($image){
+                            removeImage($image);
+                        }
+                    }
+                } else {
+                    echo "<script type='text/javascript'>alert('Failed to create a new good') </script>";
+                 //   echo "error received adding new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
+                    if($image){
+                        removeImage($image);
+                    }
+                }
+            }
+    ?>
+    <h2 class="mb-4">Fill out form to add a new good to inventory</h2>
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" style="" method="post" enctype="multipart/form-data" >
         <fieldset class="form-group">
             <legend></legend>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="good_name"><span class="text-danger">*</span> Name</label>
-                <input class="form-control" type="text" name="good_name" id="good_name" placeholder="Enter name for good" value="" />
+                <input class="form-control" type="text" name="good_name" id="good_name" placeholder="Enter name for good" value="<?php echo $name;?>" />
+                <p style="color:#ff0000;"><?php echo $nameErr;?></p>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="form-control-label" for="good_image"><span class="text-danger">*</span> Image</label>
+                <input class="form-control" type="file" name="good_image" id="good_image" accept="image/x-png,image/jpeg" placeholder="Add an image" value="<?php echo $image;?>" />
+                <p style="color:#ff0000;"><?php echo $imageErr;?></p>
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="description"><span class="text-danger">*</span> Description</label>
-                <textarea class="form-control" rows="3" name="description" id="description" placeholder="Enter description"><?php echo escape(Input::get('client_info'))?></textarea>
+                <textarea class="form-control" rows="3" name="description" id="description" placeholder="Enter description"><?php echo $description;/*echo escape(Input::get('client_info'))*/?></textarea>
+                <p style="color:#ff0000;"><?php echo $descriptionErr;?></p>
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="good_price"><span class="text-danger">*</span>&nbspPrice ($)</label>
-                <p><input class="form-control" type="number" min="0.01" step="0.01" name="good_price" id="good_price" style="width: 90px;" value="" />
-
+                <input class="form-control" type="number" min="0.01" step="0.01" name="good_price" id="good_price" style="width: 90px;" value="<?php echo $price;?>" />
+                <p style="color:#ff0000;"><?php echo $priceErr;?></p>
             </div>
             <div class="form-group col-md-6">
-                <label class="form-control-label" for="good_quantity"><span class="text-danger">*</span>&nbspQuantity</label>
-                <input class="form-control" type="number" min="0" step="1" name="good_quantity" id="good_quantity" style="width: 90px;" value="" />
-
+                <label class="form-control-label" for="good_quantity"><span class="text-danger">*</span>&nbspQuantity </label>
+                <input class="form-control" type="number" min="0" step="1" name="good_quantity" id="good_quantity" style="width: 90px;" value="<?php echo $quantity;?>" />
+                <p style="color:#ff0000;"><?php echo $quantityErr;?></p>
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="good_weight"><span class="text-danger">*</span>&nbspWeight (pounds)</label>
-                <input class="form-control" type="number" min="0.01" step="0.01" name="good_weight" id="good_weight" style="width: 90px;" value="" />
-
-            </div>
-
-            <div class="form-group col-md-6">
-                <label class="form-control-label" for="color">Product color</label>
-                <input class="form-control" type="text" name="good_color" id="good_color" value="" placeholder="Enter product color"/>
+                <input class="form-control" type="number" min="0.01" step="0.01" name="good_weight" id="good_weight" style="width: 90px;" value="<?php echo $weight;?>" />
+                <p style="color:#ff0000;"><?php echo $weightErr;?></p>
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="taxable">Taxable</label>
-                <input style="margin-left: 10px;"type="checkbox" name="taxable" id="taxable" value="tax"/>
+                <input style="margin-left: 10px;"type="checkbox" name="taxable" id="taxable" <?php if(isset($taxable) && $taxable==true) echo "checked";?>/>
+                 <p style="color:#ff0000;"><?php echo $taxableErr;?></p>               
             </div>
+            <div class="form-group col-md-6">
+                <label class="form-control-label" for="visible">Visible</label>
+                <input style="margin-left: 10px;"type="checkbox" name="visible" id="visible" <?php if(isset($visible) && $visible==true) echo "checked";?>/>
+                <p style="color:#ff0000;"><?php echo $visibleErr;?></p>
+            </div>
+            <div class="form-group col-md-6">
+                <label class="form-control-label" for="category_id"><span class="text-danger">*</span>Category</label>
+                <select name="category_id" id="category_id" >
+                                        <?php 
+                                        mysqli_data_seek($allcategory, 0);
+                                        while($row = mysqli_fetch_assoc($allcategory)){
+                                            echo "<option value='$row[category_id]'>$row[category_name]</option>";
+                                        }
+                                        ?>
+                </select>
+                <p style="color:#ff0000;"><?php echo $categoryErr;?></p>
+            </div>
+
 
         </fieldset>
         <div class="form-group">

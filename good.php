@@ -1,15 +1,17 @@
 <?php
 require_once  'core/init.php';
-
 $user = new User();
 $validate = new Validate();
-
 if(!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
 
-$good = new Good();
-$category = new Category();
+include_once '/data/www/default/wecreu/tools/good.php';
+include_once '/data/www/default/wecreu/tools/sql.php';
+
+$db = Database::getInstance();
+//$category = new Category($db, $user->data()->client_id);
+$good = new Good($db);
 ?>
 
 <!DOCTYPE html>
@@ -43,20 +45,9 @@ $category = new Category();
                     <div class="dropdown-menu" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="edit-com.php">Update account</a>
                         <a class="dropdown-item" href="changepassword.php">Change password</a>
-                    </div>
-                </div>
-
-                <div class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle" href="#"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        id="pageDropdown"
-                    >Page</a>
-                    <div class="dropdown-menu" aria-labelledby="pageDropdown">
                         <a class="dropdown-item" href="editCover.php">Edit cover</a>
                         <a class="dropdown-item" href="editFooter.php">Edit footer</a>
                         <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
-                        <a class="dropdown-item" href="pageList.php">View pages</a>
-                        <a class="dropdown-item" href="addPage.php">Create page</a>
                     </div>
                 </div>
 
@@ -112,40 +103,30 @@ $category = new Category();
         echo '<p class="text-success">' . Session::flash('good') . '</p>';
     }
     ?>
-
+    <a href="create-good.php" >Add new good</a><br/><br/>
 
     <table class="table table-striped">
         <tr>
             <th>Name</th>
-            <th>Description</th>
+            <th>Image</th>
+            <th>Category</th>
             <th>Number of stocks</th>
             <th>Actions</th>
         </tr>
         <?php
-        $category->getCategory($user->data()->client_id);
-        if($category->exists()) {
-            $categoryItems = $category->data();
+        $alldata = $good->getMgmtGoods($user->data()->client_id);
 
-            foreach ($categoryItems as $categoryItem) {
-                $good->getGood(array('category_id', '=', $categoryItem->category_id));
-                if($good->exists()){
-                    $goodItems = $good->data();
-
-                    foreach ($goodItems as $goodItem){
-                        echo '<tr>';
-                        echo '<th>'. $goodItem->good_name .'</th>';
-                        echo '<td>'. $goodItem->good_description .'</td>';
-                        if ($goodItem->good_visible) {
-                            echo '<td>Yes</td>';
-                        } else{
-                            echo '<td>No</td>';
-                        }
-
-                        echo '<td><a href="editcategory.php?user='. $user->data()->username .'&goodNo='. $goodItem->good_id .'">edit</a></td>';
-                        echo '</tr>';
-                    }
-                }
-            }
+        while ($row = mysqli_fetch_assoc($alldata)){
+         //   echo "$row[good_name]<br/>";
+        ?>
+        <tr>
+            <td><a href="good-detail.php?gid=<?php echo "$row[good_id]";?>"><?php echo "$row[good_name]";  ?></a></td>
+            <td><img src="<?php echo "images/".$row['good_image']; ?>" alt="good image" height="70" width="70" /></td>
+            <td><?php echo "$row[category_name]";  ?></td>
+            <td><?php echo "$row[good_in_stock]";  ?></td>
+            <td><a href="edit-good.php?gid=<?php echo "$row[good_id]";?>">Edit</a>|<a href="delete-good.php?gid=<?php echo "$row[good_id]";?>">Delete</a></td>
+        </tr>
+        <?php
         }
         ?>
     </table>
