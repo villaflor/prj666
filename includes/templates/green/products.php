@@ -72,7 +72,7 @@
 
         echo '<section class="col-md-3">';
         echo '<p>' . $row["good_name"] . '</p>';
-        echo '<a href="detail.php?gid=' .$row['good_id'] .'"><img class="img-thumbnail" src="../../../images/' . $row['good_image'] . '" alt="good image"></a>';
+        echo '<a href="detail.php?gid=' .$row['good_id'] .'"><img class="img-thumbnail" width="250px" height="250px" src="images/' . $row['good_image'] . '" alt="good image"></a>';
         echo '<p>Price: $' . $row['good_price'] . ' / lb</p>';
         echo "</section>";
     }
