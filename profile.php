@@ -350,7 +350,7 @@ if(!$username = Input::get('user')){
             </section>
         </div>
         <form action="" method="post">
-            <input class="btn btn-primary float-right" type="submit" name="submitBtn" value="Delete your website">
+            <input class="btn btn-primary float-right" type="submit" name="submitBtn" onclick="return confirm('Do you really want to delete your site?');" value="Delete your website">
         </form>
 
     </div>
@@ -386,7 +386,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (file_exists($deletedDir4)){
                 rrmdir($deletedDir4);
             }
-            if(file_exists($$deletedDir5)){
+            if(file_exists($deletedDir5)){
                 rrmdir($deletedDir5);
             }
             if(file_exists($deletedDir6)){
