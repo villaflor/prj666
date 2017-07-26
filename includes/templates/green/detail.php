@@ -13,7 +13,7 @@ $good = new Good($db);
 $alldata = $good->getGoodDetail($_GET["gid"]);
 
 $row = mysqli_fetch_assoc($alldata);
-$imagepath = "../../../images/".$row['good_image'];
+$imagepath = "/images/".$row['good_image'];
 ?>
 
 <!DOCTYPE html>
