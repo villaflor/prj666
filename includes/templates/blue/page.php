@@ -17,20 +17,20 @@
 		<div class="middle">
 			<div class="content">
 				<div>
-	        <?php
-	          if(!isset($_GET['page'])){
-	            echo "<h1>Page not found</h1>";
-	          }else{
-	            $url = "/data/www/default/wecreu/companyInfo/page/".$clientid."/".$_GET['page'].".txt";
-	            if (file_exists($url)) {
-	              $content = file_get_contents($url);
-	              echo $content;
-	            }else{
-	              echo "<h1>Page not found</h1>";
-	            }
-	          }
-	          ?>
-	      </div>
+					<?php
+					  if(!isset($_GET['page'])){
+					    echo "<h1>Page not found</h1>";
+					  }else{
+					    $url = "/data/www/default/wecreu/companyInfo/page/".$clientid."/".$_GET['page'].".txt";
+					    if (file_exists($url)) {
+					      $content = file_get_contents($url);
+					      echo $content;
+					    }else{
+					      echo "<h1>Page not found</h1>";
+					    }
+					  }
+					  ?>
+				</div>
 			</div>
 
 			<?php
