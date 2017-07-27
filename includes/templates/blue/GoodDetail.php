@@ -27,7 +27,7 @@
                     $alldata = $good->getGoodDetail($_GET["gid"]);
                    
                     $row = mysqli_fetch_assoc($alldata);
-                    $imagepath = "../../../images/".$row['good_image'];
+                    $imagepath = "images/".$row['good_image'];
                 ?>
                 
 				<div class="goodimage" >     
@@ -58,7 +58,7 @@
 						</tr>
                         <tr>
                             <td>Sales Applicable: <?php if(isset($row['sale_id'])){
-                                                            echo "$row[sale_name]"; 
+                                                            echo "$row[sale_id]"; 
                                                         }else{
                                                             echo "No Sale";
                                                         }?></td>     
