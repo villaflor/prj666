@@ -174,7 +174,7 @@ if(Input::exists()){
         <form action="/wecreu/tools/uploadCover.php" method="post" enctype="multipart/form-data">
           <input type='text' name='textfield' id='textfield' class='txt' />
           <!-- <input type='button' class='btnUp' value='Browse' /> -->
-          <input type="file" name="fileToUpload" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
+          <input type="file" accept="image/x-png,image/jpeg,image/jpg,image/bmp,image/gif" name="fileToUpload" class="file" id="fileField" size="28" onchange="document.getElementById('textfield').value=this.value" />
           <input type="hidden" value="<?php echo escape($user->data()->client_id) ?>" name="id">
           <input type="hidden" name="url" value="<?php echo 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']; ?>">
           <input type="submit" name="submit" class="btnUp" value="upload" />
