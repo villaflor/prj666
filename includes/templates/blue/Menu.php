@@ -10,6 +10,5 @@
 			echo '<li><a href="page.php?page='.$row['id'].'">'.$row['page_name'].'</a></li>';
 		}
 		?>
-		<li><a href="manage-good.php">Settings</a></li>
 	</ul>
 </nav>
