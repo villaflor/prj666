@@ -23,23 +23,35 @@
   <?php
   $clientId = file_get_contents('conf.ini');
   include_once("/data/www/default/wecreu/tools/sql.php");
-  require_once("/data/www/default/wecreu/tools/search.php");
+  include_once("/data/www/default/wecreu/tools/good.php");
+ // require_once("/data/www/default/wecreu/tools/search.php");
   $limit=12;
   $offSet=0;
   $db = Database::getInstance();
-  $search = new Search($db,$clientId);
-  $alldata = $search->getAll($limit,$offSet);
+ // $search = new Search($db,$clientId);
+ // $alldata = $search->getAll($limit,$offSet);
+
+  $good = new Good($db);
+
+    if(isset($_GET["cid"])){
+        $selectcategory = $_GET["cid"];
+    } else{
+        $selectcategory = "*";
+    }
+    $alldata = $good->getGoodRows($selectcategory, $clientId, $limit, $offSet);
+
+
   while ($row = mysqli_fetch_assoc($alldata)) {
     ?>
     <div class="item col-md-12 col-sm-4 col-xs-4">
       <a href='detail.php?id=<?php echo $row['good_id'];?>'>
-         <img src="http://th25.st.depositphotos.com/5142301/7567/v/450/depositphotos_75677235-stock-illustration-lion-head-logo.jpg" class="img-responsive" alt="Cinque Terre">
+         <img src="<?php echo "images/".$row['good_image'];?>" class="img-responsive" alt="Cinque Terre">
         <p>
           <?php
           $name = $row['good_name'];
           $length = strlen($name);
           if ($length > 16){
-            $name = substr($name, 1 ,16)."...";
+            $name = substr($name, 0 ,16)."...";
           }
           echo $name;
           ?>
