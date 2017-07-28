@@ -12,7 +12,7 @@
     header("Location: index.php");
     exit;
   }
-
+	
   // items
   $alldata = $good->getGoodDetail($_GET['id']);
   if(mysqli_num_rows($alldata) == 0){
@@ -25,7 +25,7 @@
   <div class="row">
     <div class="col-xs-4"></div>
     <div class="nnn col-lg-3 col-md-4 col-sm-4 col-xs-3 img-circle float-right clearfix">
-      <img src="<?php echo $row['good_image'];?>" class="img-responsive" alt="Cinque Terre" >
+      <img src="<?php echo "images/".$row['good_image'];?>" class="img-responsive" alt="http://th25.st.depositphotos.com/5142301/7567/v/450/depositphotos_75677235-stock-illustration-lion-head-logo.jpg" />
       </div>
   </div>
   <br>
@@ -49,14 +49,14 @@
             </tr>
             <tr height="50px">
               <td class="text-center"><?php echo $row['good_description'];?></td>
-              <td class="text-center"><?php echo $row['good_weight'];?></td>
+              <td class="text-center"><?php echo $row['good_weight'];?> lbs</td>
               <td class="text-center">$<?php echo $row['good_price'];?></td>
             </tr>
           </tbody>
         </table>
       <br>
       <div class="clearfix centeredImage">
-          <button class="btn btn-danger btn-lg btn-block">Add To Cart</button>
+          <a href="cartAction.php?action=addToCart&id=<?php echo $_GET['id']; ?>" class="btn btn-danger btn-lg btn-block">Add To Cart</a>
         </div>
         <a class="pull-left" href="good.php" >Back</a>
         </div>
