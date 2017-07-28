@@ -44,8 +44,8 @@
     include_once("/data/www/default/wecreu/tools/sql.php");
     include_once('/data/www/default/wecreu/tools/good.php');
     $db = Database::getInstance();
-    $good = new Good($db,$clientId);
-
+   // $good = new Good($db,$clientId);
+    $good = new Good($db);
 
     // items
     $alldata = $good->getGoodDetail($_GET['id']);
@@ -59,7 +59,7 @@
       <div class="row">
         <div class="col-xs-4"></div>
         <div class="nnn col-lg-3 col-md-4 col-sm-4 col-xs-3 img-circle float-right clearfix">
-          <img src="<?php echo $row['good_image'];?>" class="img-responsive" alt="Cinque Terre" >
+          <img src="<?php echo "images/".$row['good_image'];?>" class="img-responsive" alt="Cinque Terre" >
           </div>
       </div>
       <br>
@@ -83,14 +83,16 @@
                 </tr>
                 <tr height="50px">
                   <td class="text-center"><?php echo $row['good_description'];?></td>
-                  <td class="text-center"><?php echo $row['good_weight'];?></td>
+                  <td class="text-center"><?php echo $row['good_weight'];?> lbs</td>
                   <td class="text-center">$<?php echo $row['good_price'];?></td>
                 </tr>
               </tbody>
             </table>
           <br>
           <div class="clearfix centeredImage">
-            <button class="btn addToCart btn-lg btn-block">Add To Cart</button>
+           <!-- <button class="btn addToCart btn-lg btn-block">Add To Cart</button>-->
+          <a href="cartAction.php?action=addToCart&id=<?php echo $row['good_id']; ?>" class="btn addToCart btn-lg btn-block">Add To Cart</a>
+
           </div>
           <a class="pull-left" href="good.php" >Back</a>
           </div>
