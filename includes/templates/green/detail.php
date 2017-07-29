@@ -12,8 +12,8 @@ $good = new Good($db);
 //    echo "getting good object";
 $alldata = $good->getGoodDetail($_GET["gid"]);
 
-$row = mysqli_fetch_assoc($alldata);
-$imagepath = "../../../images/".$row['good_image'];
+$goodrow = mysqli_fetch_assoc($alldata);
+$imagepath = "images/".$goodrow['good_image'];
 ?>
 
 <!DOCTYPE html>
@@ -33,12 +33,6 @@ $imagepath = "../../../images/".$row['good_image'];
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
-        <?php
-            $alldata = $page->getAll();
-            while ($row = mysqli_fetch_assoc($alldata)) {
-              echo '<a class="nav-item nav-link text-white" href="page.php?page='.$row['id'].'">'.$row['page_name'].'</a>';
-            }
-        ?>
     </nav>
 </div>
 <div class="container mb-5">
@@ -59,23 +53,23 @@ $imagepath = "../../../images/".$row['good_image'];
     <div class="container text-center mb-5">
         <div class="container row">
         <section class="col-sm-6"><button type="button" class="btn btn-primary" style="width: 150px">
-                <a class="text-white" href="cartAction.php?action=addToCart&id=<?php echo "$row[good_id]"; ?>">Add to cart</a>
+                <a class="text-white" href="cartAction.php?action=addToCart&id=<?php echo "$goodrow[good_id]"; ?>">Add to cart</a>
             </button></section>
         <section class="col-sm-6"><button type="button" class="btn btn-default" style="width: 150px">Back</button></section>
         </div>
     </div>
     <div class="container text-center">
         <div class="container row">
-            <section class="col-md-6"><p>Product Name: <?php echo "$row[good_name]";  ?></p></section>
-            <section class="col-md-6"><p>Quantity: <?php echo "$row[good_in_stock]";  ?></p></section>
+            <section class="col-md-6"><p>Product Name: <?php echo "$goodrow[good_name]";  ?></p></section>
+            <section class="col-md-6"><p>Quantity: <?php echo "$goodrow[good_in_stock]";  ?></p></section>
         </div>
         <div class="container row">
-            <section class="col-md-6"><p>Category: <?php echo "$row[category_name]";  ?></p></section>
-            <section class="col-md-6"><p>Weight: <?php echo "$row[good_weight]";  ?> lbs</p></section>
+            <section class="col-md-6"><p>Category: <?php echo "$goodrow[category_name]";  ?></p></section>
+            <section class="col-md-6"><p>Weight: <?php echo "$goodrow[good_weight]";  ?> lbs</p></section>
         </div>
         <div class="container row">
-            <section class="col-md-6"><p>Description: <?php echo "$row[good_description]";  ?></p></section>
-            <section class="col-md-6"><p>Price: $ <?php echo "$row[good_price]";  ?></p></section>
+            <section class="col-md-6"><p>Description: <?php echo "$goodrow[good_description]";  ?></p></section>
+            <section class="col-md-6"><p>Price: $ <?php echo "$goodrow[good_price]";  ?></p></section>
         </div>
     </div>
 </div>

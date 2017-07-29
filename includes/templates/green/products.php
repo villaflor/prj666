@@ -15,12 +15,6 @@
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
-        <?php
-            $alldata = $page->getAll();
-            while ($row = mysqli_fetch_assoc($alldata)) {
-              echo '<a class="nav-item nav-link text-white" href="page.php?page='.$row['id'].'">'.$row['page_name'].'</a>';
-            }
-        ?>
     </nav>
 </div>
 <div class="container mb-5">
@@ -58,9 +52,9 @@
     $good = new Good($db);
     // echo "getting good object";
     if(isset($_GET['cid'])){
-        $alldata = $good->getAllGoods($_GET['cid']);
+        $alldata = $good->getAllGoods($_GET['cid'], $clientId);
     } else{
-        $alldata = $good->getAllGoods("*");
+        $alldata = $good->getAllGoods("*", $clientId);
     }
     //  echo "getting goods list";
 
@@ -74,12 +68,12 @@
     <div class="row text-center">
 
         <?php
-    while ($row = mysqli_fetch_assoc($alldata)){
+    while ($goodrow = mysqli_fetch_assoc($alldata)){
 
         echo '<section class="col-md-3">';
-        echo '<p>' . $row["good_name"] . '</p>';
-        echo '<a href="detail.php?gid=' .$row['good_id'] .'"><img class="img-thumbnail" width="250px" height="250px" src="images/' . $row['good_image'] . '" alt="good image"></a>';
-        echo '<p>Price: $' . $row['good_price'] . ' / lb</p>';
+        echo '<p>' . $goodrow["good_name"] . '</p>';
+        echo '<a href="detail.php?gid=' .$goodrow['good_id'] .'"><img class="img-thumbnail" width="250px" height="250px" src="images/' . $goodrow['good_image'] . '" alt="good image"></a>';
+        echo '<p>Price: $' . $goodrow['good_price'] . ' / lb</p>';
         echo "</section>";
     }
     ?>
@@ -93,3 +87,4 @@
 <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
+
