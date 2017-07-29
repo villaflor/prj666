@@ -10,7 +10,7 @@
         	$alldata = $category->getAll();
           while ($row = mysqli_fetch_assoc($alldata)) {
   		        //$row[category_id] $row[category_name] $row[category_description] $row[category_display]
-  		        echo "<li><a href='good.php?gid=$row[category_id]'>$row[category_name]</a></li>";
+  		        echo "<li><a href='good.php?cid=$row[category_id]'>$row[category_name]</a></li>";
   		    }
         ?>
       </ul>

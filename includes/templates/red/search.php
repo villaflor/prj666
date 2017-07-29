@@ -58,7 +58,7 @@ while ($row = mysqli_fetch_assoc($alldata)) {
   ?>
   <div class="item col-md-12 col-sm-4 col-xs-4">
     <a href='detail.php?id=<?php echo $row['good_id'];?>'>
-       <img src="http://th25.st.depositphotos.com/5142301/7567/v/450/depositphotos_75677235-stock-illustration-lion-head-logo.jpg" class="img-responsive" alt="Cinque Terre">
+       <img src="<?php echo "images/".$row['good_image'];?>" class="img-responsive" alt="<?php echo $row['good_name'];?>">
       <p>
         <?php
         $name = $row['good_name'];

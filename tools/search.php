@@ -14,7 +14,7 @@ class Search {
 	@return goods
 	*/
 	public function getAll($limit, $offSet) {
-		$sql_query = "SELECT * FROM v_category_good WHERE category_display = 1 AND client_id = $this->client_id ORDER BY good_id DESC LIMIT $limit OFFSET $offSet";
+		$sql_query = "SELECT * FROM v_category_good WHERE category_display = 1 AND client_id = $this->client_id AND good_visible = 1 ORDER BY good_id DESC LIMIT $limit OFFSET $offSet";
 	  return $this->mysqli->query($sql_query);
 	}
 
@@ -23,7 +23,7 @@ class Search {
 	@return goods
 	*/
 	public function searchGood($keyword,$limit, $offSet) {
-		$sql_query = "SELECT * FROM v_category_good WHERE category_display = 1 AND client_id = $this->client_id AND good_name LIKE '%$keyword%' ORDER BY good_id DESC LIMIT $limit OFFSET $offSet";
+		$sql_query = "SELECT * FROM v_category_good WHERE category_display = 1 AND client_id = $this->client_id AND good_visible = 1 AND good_name LIKE '%$keyword%' ORDER BY good_id DESC LIMIT $limit OFFSET $offSet";
 	  return $this->mysqli->query($sql_query);
 	}
 
