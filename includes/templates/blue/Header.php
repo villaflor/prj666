@@ -18,6 +18,6 @@
 	<form>
 		<input type="text" name="keyword" /> Search
 	</form>
-	<h1><?php echo $client->getClientSiteTitle(); ?></h1>
+	<h1><a href="index.php" style="text-decoration:none;"><?php echo $client->getClientSiteTitle(); ?></a></h1>
 			
 </header>
