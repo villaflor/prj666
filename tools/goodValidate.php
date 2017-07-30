@@ -61,7 +61,7 @@
 
       //      echo "good_price is not empty, processing...<br/>";
             $price = validate($_POST["good_price"]);
-            if(!preg_match("/^\d{1,8}\.\d{2}$/", $price)){
+            if(!preg_match("/^\d{1,8}(\.\d{0,2}|)$/", $price)){
                 $priceErr = "Price must be 8 digits, 2 decimals at most";
             } else {
                 $priceVer = true;
@@ -85,7 +85,7 @@
 
       //      echo "good_weight is not empty, processing...<br/>";
             $weight = validate($_POST["good_weight"]);
-            if(!preg_match("/^\d{1,6}\.\d{2}$/", $weight)){
+            if(!preg_match("/^\d{1,6}(\.\d{0,2}|)$/", $weight)){
                 $weightErr = "Weight must be 6 digits, 2 decimals at most";
             } else {
                 $weightVer = true;
