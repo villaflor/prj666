@@ -12,10 +12,15 @@ $clientid = $user->data()->client_id;
 
 $db = Database::getInstance();
 $category = new Category($db,$clientid);
-$allcategory = $category->getAll();
+$allcategory = $category->getAllAvaliable();
 
-$sale = new Sale();
-$allsale=$sale->getSale($user->data()->client_id);
+//$sale = new Sale();
+//$sale->getSale($user->data()->client_id);
+$query="SELECT DISTINCT sale.* FROM client JOIN category ON category.client_id = client.client_id JOIN good ON good.category_id = category.category_id JOIN sale ON sale.sale_id = good.sale_id WHERE client.client_id = ".$clientid;
+   echo $query;
+$conn = $db->getConnection();  
+$allsale=$conn->query($query);
+
 ?>
 
 <!DOCTYPE html>
@@ -49,20 +54,9 @@ $allsale=$sale->getSale($user->data()->client_id);
                     <div class="dropdown-menu" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="edit-com.php">Update account</a>
                         <a class="dropdown-item" href="changepassword.php">Change password</a>
-                    </div>
-                </div>
-
-                <div class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle" href="#"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                        id="pageDropdown"
-                    >Page</a>
-                    <div class="dropdown-menu" aria-labelledby="pageDropdown">
                         <a class="dropdown-item" href="editCover.php">Edit cover</a>
                         <a class="dropdown-item" href="editFooter.php">Edit footer</a>
                         <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
-                        <a class="dropdown-item" href="pageList.php">View pages</a>
-                        <a class="dropdown-item" href="addPage.php">Create page</a>
                     </div>
                 </div>
 
@@ -116,8 +110,8 @@ $allsale=$sale->getSale($user->data()->client_id);
             $good = new Good($db);
             echo "getting info for good ".$id;
             $alldata = $good->getGoodDetail($id);
-            $row = mysqli_fetch_assoc($alldata);
-
+            $row = mysqli_fetch_assoc($alldata);     
+                                        
             $name = $row['good_name'];
             $image = $row['good_image'];
             $description = $row['good_description'];
@@ -128,25 +122,25 @@ $allsale=$sale->getSale($user->data()->client_id);
             $visible = $row['good_visible'];
             $category = $row['category_id'];
             $sale = $row['sale_id'];
-
+            
             $nameErr = $imageErr = $descriptionErr = $priceErr = $quantityErr = $weightErr = $taxableErr = $visibleErr = $categoryErr = "";
             $taxable = $visible = 0;
-            $nameVer = $imageVer = $descVer = $priceVer = $qtyVer = $weightVer = $catVer = false;
+            $nameVer = $imageVer = $descVer = $priceVer = $qtyVer = $weightVer = $catVer = false; 
 
             if($_POST){
                 include '/data/www/default/wecreu/tools/goodValidate.php';
 
            //     echo "<br/>edit-good.php is getting ready to edit good ".$id." in db<br/>";
              //   echo "$nameVer, $imageVer, $descVer, $priceVer, $qtyVer, $weightVer, $catVer Calling DB<br/>";
-                if($nameVer == true && $imageVer == true && $descVer == true &&
-                   $priceVer == true && $qtyVer == true && $weightVer == true &&
+                if($nameVer == true && $imageVer == true && $descVer == true && 
+                   $priceVer == true && $qtyVer == true && $weightVer == true && 
                    $catVer == true){
-
-                    echo "editing new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
+                      
+                    echo "editing good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category.",".$sale."<br/>";
 
                     if($good->editGood($id, $name, $image, $description, $price, $quantity, $weight, $taxable, $visible, $category, $sale)){
-
-                        echo "<script type='text/javascript'>alert('Good has been updated') </script>";
+                        
+                        echo "<script type='text/javascript'>alert('Good has been updated') </script>";                             
                       //  echo "updated successfully good ".$id.",".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category.",".$sale."<br/>";
                     } else {
                         echo "<script type='text/javascript'>alert('Database error received while updating good') </script>";
@@ -195,7 +189,7 @@ $allsale=$sale->getSale($user->data()->client_id);
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="taxable">Taxable</label>
                 <input style="margin-left: 10px;"type="checkbox" name="taxable" id="taxable" <?php if(isset($taxable) && $taxable==true) echo "checked";?>/>
-                <p style="color:#ff0000;"><?php echo $taxableErr;?></p>
+                <p style="color:#ff0000;"><?php echo $taxableErr;?></p>             
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="visible">Visible</label>
@@ -205,27 +199,34 @@ $allsale=$sale->getSale($user->data()->client_id);
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="category_id"><span class="text-danger">*</span>Category</label>
                 <select name="category_id" id="category_id" >
-                                        <?php
-                                        mysqli_data_seek($allcategory, 0);
-                                        while($row = mysqli_fetch_assoc($allcategory)){
-                                            echo "<option value='$row[category_id]'>$row[category_name]</option>";
-                                        }
-                                        ?>
+                    <?php 
+                    mysqli_data_seek($allcategory, 0);
+                    while($row = mysqli_fetch_assoc($allcategory)){
+                        echo "<option value='$row[category_id]'>$row[category_name]</option>";
+                    }
+                    ?>
                 </select>
                 <p style="color:#ff0000;"><?php echo $categoryErr;?></p>
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="sale_id"><span class="text-danger">*</span>Sale</label>
                 <select name="sale_id" id="sale_id" >
-                                        <?php
-                                        mysqli_data_seek($allsale, 0);
-                                        while($row = mysqli_fetch_assoc($allsale)){
-                                            echo "<option value='$row[sale_id]'>$row[sale_name]</option>";
-                                        }
-                                        ?>
-                <option>BBB</option>
+                    <option value='null'></option>
+                    <?php 
+                    /* if($sale->exists()){
+                        $allsale=$sale->data();
+
+                        foreach($sallsale as $saleentry){
+                            echo "<option value='".$saleentry->sale_id."'>".$saleentry->sale_name."</option>";
+                        }
+                    }*/
+                    mysqli_data_seek($allsale, 0);
+                    while($row = mysqli_fetch_assoc($allsale)){
+                        echo "<option value='$row[sale_id]'>$row[sale_name]</option>";
+                    }
+                    ?>
                 </select>
-              <!--  <p style="color:#ff0000;"><?php /*echo $categoryErr;*/?></p>-->
+              
             </div>
 
 
