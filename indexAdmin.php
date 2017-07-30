@@ -38,7 +38,7 @@ $user = new Admin();
             </div>
         </div>
 
-        <h1 class="navbar-brand mb-0 mr-3">Hello Admin <a class="text-white" href="profile.php?user=<?php echo escape($user->data()->admin_username); ?>"><?php echo escape($user->data()->admin_name); ?></a>!</h1>
+        <h1 class="navbar-brand mb-0 mr-3">Hello Admin <a class="text-white" href="profileAdmin.php?user=<?php echo escape($user->data()->admin_username); ?>"><?php echo escape($user->data()->admin_name); ?></a>!</h1>
 
         <?php
         } else{
