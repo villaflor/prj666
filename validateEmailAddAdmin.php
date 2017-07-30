@@ -22,7 +22,7 @@ if($identifier !== $user->data()->validate_hash){
     Redirect::to('indexAdmin.php');
 }
 
-if($date->format('Y-m-d H:i:s') > $user->data()->validate_email_expire){
+if($date->format('Y-m-d H:i:s') > $user->data()->validate_expire){
     $user->deleteUser();
     Session::flash('registerAdminError', 'Your email address verification request has been expired. Please, register again.');
     Redirect::to('registerAdmin.php');
@@ -32,8 +32,8 @@ try{
     $user->update(array(
         'validate_hash' => NULL,
         'validated' => 1,
-        'validate_email_expire' => NULL
-    ), $user->data()->client_id);
+        'validate_expire' => NULL
+    ), $user->data()->admin_id);
 
     Session::flash('login', 'Your email address have been successfully verified.');
     Redirect::to('login.php');
