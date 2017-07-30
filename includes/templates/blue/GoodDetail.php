@@ -19,11 +19,10 @@
 			<div class="content">
 				
                 <?php
-                   // include '../../tools/good.php';
-               //     echo "Found file";
+
                     $db = Database::getInstance();
                     $good = new Good($db);
-                //    echo "getting good object";
+              
                     $alldata = $good->getGoodDetail($_GET["gid"]);
                    
                     $row = mysqli_fetch_assoc($alldata);
@@ -58,7 +57,12 @@
 						</tr>
                         <tr>
                             <td>Sales Applicable: <?php if(isset($row['sale_id'])){
-                                                            echo "$row[sale_id]"; 
+                                                            $query="SELECT `sale_name` FROM `sale` WHERE `sale_id` = ".$row['sale_id'];
+                                                         //   echo $query;
+                                                            $conn = $db->getConnection();  
+                                                            $datasale=$conn->query($query);
+                                                            $salerow=mysqli_fetch_assoc($datasale);
+                                                            echo "$salerow[sale_name]"; 
                                                         }else{
                                                             echo "No Sale";
                                                         }?></td>     
