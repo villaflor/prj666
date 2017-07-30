@@ -34,75 +34,7 @@ $user = new Admin();
 
                 if($user->isLoggedIn()) {
                 ?>
-<!--                <a class="nav-item nav-link" href="generateTemplate.php">Generate site</a>-->
-<!--                <a class="nav-item nav-link" href="profile.php?user=--><?php //echo escape($user->data()->username); ?><!--">Profile</a>-->
-<!---->
-<!--                <div class="dropdown">-->
-<!--                    <a class="nav-item nav-link dropdown-toggle" href="#"-->
-<!--                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"-->
-<!--                       id="profileDropdown"-->
-<!--                    >Account</a>-->
-<!---->
-<!--                    <div class="dropdown-menu" aria-labelledby="profileDropdown">-->
-<!--                        <a class="dropdown-item" href="edit-com.php">Update account</a>-->
-<!--                        <a class="dropdown-item" href="changepassword.php">Change password</a>-->
-<!--                        <a class="dropdown-item" href="editCover.php">Edit cover</a>-->
-<!--                        <a class="dropdown-item" href="editFooter.php">Edit footer</a>-->
-<!--                        <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!---->
-<!--                <div class="dropdown">-->
-<!--                    <a class="nav-item nav-link dropdown-toggle" href="#"-->
-<!--                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"-->
-<!--                       id="pageDropdown"-->
-<!--                    >Page</a>-->
-<!---->
-<!--                    <div class="dropdown-menu" aria-labelledby="pageDropdown">-->
-<!--                        <a class="dropdown-item" href="pageList.php">View pages</a>-->
-<!--                        <a class="dropdown-item" href="addPage.php">Create page</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!---->
-<!--                <div class="dropdown">-->
-<!--                    <a class="nav-item nav-link dropdown-toggle" href="#"-->
-<!--                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"-->
-<!--                       id="categoryDropdown"-->
-<!--                    >Category</a>-->
-<!---->
-<!--                    <div class="dropdown-menu" aria-labelledby="categoryDropdown">-->
-<!--                        <a class="dropdown-item" href="category.php">View categories</a>-->
-<!--                        <a class="dropdown-item" href="addCategoryForm.php">Create category</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!---->
-<!--                <div class="dropdown">-->
-<!--                    <a class="nav-item nav-link dropdown-toggle" href="#"-->
-<!--                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"-->
-<!--                       id="goodDropdown"-->
-<!--                    >Good</a>-->
-<!---->
-<!--                    <div class="dropdown-menu" aria-labelledby="goodDropdown">-->
-<!--                        <a class="dropdown-item" href="good.php">View goods</a>-->
-<!--                        <a class="dropdown-item" href="create-good.php">Create good</a>-->
-<!--                        <a class="dropdown-item" href="edit-good.php">Edit good</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!---->
-<!--                <div class="dropdown">-->
-<!--                    <a class="nav-item nav-link dropdown-toggle" href="#"-->
-<!--                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"-->
-<!--                       id="saleDropdown"-->
-<!--                    >Sale</a>-->
-<!---->
-<!--                    <div class="dropdown-menu" aria-labelledby="saleDropdown">-->
-<!--                        <a class="dropdown-item" href="sale.php">View sales</a>-->
-<!--                        <a class="dropdown-item" href="onsale.php">Goods on sale</a>-->
-<!--                        <a class="dropdown-item" href="createsale.php">Create Sale</a>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-                <a class="nav-item nav-link" href="logout.php">Log out</a>
+                <a class="nav-item nav-link" href="logoutAdmin.php">Log out</a>
             </div>
         </div>
 
@@ -126,66 +58,7 @@ $user = new Admin();
 </nav>
 
 <div class="container bg-faded py-5" style="min-height: 65vh">
-<!--    <h2 class="mb-4 text-center">Templates</h2>-->
-<!--    <div class="row">-->
-<!--        <div class="col-sm-12 col-md-6 pb-3">-->
-<!--            <a href="includes/templates/green/index.php">-->
-<!--                <img src="images/t-green.png" alt="Green Template" class="img-thumbnail">-->
-<!--                <h5 class="pt-1 mb-4 text-center">Green</h5>-->
-<!--            </a>-->
-<!--            <p>A very simple site to display all your products. It has responsive display feature. It is green.</p>-->
-<!--        </div>-->
-<!--        <div class="col-sm-12 col-md-6 pb-3">-->
-<!--            <a href="includes/templates/red/index.php">-->
-<!--                <img src="images/t-red.png" alt="Red Template" class="img-thumbnail" style="display: block">-->
-<!--                <h5 class="pt-1 mb-4 text-center">Red</h5>-->
-<!--            </a>-->
-<!--            <p>A standard site for unlimited categories or goods. It shows the all sales items on the index page. It's red.</p>-->
-<!--        </div>-->
-<!--        <div class="col-sm-12 col-md-6 pb-3">-->
-<!--            <a href="includes/templates/blue/index.php">-->
-<!--                <img src="images/t-blue.png" alt="Blue Template" class="img-thumbnail" style="display: block">-->
-<!--                <h5 class="pt-1 mb-4 text-center">Blue</h5>-->
-<!--            </a>-->
-<!--        </div>-->
-<!--        <div class="col-sm-12 col-md-6 pb-3">-->
-<!--            <a href="includes/templates/grey/index.php">-->
-<!--                <img src="images/t-grey.png" alt="Grey Template" class="img-thumbnail" style="display: block">-->
-<!--                <h5 class="pt-1 mb-4 text-center">Grey</h5>-->
-<!--            </a>-->
-<!--            <p>This template is designed for limited goods and categories. It doesn't support search function. When customers move to another page( from good list to good detail), it will not refresh the whole page. At the bottom of the template, it allows customers connect quickly with client. It is good for selling services.</p>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <hr/>-->
-<!--    <div id="feature" class="col-md-12">-->
-<!--        <h1 style="color:#186bd6" class="text-center pb-3"><b><i>Features</i></b></h1>-->
-<!--        <hr/>-->
-<!--        <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">-->
-<!--            <h2 class="pl-1" style="color:#186bd6"><i>Create your site</i></h2>-->
-<!--            <p class="pb-3 pl-3">Generate with two clicks.</p>-->
-<!--            <img class="col-md-12" src="images/generate.jpg" />-->
-<!--        </div>-->
-<!--        <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">-->
-<!--            <h2 class="pr-1 text-right" style="color:#186bd6"><i>Templates change</i></h2>-->
-<!--            <p class="pb-3 pr-3 text-right">Change your site's style.</p>-->
-<!--            <img class="col-md-12" src="images/template.jpg" />-->
-<!--        </div>-->
-<!--            <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">-->
-<!--            <h2 class="pl-1" style="color:#186bd6"><i>Inventory control</i></h2>-->
-<!--            <p class="pb-3 pl-3">Manage your products and sell them.</p>-->
-<!--            <img class="col-md-12" src="images/inventory.jpg" />-->
-<!--        </div>-->
-<!--        <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">-->
-<!--            <h2 class="pr-1 text-right" style="color:#186bd6"><i>Promotion sales</i></h2>-->
-<!--            <p class="pb-3 pr-3 text-right">Recomand products to your customers.</p>-->
-<!--            <img class="col-md-12" src="images/promotion.jpg" />-->
-<!--        </div>-->
-<!--        <div style="border: 1px solid silver; padding:10px; margin: 20px 0;">-->
-<!--            <h2 class="pl-1" style="color:#186bd6"><i>Dynamic page</i></h2>-->
-<!--            <p class="pb-3 pl-3">Custom your site in a easy way.</p>-->
-<!--            <img class="col-md-12" src="images/page.jpg" />-->
-<!--        </div>-->
-<!--    </div>-->
+
 </div>
 
 <?php include('includes/footer.inc'); ?>
