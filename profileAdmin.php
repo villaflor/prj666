@@ -38,8 +38,8 @@ if($adminUsername !== Input::get('user')){
             </button>
             <div class="collapse navbar-collapse" id="menuContent">
                 <div class="navbar-nav mr-auto">
-                    <a class="nav-item nav-link active" href="indexAdmin.php">Home</a>
-
+                    <a class="nav-item nav-link" href="indexAdmin.php">Home</a>
+                    <a class="nav-item nav-link" href="monitor.php">Monitor Client</a>
                     <a class="nav-item nav-link" href="logoutAdmin.php">Log out</a>
                 </div>
             </div>
