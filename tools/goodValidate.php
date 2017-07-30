@@ -36,7 +36,7 @@
         } else {
         //    echo "no image uploaded <br/>";
             $imageVer = true;
-            $image="";
+            //$image="";
         }
 
       //  echo "checking description<br/>";
@@ -121,6 +121,12 @@
          //   echo "category_id is not empty, processing...<br/>";
             $category = validate($_POST["category_id"]);
             $catVer = true;
+        }
+     //   echo "checking sale_id<br/>";
+        if(isset($_POST["sale_id"])){
+
+            echo "sale_id is not empty, processing...".$_POST["sale_id"]."<br/>";
+            $sale = validate($_POST["sale_id"]);
         }
     }
 
