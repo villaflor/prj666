@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<?php  
-
-?>
 <html lang="en-US">
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="description" content="home page" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		
-		<title>Blue</title>
+		<title>Wecreu</title>
 		<link rel="stylesheet" href="css/stylesheet.css" />
 		
 		
@@ -18,6 +15,19 @@
 		
 		<?php
 			include 'Header.php';
+           
+            include_once '/data/www/default/wecreu/tools/sql.php';
+            $clientid = file_get_contents('conf.ini');
+
+            $db = Database::getInstance();
+
+            $query="SELECT good.*, sale.* FROM client JOIN category ON category.client_id = client.client_id JOIN good ON good.category_id = category.category_id JOIN sale ON sale.sale_id = good.sale_id WHERE client.client_id = ".$clientid;
+           // echo $query;
+            $conn = $db->getConnection();  
+            $allsale = $conn->query($query);
+            $productName = "";
+            $saleName = "";
+            $saleAmount = ""
 		?>
 		
 		<div class="middle">
@@ -25,13 +35,29 @@
 			<div class="content">
 				
 				<div class="slideshow" style="float:left">
-					<img class="slides" src="images/fish.png" alt="fish" height="536" width="559"/>
-					<img class="slides" src="images/logo.jpg" alt="logo" height="536" width="559" />
+                    <img class="slides" src="images/logo.jpg" alt="logo" height="536" width="559" />
+                    <?php
+                        if($allsale) {
+                            while ($row = mysqli_fetch_assoc($allsale)){
+                            $productName = "Click an image<br/>to check out<br/>our current<br/>Promos!";//$row['good_name'];
+                        //    $saleName = $row['sale_name'];
+                          //  $saleAmount = $row['discount'];
+                    ?>
+                    <a href="GoodDetail.php?gid=<?php echo "$row[good_id]";?>">
+					<img class="slides" src=<?php echo "../wecreu/images/".$row['good_image']; ?> alt=<?php echo $row['good_name']; ?> height="536" width="559"/>
+					</a>
+                    <?php
+                            }
+                        } 
+                    ?>
+                    <!--<img class="slides" src="images/fish.png" alt="logo" height="536" width="559" />-->
+                   
 				</div>
 			
 				<div class="info">
-					<p>Product Name</p>
-					<p>Product Price</p>
+				<!--	<p><?php echo $saleName.":"; ?></p>-->
+					<p><?php echo $productName; ?></p>
+                <!--    <p><?php echo $saleAmount." % off!"; ?></p>-->
 				</div>
 			</div>
 			
