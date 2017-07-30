@@ -63,6 +63,11 @@ if(!$user->isLoggedIn()){
 </nav>
 
 <div class="container bg-faded py-5" style="min-height: 65vh">
+    <?php
+    if(Session::exists('monitor')) {
+        echo '<p class="text-success">' . Session::flash('monitor') . '</p>';
+    }
+    ?>
     <h2 class="mb-4">List of clients</h2>
     <h3 class="mb-4">Payment due</h3>
     <table class="table table-striped">
@@ -86,7 +91,7 @@ if(!$user->isLoggedIn()){
                 echo '<td>' . $item->client_site_title . '</td>';
                 echo '<td>' . $item->last_payment . '</td>';
                 echo '<td>' . $date->diff(new DateTime($item->last_payment))->format("%a") .'</td>';
-                echo '<td><a href="">details</a> | <a href="">send email</a></td>';
+                echo '<td><a href="">details</a> | <a href="sendEmailToClient.php?email=' . $item->client_admin_email . '&name=' . $item->client_name .'">send email</a></td>';
                 echo '</tr>';
 
 
