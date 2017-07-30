@@ -141,10 +141,15 @@ if(!$user->isLoggedIn()){
         </tr>
         <tr>
             <td>Sales Applicable: <?php if(isset($row['sale_id'])){
-                                            echo "$row[sale_name]"; 
-                                        }else{
-                                            echo "No Sale";
-                                        }?></td>     
+                                        $query="SELECT `sale_name` FROM `sale` WHERE `sale_id` = ".$row['sale_id'];
+                                     //   echo $query;
+                                        $conn = $db->getConnection();  
+                                        $datasale=$conn->query($query);
+                                        $salerow=mysqli_fetch_assoc($datasale);
+                                        echo "$salerow[sale_name]"; 
+                                    }else{
+                                        echo "No Sale";
+                                    }?></td>     
             <td></td>
         </tr>
 					
