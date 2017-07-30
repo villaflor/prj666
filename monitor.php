@@ -2,7 +2,11 @@
 require_once 'core/init.php';
 
 $user = new Admin();
+$client = new Client();
 
+if(!$user->isLoggedIn()){
+    Redirect::to("indexAdmin.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +16,7 @@ $user = new Admin();
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Wecrue Admin</title>
+    <title>Wecrue - Monitor</title>
 </head>
 <body>
 
@@ -29,12 +33,12 @@ $user = new Admin();
         </button>
         <div class="collapse navbar-collapse" id="menuContent">
             <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link active" href="indexAdmin.php">Home</a>
+                <a class="nav-item nav-link" href="indexAdmin.php">Home</a>
                 <?php
 
                 if($user->isLoggedIn()) {
                 ?>
-                <a class="nav-item nav-link" href="monitor.php">Monitor Client</a>
+                <a class="nav-item nav-link active" href="monitor.php">Monitor Client</a>
                 <a class="nav-item nav-link" href="logoutAdmin.php">Log out</a>
             </div>
         </div>
@@ -59,7 +63,39 @@ $user = new Admin();
 </nav>
 
 <div class="container bg-faded py-5" style="min-height: 65vh">
+    <h2 class="mb-4">List of clients</h2>
+    <h3 class="mb-4">Payment due</h3>
+    <table class="table table-striped">
+        <tr>
+            <th>Client Name</th>
+            <th>Client Site Title</th>
+            <th>Last payment</th>
+            <th>Number of days due</th>
+            <th>Actions</th>
+        </tr>
+        <?php
+        $date = new DateTime("-1 months");
+        $client->getClient(array('last_payment', '<', $date->format('Y-m-d H:i:s')));
+        if($client->exists()) {
+            $allClients = $client->data();
 
+            foreach ($allClients as $item) {
+
+                echo '<tr>';
+                echo '<th>' . $item->client_name . '</th>';
+                echo '<td>' . $item->client_site_title . '</td>';
+                echo '<td>' . $item->last_payment . '</td>';
+                echo '<td>' . $date->diff(new DateTime($item->last_payment))->format("%a") .'</td>';
+                echo '<td><a href="">details</a> | <a href="">send email</a></td>';
+                echo '</tr>';
+
+
+
+            }
+        }
+
+        ?>
+    </table>
 </div>
 
 <?php include('includes/footer.inc'); ?>

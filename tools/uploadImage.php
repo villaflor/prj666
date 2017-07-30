@@ -1,7 +1,7 @@
 <?php
 
     
-     $target_dir = "/data/www/default/wecreu/images/";
+     $target_dir = "/data/www/default/".$user->data()->username."/images/";
      $target_file = $target_dir . $_FILES["good_image"]["name"];//"101.jpg";//basename($_FILES["good_image"]["name"]);
      $uploadOk = 1;
 
@@ -23,7 +23,7 @@
     // Check if file already exists
     if (file_exists($target_file)) {
          // if the logo exists, delete it.
-        unlink($target_file);
+     //   unlink($target_file);
         $uploadOk = 0;
        // $image = $target_file;
         echo "<script type='text/javascript'>alert('File already exists') </script>";
@@ -59,7 +59,7 @@
 
       //  echo "got file ".$filename;
 
-        $deletepath = "/data/www/default/wecreu/images/".$filename;
+        $deletepath = "/data/www/default/".$user->data()->username."/images/".$filename;
 
         if (is_file($deletepath)) {
             echo "<script type='text/javascript'>alert('found file '".$deletepath."' deleting!') </script>";

@@ -111,6 +111,7 @@ $good = new Good($db);
             <th>Image</th>
             <th>Category</th>
             <th>Number of stocks</th>
+            <th>Visible</th>
             <th>Actions</th>
         </tr>
         <?php
@@ -118,12 +119,18 @@ $good = new Good($db);
 
         while ($row = mysqli_fetch_assoc($alldata)){
          //   echo "$row[good_name]<br/>";
+            $imagepath = "../".$user->data()->username."/images/".$row['good_image'];
         ?>
         <tr>
             <td><a href="good-detail.php?gid=<?php echo "$row[good_id]";?>"><?php echo "$row[good_name]";  ?></a></td>
-            <td><img src="<?php echo "images/".$row['good_image']; ?>" alt="good image" height="70" width="70" /></td>
+            <td><img src="<?php echo $imagepath; ?>" alt="good image" height="70" width="70" /></td>
             <td><?php echo "$row[category_name]";  ?></td>
             <td><?php echo "$row[good_in_stock]";  ?></td>
+            <td><?php if($row['good_visible']){
+                        echo "Yes";
+                       } else {
+                        echo "No";  
+                       }?></td>
             <td><a href="edit-good.php?gid=<?php echo "$row[good_id]";?>">Edit</a>|<a href="delete-good.php?gid=<?php echo "$row[good_id]";?>">Delete</a></td>
         </tr>
         <?php
