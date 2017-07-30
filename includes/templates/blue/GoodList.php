@@ -12,7 +12,7 @@
 		
 		<?php
 			include 'Header.php';
-        
+            $clientId = file_get_contents('conf.ini');
           //  $db = Database::getInstance();
             //$category = new Category($db,1);
 		?>
@@ -35,7 +35,7 @@
                    
                     $good = new Good($db);
                   //  echo "getting good object";
-                    $alldata = $good->getAllGoods($selectcategory);
+                    $alldata = $good->getAllGoods($selectcategory,$clientId);
                  //   echo "getting goods list";
                    
                     while ($row = mysqli_fetch_assoc($alldata)){
