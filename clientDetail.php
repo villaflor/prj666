@@ -1,7 +1,8 @@
 <?php
 require_once 'core/init.php';
 
-$user = new User();
+$admin = new Admin();
+$user = new User(Input::get('clientId'));
 $good = new Good();
 $category = new Category();
 $lowStocks = array();
@@ -13,26 +14,14 @@ $numGoods = 0;
 $sale_list = array();
 $numSale = 0;
 
-if($user->data()->username !== Input::get('user')){
-    Redirect::to(404);
-}
-
-if(!$user->isLoggedIn()){
-    Redirect::to('index.php');
+if(!$admin->isLoggedIn()){
+    Redirect::to('indexAdmin.php');
 }
 
 $client_name = $user->data()->username;
 $check = 0;
 
-if(!$username = Input::get('user')){
-    Redirect::to('index.php');
-} else{
-    $user = new User($username);
-    if(!$user->exists()){
-        Redirect::to(404);
-    } else{
-        $data = $user->data();
-    }
+
     ?>
 
     <!DOCTYPE html>
@@ -42,7 +31,7 @@ if(!$username = Input::get('user')){
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="css/bootstrap.min.css">
-        <title>Wecrue - Profile</title>
+        <title>Wecrue - Client Details</title>
     </head>
     <body>
 
@@ -53,78 +42,13 @@ if(!$username = Input::get('user')){
             </button>
             <div class="collapse navbar-collapse" id="menuContent">
                 <div class="navbar-nav mr-auto">
-                    <a class="nav-item nav-link" href="index.php">Home</a>
-                    <a class="nav-item nav-link" href="generateTemplate.php">Generate site</a>
-                    <a class="nav-item nav-link active" href="profile.php?user=<?php echo escape($user->data()->username); ?>">Profile</a>
-
-                    <div class="dropdown">
-                        <a class="nav-item nav-link dropdown-toggle" href="#"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                           id="profileDropdown"
-                        >Account</a>
-
-                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item" href="edit-com.php">Update account</a>
-                            <a class="dropdown-item" href="changepassword.php">Change password</a>
-                        </div>
-                    </div>
-
-                    <div class="dropdown">
-                        <a class="nav-item nav-link dropdown-toggle" href="#"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            id="pageDropdown"
-                        >Page</a>
-                        <div class="dropdown-menu" aria-labelledby="pageDropdown">
-                            <a class="dropdown-item" href="editCover.php">Edit cover</a>
-                            <a class="dropdown-item" href="editFooter.php">Edit footer</a>
-                            <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
-                            <a class="dropdown-item" href="pageList.php">View pages</a>
-                            <a class="dropdown-item" href="addPage.php">Create page</a>
-                        </div>
-                    </div>
-
-                    <div class="dropdown">
-                        <a class="nav-item nav-link dropdown-toggle" href="#"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                           id="categoryDropdown"
-                        >Category</a>
-
-                        <div class="dropdown-menu" aria-labelledby="categoryDropdown">
-                            <a class="dropdown-item" href="category.php">View categories</a>
-                            <a class="dropdown-item" href="addCategoryForm.php">Create category</a>
-                        </div>
-                    </div>
-
-                    <div class="dropdown">
-                        <a class="nav-item nav-link dropdown-toggle" href="#"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                           id="goodDropdown"
-                        >Good</a>
-
-                        <div class="dropdown-menu" aria-labelledby="goodDropdown">
-                            <a class="dropdown-item" href="good.php">View goods</a>
-                            <a class="dropdown-item" href="create-good.php">Create good</a>
-                            <a class="dropdown-item" href="edit-good.php">Edit good</a>
-                        </div>
-                    </div>
-
-                    <div class="dropdown">
-                        <a class="nav-item nav-link dropdown-toggle" href="#"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                           id="saleDropdown"
-                        >Sale</a>
-
-                        <div class="dropdown-menu" aria-labelledby="saleDropdown">
-                            <a class="dropdown-item" href="sale.php">View sales</a>
-                            <a class="dropdown-item" href="onsale.php">Goods on sale</a>
-                            <a class="dropdown-item" href="createsale.php">Create Sale</a>
-                        </div>
-                    </div>
-
-                    <a class="nav-item nav-link" href="logout.php">Log out</a>
+                    <a class="nav-item nav-link" href="indexAdmin.php">Home</a>
+                    <a class="nav-item nav-link" href="monitor.php">Monitor Client</a>
+                    <a class="nav-item nav-link" href="logoutAdmin.php">Log out</a>
                 </div>
             </div>
-            <h1 class="navbar-brand mb-0 mr-3">Hello <a class="text-white" href="profile.php?user=<?php echo escape($user->data()->username); ?>"><?php echo escape($user->data()->username); ?></a>!</h1>
+
+            <h1 class="navbar-brand mb-0 mr-3">Hello Admin <a class="text-white" href="profileAdmin.php?user=<?php echo escape($admin->data()->admin_username); ?>"><?php echo escape($admin->data()->admin_name); ?></a>!</h1>
         </div>
     </nav>
 
@@ -161,10 +85,7 @@ if(!$username = Input::get('user')){
                                     </a>
                                     <?php
                                 } else {
-                                    ?><a class="text-white" href="generateTemplate.php">
-                                        Generate my site
-                                    </a>
-                                    <?
+                                    echo "Site not generated.";
                                 }
                                 ?>
 
@@ -349,10 +270,6 @@ if(!$username = Input::get('user')){
                 </div>
             </section>
         </div>
-        <form action="" method="post">
-            <input class="btn btn-primary float-right" type="submit" name="submitBtn" onclick="return confirm('Do you really want to delete your site?');" value="Delete your website">
-        </form>
-
     </div>
 
 
@@ -368,52 +285,4 @@ if(!$username = Input::get('user')){
 
 
 
-    <?php
-}
 
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['submitBtn'])) {
-        $deletedDir = '/data/www/default/' . $client_name;
-        $deletedDir2 = '/data/www/default/' . $client_name . '/images';
-        $deletedDir3 = '/data/www/default/' . $client_name . '/css';
-        $deletedDir4 = '/data/www/default/' . $client_name . '/js';
-        $deletedDir5 = '/data/www/default/' . $client_name . '/good';
-        $deletedDir6 = '/data/www/default/' . $client_name . '/backup';
-        if(file_exists($deletedDir)){
-            rrmdir($deletedDir2);
-            rrmdir($deletedDir3);
-            if (file_exists($deletedDir4)){
-                rrmdir($deletedDir4);
-            }
-            if(file_exists($deletedDir5)){
-                rrmdir($deletedDir5);
-            }
-            if(file_exists($deletedDir6)){
-                rrmdir($deletedDir6);
-            }
-            rrmdir($deletedDir);
-            $check == 1;
-        }
-    }
-    if ($check == 1){
-        echo "Your site has been deleted.";
-    }
-
-}
-
-function rrmdir($dir) {
-    if (is_dir($dir)) {
-        $objects = scandir($dir);
-        foreach ($objects as $object) {
-            if ($object != "." && $object != "..") {
-                if (is_dir($dir."/".$object))
-                    rrmdir($dir."/".$object);
-                else
-                    unlink($dir."/".$object);
-            }
-        }
-        rmdir($dir);
-    }
-}
-?>
