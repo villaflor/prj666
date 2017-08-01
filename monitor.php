@@ -84,8 +84,11 @@ if(!$user->isLoggedIn()){
         if($client->exists()) {
             $allClients = $client->data();
 
-            foreach ($allClients as $item) {
+            $tempArry = array();
+            foreach ($allClients as $i) $tempArry[] = $i->client_name;
+            array_multisort($tempArry, SORT_ASC, $allClients);
 
+            foreach ($allClients as $item) {
                 echo '<tr>';
                 echo '<th>' . $item->client_name . '</th>';
                 echo '<td>' . $item->client_site_title . '</td>';
@@ -93,9 +96,38 @@ if(!$user->isLoggedIn()){
                 echo '<td>' . $date->diff(new DateTime($item->last_payment))->format("%a") .'</td>';
                 echo '<td><a href="clientDetail.php?clientId='.$item->client_id.'">details</a> | <a href="sendEmailToClient.php?email=' . $item->client_admin_email . '&name=' . $item->client_name .'">send email</a></td>';
                 echo '</tr>';
+            }
+        }
 
+        ?>
+    </table>
+    <hr>
+    <br>
+    <h3 class="mb-4">All clients</h3>
+    <table class="table table-striped">
+        <tr>
+            <th>Client Name</th>
+            <th>Client Site Title</th>
+            <th>Last payment</th>
+            <th>Actions</th>
+        </tr>
+        <?php
+        $date = new DateTime("-1 months");
+        $client->getClient(array('validated', '=', 1));
+        if($client->exists()) {
+            $allClients = $client->data();
 
+            $tempArry = array();
+            foreach ($allClients as $i) $tempArry[] = $i->client_name;
+            array_multisort($tempArry, SORT_ASC, $allClients);
 
+            foreach ($allClients as $item) {
+                echo '<tr>';
+                echo '<th>' . $item->client_name . '</th>';
+                echo '<td>' . $item->client_site_title . '</td>';
+                echo '<td>' . $item->last_payment . '</td>';
+                echo '<td><a href="clientDetail.php?clientId='.$item->client_id.'">details</a> | <a href="sendEmailToClient.php?email=' . $item->client_admin_email . '&name=' . $item->client_name .'">send email</a></td>';
+                echo '</tr>';
             }
         }
 
