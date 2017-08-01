@@ -1,6 +1,6 @@
   <?php
-  include_once("/data/www/default/wecreu/tools/sql.php");
-  $db = Database::getInstance();
+  //include_once("/data/www/default/wecreu/tools/sql.php");
+  //$db = Database::getInstance();
   ?>
   <div class="col-md-12 col-sm-12 col-xs-12">
     <h1> Promotions </h1>

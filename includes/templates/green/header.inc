@@ -1,5 +1,5 @@
 <?php
-    $clientId = file_get_contents('conf.ini');
+    /*$clientId = file_get_contents('conf.ini');
     include_once('/data/www/default/wecreu/tools/category.php');
     include_once("/data/www/default/wecreu/tools/sql.php");
     include_once("/data/www/default/wecreu/tools/client.php");
@@ -9,7 +9,7 @@
     $db = Database::getInstance();
     $category = new Category($db,$clientId);
     $page = new Page($db,$clientId);
-    $client = new Client($db,$clientId);
+    $client = new Client($db,$clientId);*/
     ?>
 <div class="container">
     <table class="mx-auto">

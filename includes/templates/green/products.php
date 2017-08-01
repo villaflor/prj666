@@ -15,6 +15,15 @@
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
+		<?php if ($contact == 1 ){?>
+		<a class="nav-item nav-link text-white" href="contact-us.php">Contact us</a>
+		<?php } ?>
+		<?php
+            $alldata = $page->getAll();
+            while ($row = mysqli_fetch_assoc($alldata)) {
+              echo '<a class="nav-item nav-link text-white" href="page.php?page='.$row['id'].'">'.$row['page_name'].'</a>';
+            }
+        ?>
     </nav>
 </div>
 <div class="container mb-5">
@@ -72,7 +81,7 @@
 
         echo '<section class="col-md-3">';
         echo '<p>' . $goodrow["good_name"] . '</p>';
-        echo '<a href="detail.php?gid=' .$goodrow['good_id'] .'"><img class="img-thumbnail" width="250px" height="250px" src="images/' . $goodrow['good_image'] . '" alt="good image"></a>';
+        echo '<a href="detail.php?gid=' .$goodrow['good_id'] .'"><img class="img-thumbnail" height="250" width="250" src="../wecreu/images/' . $goodrow['good_image'] . '" alt="good image"></a>';
         echo '<p>Price: $' . $goodrow['good_price'] . ' / lb</p>';
         echo "</section>";
     }

@@ -45,7 +45,12 @@ class Client {
 	    $result = mysqli_fetch_assoc($result);
 	    return $result['client_admin_email'];
 	}
-
+	public function getClientPhone() {
+		$sql_query = "SELECT * FROM client WHERE client_id = $this->client_id";
+	    $result = $this->mysqli->query($sql_query);
+	    $result = mysqli_fetch_assoc($result);
+	    return $result['phone_number'];
+	}
 	// Constructor
 	public function __construct($db, $client_id) {
 		$this->mysqli = $db->getConnection();
