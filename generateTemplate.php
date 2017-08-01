@@ -20,6 +20,7 @@ if(Input::exists()){
 		$client_id = $user->data()->client_id;
         $target_dir = '/data/www/default/' . $client_name . '/images';
         $target_file = $target_dir . "/logo.jpg";
+		$logoUrl = '../' . $client_name . '/images/logo.jpg';
         $uploadOk = 1;
 // Desired folder structure
         $destination = '/data/www/default/' . $client_name;
@@ -233,7 +234,15 @@ if(Input::exists()){
 
             }
         }
-		$user->update(array('client_logo' => $target_file));
+		$enableContact = 0;
+		if(isset($_POST['contact'])){
+			$enableContact = 1;
+			
+		}
+		$writeContact = fopen("/data/www/default/" . $client_name . "/contact.ini", "w") or die ("Unable to open file!");
+		fwrite($writeContact, $enableContact);
+		fclose($writeContact);
+		$user->update(array('client_logo' => $logoUrl));
 		if($wait == 1){
 			sleep(60);
 			//$wait2 = 1;
@@ -419,6 +428,13 @@ function rrmdir($dir) {
 
                     <input class="form-check-input" style=" margin-left:20px;" type="radio" name="template" id="grey" value="4" >
                     Grey</label>
+            </div>
+			<div class="form-check">
+                <p style=" margin-left:15px;"><span class="text-danger">*</span> Do you want to have the "Contact us" page?</p>
+                <label class="form-check-label" for="contact">
+
+                    <input class="form-check-input" style=" margin-left:20px;" type="checkbox" name="contact" id="contact" value = "yes">
+                    Yes</label>
             </div>
 
         </fieldset>

@@ -1,5 +1,5 @@
 <?php
-    $clientId = file_get_contents('conf.ini');
+    /*$clientId = file_get_contents('conf.ini');
     include_once('/data/www/default/wecreu/tools/category.php');
     include_once("/data/www/default/wecreu/tools/sql.php");
     include_once("/data/www/default/wecreu/tools/client.php");
@@ -7,7 +7,7 @@
 	//create an object
     $db = Database::getInstance();
     $category = new Category($db,$clientId);
-    $client = new Client($db,$clientId);
+    $client = new Client($db,$clientId);*/
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +26,9 @@
         <a class="nav-item nav-link text-white" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link active" href="about-us.php">About us</a>
+		<?php if ($contact == 1 ){?>
+		<a class="nav-item nav-link text-white" href="contact-us.php">Contact us</a>
+		<?php } ?>
         <?php
             $alldata = $page->getAll();
             while ($row = mysqli_fetch_assoc($alldata)) {

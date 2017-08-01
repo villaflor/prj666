@@ -17,12 +17,12 @@
 		<div class="middle">
 			<div class="content">
 				<?php
-				$clientId = file_get_contents("conf.ini");
+				/*$clientId = file_get_contents("conf.ini");
 				$url = "/data/www/default/wecreu/companyInfo/aboutUs/".$clientId.".txt";
 				if (file_exists($url)) {
 					$content = file_get_contents($url);
 				echo $content;
-				}
+				}*/
 				?>
 			</div>
 
