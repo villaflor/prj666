@@ -33,6 +33,9 @@ $goodrow = mysqli_fetch_assoc($alldata);
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
+        <?php if ($contact == 1 ){?>		
+ -		<a class="nav-item nav-link text-white" href="contact-us.php">Contact us</a>		
+ -		<?php } ?>
     </nav>
 </div>
 <div class="container mb-5">
