@@ -1,3 +1,4 @@
+<?php $contact = file_get_contents('contact.ini');?>
 <nav>
 	<ul>
 		<li><a href="index.php">Home</a></li>
