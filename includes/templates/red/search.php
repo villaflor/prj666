@@ -58,13 +58,13 @@ while ($row = mysqli_fetch_assoc($alldata)) {
   ?>
   <div class="item col-md-12 col-sm-4 col-xs-4">
     <a href='detail.php?id=<?php echo $row['good_id'];?>'>
-       <img src="<?php echo "images/".$row['good_image'];?>" class="img-responsive" alt="<?php echo $row['good_name'];?>">
+       <img src="<?php echo "/wecreu/images/".$row['good_image'];?>" class="img-responsive" alt="<?php echo $row['good_name'];?>">
       <p>
         <?php
         $name = $row['good_name'];
         $length = strlen($name);
         if ($length > 16){
-          $name = substr($name, 1 ,16)."...";
+          $name = substr($name, 0 ,16)."...";
         }
         echo $name;
         ?>

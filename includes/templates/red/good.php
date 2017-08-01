@@ -65,7 +65,7 @@ while ($row = mysqli_fetch_assoc($alldata)) {
         $name = $row['good_name'];
         $length = strlen($name);
         if ($length > 16){
-          $name = substr($name, 1 ,16)."...";
+          $name = substr($name, 0 ,16)."...";
         }
         echo $name;
         ?>

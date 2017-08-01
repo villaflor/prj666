@@ -93,13 +93,13 @@
                   <?php
                   $name = $row['good_name'];
                   $length = strlen($name);
-                  if ($length > 16){
-                    $name = substr($name, 1 ,16)."...";
-                  }
+                  // if ($length > 16){
+                  //   $name = substr($name, 0 ,16)."...";
+                  // }
                   echo $name;
                   ?>
               </p>
-              <a href="detail.php?id=<?php echo $row['good_id'];?>"><img class="img-thumbnail" src="<?php echo $row['good_image'];?>" alt="cow"> </a>
+              <a href="detail.php?id=<?php echo $row['good_id'];?>"><img class="img-thumbnail" src="/wecreu/images/<?php echo $row['good_image'];?>" alt="cow"> </a>
               <p class="text-center">Price: $<?php echo $row['good_price'];?></p>
           </section>
         <?php
