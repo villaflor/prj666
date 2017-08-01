@@ -12,7 +12,7 @@
     header("Location: index.php");
     exit;
   }
-
+	
   // items
   $alldata = $good->getGoodDetail($_GET['id']);
   if(mysqli_num_rows($alldata) == 0){
@@ -25,7 +25,7 @@
   <div class="row">
     <div class="col-xs-4"></div>
     <div class="nnn col-lg-3 col-md-4 col-sm-4 col-xs-3 img-circle float-right clearfix">
-      <img src="<?php echo "images/".$row['good_image'];?>" class="img-responsive" alt="><?php echo $row['good_name'];?>" />
+      <img src="<?php echo "../wecreu/images/".$row['good_image'];?>" class="img-responsive" alt="http://th25.st.depositphotos.com/5142301/7567/v/450/depositphotos_75677235-stock-illustration-lion-head-logo.jpg" />
       </div>
   </div>
   <br>
