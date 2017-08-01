@@ -28,7 +28,7 @@ class Good {
                         FROM good g JOIN category c ON g.category_id = c.category_id
                         WHERE g.good_visible = true AND c.category_id = $categoryid AND c.client_id = $clientid";
         }
-        echo "<br/>clientId is ".$clientid." SQL QUERY ".$sql_query."<br/>";
+       // echo "<br/>clientId is ".$clientid." SQL QUERY ".$sql_query."<br/>";
         return $this->mysqli->query($sql_query);
     }
 
@@ -70,7 +70,7 @@ class Good {
                         WHERE g.good_visible = true AND c.category_id = $categoryid AND c.client_id = $clientid
                         LIMIT $limit OFFSET $offset"; 
         }
-        echo "<br/>clientId is ".$clientid.", limit".$limit.", offset".$offset.", SQL QUERY ".$sql_query."<br/>";
+      //  echo "<br/>clientId is ".$clientid.", limit".$limit.", offset".$offset.", SQL QUERY ".$sql_query."<br/>";
         return $this->mysqli->query($sql_query);
     }
 
@@ -87,7 +87,7 @@ class Good {
                             g.sale_id as sale_id
                     FROM good g join category c on g.category_id = c.category_id
                     WHERE g.good_id = $id";
-        echo "<br/>QUERY: ".$sql_query."<br/>";
+     //   echo "<br/>QUERY: ".$sql_query."<br/>";
         return $this->mysqli->query($sql_query);
     }
 
@@ -105,7 +105,7 @@ class Good {
        //     echo "good.php:query worked ".$sql_query."<br/>";
             return true;
         }else{
-            echo "good.php:received error for query ".$sql_query." <br/>";
+          //  echo "good.php:received error for query ".$sql_query." <br/>";
             return false;
         }
     }
@@ -124,7 +124,7 @@ class Good {
         //    echo "good.php:query worked ".$sql_query."<br/>";
             return true;
         }else{
-            echo "good.php:received error for query ".$sql_query." <br/>";
+         //   echo "good.php:received error for query ".$sql_query." <br/>";
             return false;
         }  
     }
