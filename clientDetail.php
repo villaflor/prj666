@@ -187,7 +187,7 @@ $check = 0;
         </div>
         <div class="container mb-4">
             <section class="col bg-info rounded py-5">
-                <h4><a class="text-gray-dark" href="createsale.php">Number of on sale</a> <span class="badge badge-success"><?php echo $numSale; ?></span></h4>
+                <h4>Number of on sale <span class="badge badge-success"><?php echo $numSale; ?></span></h4>
                 <hr>
                 <div class="container row">
                     <div class="col-md-4">
@@ -215,7 +215,7 @@ $check = 0;
         </div>
         <div class="container mb-4">
             <section class="col bg-info rounded py-5">
-                <h4><a class="text-gray-dark" href="category.php">Number of categories</a> <span class="badge badge-success"><?php echo $numCategories; ?></span></h4>
+                <h4>Number of categories <span class="badge badge-success"><?php echo $numCategories; ?></span></h4>
                 <hr>
                 <div class="container row">
                     <div class="col-md-4">
@@ -244,7 +244,7 @@ $check = 0;
 
         <div class="container mb-4">
             <section class="container bg-info rounded py-5">
-                <h4><a class="text-gray-dark" href="good.php">Number of products</a> <span class="badge badge-success"><?php echo $numGoods; ?></span></h4>
+                <h4>Number of products <span class="badge badge-success"><?php echo $numGoods; ?></span></h4>
                 <hr>
                 <div class="container row">
                     <div class="col-md-4">
