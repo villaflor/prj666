@@ -26,7 +26,7 @@
                     $alldata = $good->getGoodDetail($_GET["gid"]);
                    
                     $row = mysqli_fetch_assoc($alldata);
-                    $imagepath = "images/".$row['good_image'];
+                    $imagepath = "../wecreu/images/".$row['good_image'];
                 ?>
                 
 				<div class="goodimage" >     
