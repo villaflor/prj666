@@ -99,7 +99,7 @@
                   echo $name;
                   ?>
               </p>
-              <a href="detail.php?id=<?php echo $row['good_id'];?>"><img class="img-thumbnail" src="/wecreu/images/<?php echo $row['good_image'];?>" alt="cow"> </a>
+              <a href="detail.php?gid=<?php echo $row['good_id'];?>"><img class="img-thumbnail" src="/wecreu/images/<?php echo $row['good_image'];?>" alt="cow"> </a>
               <p class="text-center">Price: $<?php echo $row['good_price'];?></p>
           </section>
         <?php
