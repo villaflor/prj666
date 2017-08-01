@@ -17,7 +17,7 @@ $allcategory = $category->getAllAvaliable();
 //$sale = new Sale();
 //$sale->getSale($user->data()->client_id);
 $query="SELECT DISTINCT sale.* FROM client JOIN category ON category.client_id = client.client_id JOIN good ON good.category_id = category.category_id JOIN sale ON sale.sale_id = good.sale_id WHERE client.client_id = ".$clientid;
-   echo $query;
+  // echo $query;
 $conn = $db->getConnection();  
 $allsale=$conn->query($query);
 
@@ -108,7 +108,7 @@ $allsale=$conn->query($query);
     <?php
             $id =  $_GET["gid"];
             $good = new Good($db);
-            echo "getting info for good ".$id;
+         //   echo "getting info for good ".$id;
             $alldata = $good->getGoodDetail($id);
             $row = mysqli_fetch_assoc($alldata);     
                                         
@@ -136,7 +136,7 @@ $allsale=$conn->query($query);
                    $priceVer == true && $qtyVer == true && $weightVer == true && 
                    $catVer == true){
                       
-                    echo "editing good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category.",".$sale."<br/>";
+                  //  echo "editing good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category.",".$sale."<br/>";
 
                     if($good->editGood($id, $name, $image, $description, $price, $quantity, $weight, $taxable, $visible, $category, $sale)){
                         
