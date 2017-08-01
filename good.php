@@ -119,7 +119,7 @@ $good = new Good($db);
 
         while ($row = mysqli_fetch_assoc($alldata)){
          //   echo "$row[good_name]<br/>";
-            $imagepath = "../".$user->data()->username."/images/".$row['good_image'];
+            $imagepath = "images/".$row['good_image'];
         ?>
         <tr>
             <td><a href="good-detail.php?gid=<?php echo "$row[good_id]";?>"><?php echo "$row[good_name]";  ?></a></td>
