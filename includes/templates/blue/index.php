@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+<?php include 'Header.php';?>
 <html lang="en-US">
 	<head>
 		<meta charset="UTF-8"/>
 		<meta name="description" content="home page" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		
-		<title>Wecreu</title>
+		<title><?php echo $client->getClientSiteTitle();?></title>
 		<link rel="stylesheet" href="css/stylesheet.css" />
 		
 		
@@ -14,7 +15,7 @@
 	<body>
 		
 		<?php
-			include 'Header.php';
+			
            
             include_once '/data/www/default/wecreu/tools/sql.php';
             $clientid = file_get_contents('conf.ini');
