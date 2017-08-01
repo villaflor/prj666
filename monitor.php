@@ -85,7 +85,7 @@ if(!$user->isLoggedIn()){
             $allClients = $client->data();
 
             $tempArry = array();
-            foreach ($allClients as $i) $tempArry[] = $i->client_name;
+            foreach ($allClients as $i) $tempArry[] = strtolower($i->client_name);
             array_multisort($tempArry, SORT_ASC, $allClients);
 
             foreach ($allClients as $item) {
@@ -118,7 +118,7 @@ if(!$user->isLoggedIn()){
             $allClients = $client->data();
 
             $tempArry = array();
-            foreach ($allClients as $i) $tempArry[] = $i->client_name;
+            foreach ($allClients as $i) $tempArry[] = strtolower($i->client_name);
             array_multisort($tempArry, SORT_ASC, $allClients);
 
             foreach ($allClients as $item) {
