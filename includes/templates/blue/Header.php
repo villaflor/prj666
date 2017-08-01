@@ -1,7 +1,7 @@
 <header>
 	<?php
-        include '/data/www/default/wecreu/tools/good.php';
-        include '/data/www/default/wecreu/tools/category.php';
+        include_once '/data/www/default/wecreu/tools/good.php';
+        include_once '/data/www/default/wecreu/tools/category.php';
         include_once '/data/www/default/wecreu/tools/sql.php';
         include_once('/data/www/default/wecreu/tools/client.php');
         include_once("/data/www/default/wecreu/tools/page.php");
