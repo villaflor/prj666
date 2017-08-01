@@ -13,7 +13,7 @@ $good = new Good($db);
 $alldata = $good->getGoodDetail($_GET["gid"]);
 
 $goodrow = mysqli_fetch_assoc($alldata);
-$imagepath = "images/".$goodrow['good_image'];
+
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +48,7 @@ $imagepath = "images/".$goodrow['good_image'];
 </div>
 <div class="container mb-5">
     <div class="text-center mb-5">
-        <img src="$imagepath" alt="cow" class="rounded">
+        <img src="<?php echo "../wecreu/images/".$goodrow['good_image']; ?>" alt="cow" class="rounded">
     </div>
     <div class="container text-center mb-5">
         <div class="container row">
