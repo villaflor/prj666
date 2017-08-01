@@ -1,7 +1,7 @@
 <?php
 
     
-     $target_dir = "/data/www/default/".$user->data()->username."/images/";
+     $target_dir = "/data/www/default/wecreu/images/";
      $target_file = $target_dir . $_FILES["good_image"]["name"];//"101.jpg";//basename($_FILES["good_image"]["name"]);
      $uploadOk = 1;
 
@@ -41,9 +41,9 @@
      // if everything is ok, try to upload file
     } else {
          if (move_uploaded_file($_FILES["good_image"]["tmp_name"], $target_file)) {
-             echo "The file <b>" . $target_file . "</b> has been uploaded";//basename($_FILES["fileToUpload"]["name"]) . "</b> has been uploaded.";
+          //   echo "The file <b>" . $target_file . "</b> has been uploaded";//basename($_FILES["fileToUpload"]["name"]) . "</b> has been uploaded.";
            //  echo "image ".$image;
-             $image = /*"../../../images/".*/$_FILES["good_image"]["name"];//$target_file;
+             $image = $_FILES["good_image"]["name"];//$target_file;
              $imageVer=true;
            //  echo " is set to ".$image." $imageVer= ".$imageVer."<br/>";
            
@@ -59,7 +59,7 @@
 
       //  echo "got file ".$filename;
 
-        $deletepath = "/data/www/default/".$user->data()->username."/images/".$filename;
+        $deletepath = "/data/www/default/wecreu/images/".$filename;
 
         if (is_file($deletepath)) {
             echo "<script type='text/javascript'>alert('found file '".$deletepath."' deleting!') </script>";

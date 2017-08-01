@@ -125,7 +125,7 @@
      //   echo "checking sale_id<br/>";
         if(isset($_POST["sale_id"])){
 
-            echo "sale_id is not empty, processing...".$_POST["sale_id"]."<br/>";
+        //    echo "sale_id is not empty, processing...".$_POST["sale_id"]."<br/>";
             $sale = validate($_POST["sale_id"]);
         }
     }
