@@ -15,15 +15,6 @@
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
-		<?php if ($contact == 1 ){?>
-		<a class="nav-item nav-link text-white" href="contact-us.php">Contact us</a>
-		<?php } ?>
-		<?php
-            $alldata = $page->getAll();
-            while ($row = mysqli_fetch_assoc($alldata)) {
-              echo '<a class="nav-item nav-link text-white" href="page.php?page='.$row['id'].'">'.$row['page_name'].'</a>';
-            }
-        ?>
     </nav>
 </div>
 <div class="container mb-5">

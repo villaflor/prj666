@@ -13,7 +13,7 @@ $good = new Good($db);
 $alldata = $good->getGoodDetail($_GET["gid"]);
 
 $goodrow = mysqli_fetch_assoc($alldata);
-$imagepath = "images/".$goodrow['good_image'];
+
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +33,9 @@ $imagepath = "images/".$goodrow['good_image'];
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
+        <?php if ($contact == 1 ){?>		
+ -		<a class="nav-item nav-link text-white" href="contact-us.php">Contact us</a>		
+ -		<?php } ?>
     </nav>
 </div>
 <div class="container mb-5">
@@ -48,7 +51,7 @@ $imagepath = "images/".$goodrow['good_image'];
 </div>
 <div class="container mb-5">
     <div class="text-center mb-5">
-        <img src="$imagepath" alt="cow" class="rounded">
+        <img src="<?php echo "../wecreu/images/".$goodrow['good_image']; ?>" alt="cow" class="rounded">
     </div>
     <div class="container text-center mb-5">
         <div class="container row">
