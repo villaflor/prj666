@@ -51,7 +51,19 @@ $allcategory = $category->getAllAvaliable();
                         <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
                     </div>
                 </div>
-
+                <div class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle" href="#"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        id="pageDropdown"
+                    >Page</a>
+                    <div class="dropdown-menu" aria-labelledby="pageDropdown">
+                        <a class="dropdown-item" href="editCover.php">Edit cover</a>
+                        <a class="dropdown-item" href="editFooter.php">Edit footer</a>
+                        <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
+                        <a class="dropdown-item" href="pageList.php">View pages</a>
+                        <a class="dropdown-item" href="addPage.php">Create page</a>
+                    </div>
+                </div>
                 <div class="dropdown">
                     <a class="nav-item nav-link dropdown-toggle" href="#"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -100,9 +112,9 @@ $allcategory = $category->getAllAvaliable();
     <?php
 
             $taxable = $visible = 0;
-           
+
             $name = $image = $description = $price = $quantity = $weight = $category = "";
-            $nameVer = $imageVer = $descVer = $priceVer = $qtyVer = $weightVer = $catVer = false; 
+            $nameVer = $imageVer = $descVer = $priceVer = $qtyVer = $weightVer = $catVer = false;
             $nameErr = $imageErr = $descriptionErr = $priceErr = $quantityErr = $weightErr = $taxableErr = $visibleErr = $categoryErr = "";
 
             if($_POST){
@@ -110,16 +122,16 @@ $allcategory = $category->getAllAvaliable();
          //       echo "<br/>UPDATE: create-good.php is getting ready to insert into db<br/>";
            //     echo "$nameVer, $imageVer, $descVer, $priceVer, $qtyVer, $weightVer, $catVer Calling DB<br/>";
 
-                if($nameVer == true && $imageVer == true && $descVer == true && 
-                   $priceVer == true && $qtyVer == true && $weightVer == true && 
+                if($nameVer == true && $imageVer == true && $descVer == true &&
+                   $priceVer == true && $qtyVer == true && $weightVer == true &&
                    $catVer == true){
 
                     $good = new Good($db);
-                      
+
                 //    echo "adding new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
 
                     if($good->addGood($name, $image, $description, $price, $quantity, $weight, $taxable, $visible, $category)){
-                         echo "<script type='text/javascript'>alert('New good has been created') </script>";       
+                         echo "<script type='text/javascript'>alert('New good has been created') </script>";
                       //  echo "added successfully new good ".$name.",".$image.",".$description.",".$price.",".$quantity.",".$weight.",".$taxable.",".$visible.",".$category."<br/>";
                     } else {
                         echo "<script type='text/javascript'>alert('Database error received while adding good') </script>";
@@ -174,7 +186,7 @@ $allcategory = $category->getAllAvaliable();
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="taxable">Taxable</label>
                 <input style="margin-left: 10px;"type="checkbox" name="taxable" id="taxable" <?php if(isset($taxable) && $taxable==true) echo "checked";?>/>
-                 <p style="color:#ff0000;"><?php echo $taxableErr;?></p>               
+                 <p style="color:#ff0000;"><?php echo $taxableErr;?></p>
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="visible">Visible</label>
@@ -184,7 +196,7 @@ $allcategory = $category->getAllAvaliable();
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="category_id"><span class="text-danger">*</span>Category</label>
                 <select name="category_id" id="category_id" >
-                                        <?php 
+                                        <?php
                                         mysqli_data_seek($allcategory, 0);
                                         while($row = mysqli_fetch_assoc($allcategory)){
                                             echo "<option value='$row[category_id]'>$row[category_name]</option>";
