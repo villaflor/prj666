@@ -81,11 +81,11 @@ while ($row = mysqli_fetch_assoc($alldata)) {
     <div class="btn-group pull-right" role="group" aria-label="...">
       <?php
       if($offSet!=0){
-        echo '<a href="'.$pre.'" class="btn" role="button"><-</a>';
+        echo '<a href="'.$pre.'" class="btn" role="button">Privious page</a>';
       }
       if($total == 12){
         if($nextTotal != 0) {
-          echo '<a href="'.$last.'" class="btn" role="button">-></a>';
+          echo '<a href="'.$last.'" class="btn" role="button">Next page</a>';
         }
       }
       ?>

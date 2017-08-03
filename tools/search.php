@@ -24,10 +24,18 @@ class Search {
 	@return goods
 	*/
 	public function searchGood($keyword, $limit, $offSet) {
-		$keyword = str_replace('"', '&quot;', $keyword);
-		$keyword = str_replace('&', '&amp;', $keyword);
+		// $keyword = str_replace('"', ' ', $keyword);
+		// $keyword = str_replace('&', ' ', $keyword);
+		// $keyword = str_replace('%', ' ', $keyword);
 
-		$sql_query = "SELECT * FROM v_category_good WHERE category_display = 1 AND client_id = $this->client_id AND good_visible = 1 AND good_name LIKE '%$keyword%' OR category_name LIKE '%$keyword%' OR good_description LIKE '%$keyword%' ORDER BY good_id DESC LIMIT $limit OFFSET $offSet";
+		$keyword = explode('"', $keyword)[0];
+		$keyword = explode("'", $keyword)[0];
+		$keyword = explode("&", $keyword)[0];
+		$keyword = explode("%", $keyword)[0];
+
+		$keyword = trim($keyword);
+		$sql_query = "SELECT * FROM v_category_good WHERE category_display = 1 AND client_id = $this->client_id AND good_visible = 1 AND (good_name LIKE '%$keyword%' OR category_name LIKE '%$keyword%' OR good_description LIKE '%$keyword%') ORDER BY good_id DESC LIMIT $limit OFFSET $offSet";
+	  
 	  return $this->mysqli->query($sql_query);
 	}
 
