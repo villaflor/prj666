@@ -50,7 +50,19 @@ $good = new Good($db);
                         <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
                     </div>
                 </div>
-
+                <div class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle" href="#"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        id="pageDropdown"
+                    >Page</a>
+                    <div class="dropdown-menu" aria-labelledby="pageDropdown">
+                        <a class="dropdown-item" href="editCover.php">Edit cover</a>
+                        <a class="dropdown-item" href="editFooter.php">Edit footer</a>
+                        <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
+                        <a class="dropdown-item" href="pageList.php">View pages</a>
+                        <a class="dropdown-item" href="addPage.php">Create page</a>
+                    </div>
+                </div>
                 <div class="dropdown">
                     <a class="nav-item nav-link dropdown-toggle" href="#"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -129,7 +141,7 @@ $good = new Good($db);
             <td><?php if($row['good_visible']){
                         echo "Yes";
                        } else {
-                        echo "No";  
+                        echo "No";
                        }?></td>
             <td><a href="edit-good.php?gid=<?php echo "$row[good_id]";?>">Edit</a>|<a href="delete-good.php?gid=<?php echo "$row[good_id]";?>">Delete</a></td>
         </tr>

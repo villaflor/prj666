@@ -237,7 +237,7 @@ if(Input::exists()){
 		$enableContact = 0;
 		if(isset($_POST['contact'])){
 			$enableContact = 1;
-			
+
 		}
 		$writeContact = fopen("/data/www/default/" . $client_name . "/contact.ini", "w") or die ("Unable to open file!");
 		fwrite($writeContact, $enableContact);
@@ -332,12 +332,21 @@ function rrmdir($dir) {
                     <div class="dropdown-menu" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="edit-com.php">Update account</a>
                         <a class="dropdown-item" href="changepassword.php">Change password</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle" href="#"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                        id="pageDropdown"
+                    >Page</a>
+                    <div class="dropdown-menu" aria-labelledby="pageDropdown">
                         <a class="dropdown-item" href="editCover.php">Edit cover</a>
                         <a class="dropdown-item" href="editFooter.php">Edit footer</a>
                         <a class="dropdown-item" href="editAboutUs.php">Edit about us</a>
+                        <a class="dropdown-item" href="pageList.php">View pages</a>
+                        <a class="dropdown-item" href="addPage.php">Create page</a>
                     </div>
                 </div>
-
                 <div class="dropdown">
                     <a class="nav-item nav-link dropdown-toggle" href="#"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
