@@ -15,7 +15,7 @@ function escape($string){
     return htmlentities($string, ENT_QUOTES, 'UTF-8');
 }
 
-function pixel(){
+/*function pixel(){
     $remoteAddr = $_SERVER['REMOTE_ADDR'];
     $httpUserAgent = $_SERVER['HTTP_USER_AGENT'];
     $remoteUser = $_SERVER['REMOTE_USER'];
@@ -50,4 +50,4 @@ function pixel(){
     $fp = fopen($file, "a");
     fputs($fp, $info);
     fclose($fp);
-}
+}*/
