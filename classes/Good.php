@@ -37,6 +37,14 @@ class Good{
         }
     }
 
+    public function unsetOnSale($fields = array(), $sale_id = null){
+        if($sale_id) {
+            if (!$this->_db->updateMulti('good', 'sale_id = '. $sale_id, $fields)) {
+                throw new Exception('There was a problem updating.');
+            }
+        }
+    }
+
     public function exists(){
         return (!empty($this->_data)) ? true : false;
     }

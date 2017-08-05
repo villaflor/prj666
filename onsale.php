@@ -141,7 +141,7 @@ if($action === 'delete'){
                             echo '<th>' . $item->good_name . '</th>';
                             echo '<td>' . $item->sale_name . '</td>';
                             echo '<td>' . $item->discount . '</td>';
-                            echo '<td><a href="onsale.php?action=delete&item_id='. escape($item->good_id) .'">(delete)</a></td>';
+                            echo '<td><a href="onsale.php?action=delete&item_id='. escape($item->good_id) .'">delete</a></td>';
                             echo '</tr>';
 
 

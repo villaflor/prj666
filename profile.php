@@ -191,14 +191,6 @@ if(!$username = Input::get('user')){
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="container col-6">
-                        <p>This year total sale</p>
-                    </div>
-                    <div class="container col-6">
-                        <p>Last year total sale</p>
-                    </div>
-                </div>
             </section>
         </div>
         <div class="container mb-4">
@@ -211,25 +203,29 @@ if(!$username = Input::get('user')){
                     $categoryItems = $category->data();
 
                     foreach ($categoryItems as $categoryItem) {
-                        $categories_list[] = $categoryItem->category_name . '<br>';
+                        $categories_list[] = '<p>'.$categoryItem->category_name . '</p>';
                         $numCategories++;
 
                         $good->getGood(array('category_id', '=', $categoryItem->category_id));
                         if($good->exists()){
                             $goodItems = $good->data();
 
+                            $tempArry = array();
+                            foreach ($goodItems as $i) $tempArry[] = strtolower($i->good_name);
+                            array_multisort($tempArry, SORT_ASC, $goodItems);
+
                             foreach ($goodItems as $goodItem){
                                 if($goodItem->good_in_stock < 6) {
-                                    $lowStocks[] = $goodItem->good_name .' <span class="badge badge-warning">'. $goodItem->good_in_stock .'</span><br>';
-                                    $goods_list[] = $goodItem->good_name .' <span class="badge badge-warning">'. $goodItem->good_in_stock .'</span><br>';
+                                    $lowStocks[] = '<p class="text-white">'.$goodItem->good_name .' <span class="badge badge-warning">'. $goodItem->good_in_stock .' in stock</span></p>';
+                                    $goods_list[] = '<p>'.$goodItem->good_name .' <span class="badge badge-warning">'. $goodItem->good_in_stock .' in stock</span></p>';
 
                                     $numLowStocks++;
                                 }else{
-                                    $goods_list[] = $goodItem->good_name .' <span class="badge badge-success">'. $goodItem->good_in_stock .'</span><br>';
+                                    $goods_list[] = '<p">'.$goodItem->good_name .' <span class="badge badge-success">'. $goodItem->good_in_stock .' in stock</span></p>';
                                 }
 
                                 if($goodItem->sale_id){
-                                    $sale_list[] = $goodItem->good_name . '<br>';
+                                    $sale_list[] = '<p>'.$goodItem->good_name . '  <span class="badge badge-default">'. $goodItem->good_in_stock .' in stock</span></p>';
                                     $numSale++;
                                 }
                                 $numGoods++;
@@ -237,6 +233,19 @@ if(!$username = Input::get('user')){
                         }
                     }
                 }
+
+                $tempArry2 = array();
+                foreach ($goods_list as $i) $tempArry2[] = strtolower($i->good_name);
+                array_multisort($tempArry2, SORT_ASC, $goods_list);
+
+                $tempArry3 = array();
+                foreach ($lowStocks as $i) $tempArry3[] = strtolower($i->good_name);
+                array_multisort($tempArry3, SORT_ASC, $lowStocks);
+
+                $tempArry4 = array();
+                foreach ($categories_list as $i) $tempArry4[] = strtolower($i->category_name);
+                array_multisort($tempArry4, SORT_ASC, $categories_list);
+
                 ?>
                 <h4>Number of low in stock <span class="badge badge-warning"><?php echo $numLowStocks; ?></span></h4>
                 <hr>
@@ -266,7 +275,7 @@ if(!$username = Input::get('user')){
         </div>
         <div class="container mb-4">
             <section class="col bg-info rounded py-5">
-                <h4><a class="text-gray-dark" href="createsale.php">Number of on sale</a> <span class="badge badge-success"><?php echo $numSale; ?></span></h4>
+                <h4><a class="text-gray-dark" href="createsale.php">Number of products on sale</a> <span class="badge badge-success"><?php echo $numSale; ?></span></h4>
                 <hr>
                 <div class="container row">
                     <div class="col-md-4">
