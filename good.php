@@ -143,7 +143,7 @@ $good = new Good($db);
                        } else {
                         echo "No";
                        }?></td>
-            <td><a href="edit-good.php?gid=<?php echo "$row[good_id]";?>">Edit</a>|<a href="delete-good.php?gid=<?php echo "$row[good_id]";?>">Delete</a></td>
+            <td><a href="edit-good.php?gid=<?php echo "$row[good_id]";?>">Edit</a> | <a href="delete-good.php?gid=<?php echo "$row[good_id]";?>">Delete</a></td>
         </tr>
         <?php
         }

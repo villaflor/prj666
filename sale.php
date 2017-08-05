@@ -8,6 +8,17 @@ if(!$user->isLoggedIn()){
 }
 
 $sale = new Sale();
+$good = new Good();
+
+if (Input::get('deleteSale')){
+    if(Input::get('deleteSale')) {
+        $good->unsetOnSale(array(
+            'sale_id' => NULL
+        ), Input::get('deleteSale'));
+
+        $sale->delete(Input::get('deleteSale'));
+    }
+}
 
 ?>
 
@@ -130,7 +141,7 @@ $sale = new Sale();
                 echo '<th>' . $saleDetail->sale_name . '</th>';
                 echo '<td>' . $saleDetail->sale_description . '</td>';
                 echo '<td>' . $saleDetail->discount . " %" . '</td>';
-                echo '<td></td>';
+                echo '<td><a href="sale.php?deleteSale='. $saleDetail->sale_id .'">Delete</a></td>';
                 echo '</tr>';
 
             }
