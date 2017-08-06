@@ -32,7 +32,7 @@
             if($i%2 != 0){
         ?>
           <div class="col-md-6 pro-image">
-            <img src=<?php echo "/wecreu/images/".$goodrow['good_image']; ?> /><!--</img>-->
+            <img src=<?php echo "/wecreu/images/".$goodrow['good_image']; ?> height="300" width="400" />
           </div>
         <?php
             }
@@ -49,7 +49,7 @@
             if($i%2 == 0){
         ?>
           <div class="col-md-6 pro-image">
-            <img src=<?php echo "/wecreu/images/".$goodrow['good_image']; ?> /><!--</img>-->
+            <img src=<?php echo "/wecreu/images/".$goodrow['good_image']; ?> height="300" width="400" />
           </div>
         <?php
             }
