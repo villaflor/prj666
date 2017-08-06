@@ -48,9 +48,11 @@ class Sale{
         return false;
     }
 
-//    public function offSale(){
-//        $this->_data = $this->_data->get('sale', null);
-//    }
+    public function update($fields = array(), $id = null){
+        if(!$this->_db->update('sale', $id, $fields)){
+            throw new Exception('There was a problem updating.');
+        }
+    }
 
     public function exists(){
         return (!empty($this->_data)) ? true : false;
@@ -60,6 +62,19 @@ class Sale{
         if($id){
             $this->_db->delete('sale', array('sale_id', '=', $id));
         }
+    }
+
+    public function isBelongToUser($saleId = null, $clientId){
+        $rc = false;
+
+        if($saleId){
+            $stringQuery = "SELECT sale.* FROM client JOIN category ON category.client_id = client.client_id JOIN good ON good.category_id = category.category_id JOIN sale ON sale.sale_id = good.sale_id WHERE client.client_id = ? AND sale.sale_id = ? GROUP BY sale.sale_id";
+            $data = $this->_db->query($stringQuery, array($clientId, $saleId));
+            if($data->results()) $rc =true;
+
+        }
+
+        return $rc;
     }
 
     public function data(){
