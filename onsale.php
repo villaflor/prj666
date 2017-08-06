@@ -106,7 +106,16 @@ if($action === 'delete'){
                         <a class="dropdown-item" href="createsale.php">Create Sale</a>
                     </div>
                 </div>
+                <div class="dropdown">
+                            <a class="nav-item nav-link dropdown-toggle" href="#"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                               id="saleDropdown"
+                            >Orders</a>
 
+                            <div class="dropdown-menu" aria-labelledby="saleDropdown">
+                                <a class="dropdown-item" href="orderList.php">View orders</a>
+                            </div>
+                        </div>
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
         </div>

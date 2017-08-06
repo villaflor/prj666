@@ -89,7 +89,16 @@ if(!$user->isLoggedIn()){
                         <a class="dropdown-item" href="createsale.php">Create Sale</a>
                     </div>
                 </div>
+                <div class="dropdown">
+                            <a class="nav-item nav-link dropdown-toggle" href="#"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                               id="saleDropdown"
+                            >Orders</a>
 
+                            <div class="dropdown-menu" aria-labelledby="saleDropdown">
+                                <a class="dropdown-item" href="orderList.php">View orders</a>
+                            </div>
+                        </div>
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
         </div>
@@ -104,31 +113,31 @@ if(!$user->isLoggedIn()){
         echo '<p class="text-success">' . Session::flash('good') . '</p>';
     }
 
-              
+
     $db = Database::getInstance();
     $good = new Good($db);
 //    echo "getting good object";
     $alldata = $good->getGoodDetail($_GET["gid"]);
-   
+
     $row = mysqli_fetch_assoc($alldata);
     $imagepath = "images/".$row['good_image'];
-               
+
     ?>
 
-				 
+
 	<img src='<?php echo $imagepath;  ?>' alt="good image" height="200" width="200" />
-			
+
     <table class="table table-striped">
         <tr>
-            <td>Product Name: <?php echo "$row[good_name]";  ?></td>                            
+            <td>Product Name: <?php echo "$row[good_name]";  ?></td>
             <td>Quantity: <?php echo "$row[good_in_stock]";  ?></td>
         </tr>
         <tr>
-            <td>Category: <?php echo "$row[category_name]";  ?></td>                        
+            <td>Category: <?php echo "$row[category_name]";  ?></td>
             <td>Weight: <?php echo "$row[good_weight]";  ?> lbs</td>
         </tr>
         <tr>
-            <td>Price: $ <?php echo "$row[good_price]";  ?></td>                           
+            <td>Price: $ <?php echo "$row[good_price]";  ?></td>
             <td>Taxable: <?php if(isset($row['good_taxable'])){
                                     if($row['good_taxable']==1){
                                         echo "Taxable";
@@ -143,21 +152,21 @@ if(!$user->isLoggedIn()){
             <td>Sales Applicable: <?php if(isset($row['sale_id'])){
                                         $query="SELECT `sale_name` FROM `sale` WHERE `sale_id` = ".$row['sale_id'];
                                      //   echo $query;
-                                        $conn = $db->getConnection();  
+                                        $conn = $db->getConnection();
                                         $datasale=$conn->query($query);
                                         $salerow=mysqli_fetch_assoc($datasale);
-                                        echo "$salerow[sale_name]"; 
+                                        echo "$salerow[sale_name]";
                                     }else{
                                         echo "No Sale";
-                                    }?></td>     
+                                    }?></td>
             <td></td>
         </tr>
-					
+
         <tr >
             <td> Description:<?php echo "$row[good_description]";  ?></td>
             <td></td>
         </tr>
-					
+
     </table>
 
 </div>

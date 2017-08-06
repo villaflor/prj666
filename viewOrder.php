@@ -13,24 +13,14 @@ if (!isset($_GET['id'])){
 
 $clientId = escape($user->data()->client_id);
 
-include_once('tools/page.php');
+include_once('tools/order.php');
 include_once("tools/sql.php");
 
 $db = Database::getInstance();
 //create an object
-$page = new Page($db, $clientId);
-$page_id = $_GET['id'];
-$alldata = $page->getAll();
-$isFoundPageId = false;
-while ($row = mysqli_fetch_assoc($alldata)) {
-  if($row['id'] == $page_id){
-    $isFoundPageId = true;
-  }
-}
-
-if(!$isFoundPageId){
-  Redirect::to('index.php');
-}
+$order = new Order($db, $clientId);
+$order_id = $_GET['id'];
+$alldata = $order->getOne($order_id);
 
 if(Input::exists()){
     if(Token::check(Input::get('token'))){
@@ -126,7 +116,7 @@ if(Input::exists()){
                   <a class="nav-item nav-link" href="profile.php?user=<?php echo escape($user->data()->username); ?>">Profile</a>
 
                   <div class="dropdown">
-                      <a class="nav-item nav-link dropdown-toggle active" href="#"
+                      <a class="nav-item nav-link dropdown-toggle" href="#"
                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                          id="profileDropdown"
                       >Account</a>
@@ -139,7 +129,7 @@ if(Input::exists()){
                   </div>
 
                   <div class="dropdown">
-                      <a class="nav-item nav-link dropdown-toggle active" href="#"
+                      <a class="nav-item nav-link dropdown-toggle" href="#"
                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                          id="pageDropdown"
                       >Page</a>
@@ -190,16 +180,7 @@ if(Input::exists()){
                           <a class="dropdown-item" href="createsale.php">Create Sale</a>
                       </div>
                   </div>
-                  <div class="dropdown">
-                              <a class="nav-item nav-link dropdown-toggle" href="#"
-                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                 id="saleDropdown"
-                              >Orders</a>
 
-                              <div class="dropdown-menu" aria-labelledby="saleDropdown">
-                                  <a class="dropdown-item" href="orderList.php">View orders</a>
-                              </div>
-                          </div>
                   <a class="nav-item nav-link" href="logout.php">Log out</a>
               </div>
           </div>
@@ -224,32 +205,81 @@ if(Input::exists()){
       </div>
   </nav>
 <div class="container bg-faded py-5">
-    <h2 class="mb-4">Edit Page</h2>
+    <h2 class="mb-4">Invoice Detail</h2>
+    <?php $row = mysqli_fetch_assoc($alldata);?>
+    <table>
+        <tr>
+            <th>Customer Name: </th>
+            <td><?php echo $row['customer_name']?></td>
+        </tr>
+        <tr>
+            <th>Customer Number: </th>
+            <td><?php echo $row['customer_number']?></td>
+        </tr>
+        <tr>
+            <th>Customer Address: </th>
+            <td><?php echo $row['customer_street_address']?></td>
+        </tr>
+        <tr>
+            <th>Customer City: </th>
+            <td><?php echo $row['customer_city']?></td>
+        </tr>
+        <tr>
+            <th>Customer State: </th>
+            <td><?php echo $row['customer_state']?></td>
+        </tr>
+        <tr>
+            <th>Customer Country: </th>
+            <td><?php echo $row['customer_country']?></td>
+        </tr>
+        <tr>
+            <th>Customer Email: </th>
+            <td><?php echo $row['customer_email']?></td>
+        </tr>
+    </table>
+    <br/>
+    <table>
+        <tr>
+            <th>Invoice #: </th>
+            <td><?php echo $row['invoice_id']?></td>
+        </tr>
+        <tr>
+            <th>Invoice Price: </th>
+            <td>$<?php echo $row['invoice_final_price']?></td>
+        </tr>
+        <tr>
+            <th>Number of products: </th>
+            <td><?php echo $row['invoice_total_quantity']?></td>
+        </tr>
+    </table>
+    <br/>
+    <table>
+        <tr>
+            <th>Product name</th>
+            <th>Product description</th>
+            <th>Product quantity</th>
+        </tr>
+        <tr>
+            <td><?php echo $row['good_name']?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td><?php echo $row['good_description']?>&nbsp;&nbsp;</td>
+            <td style="text-align:center"><?php echo $row['good_quantity']?></td>
+        </tr>
+
+
+
+    <br/>
     <?php
-    if($validate->errors()) {
-        foreach ($validation->errors() as $error) {
-            echo '<small class="text-warning">' . $error . '</small><br />';
-        }
+    while ($row = mysqli_fetch_assoc($alldata)) {
+        ?>
+        <tr>
+            <td><?php echo $row['good_name']?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td><?php echo $row['good_description']?>&nbsp;&nbsp;</td>
+            <td style="text-align:center"><?php echo $row['good_quantity']?></td>
+        </tr>
+        <?php
     }
     ?>
- <div>
-    <script id="editor" type="text/plain" style="width:1024px;height:500px;">
-    <?php
-
-
-
-    $url = "companyInfo/page/".$clientId."/".$page_id.".txt";
-    if (file_exists($url)) {
-      $content = file_get_contents($url);
-      echo $content;
-    }
-    ?></script>
-  </div>
-  <div id="btns">
-    <div>
-      <button onclick="save()">Save</button>
-    </div>
-  </div>
+    </table>
 </div>
 <?php include('includes/footer.inc'); ?>
 
