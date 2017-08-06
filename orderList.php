@@ -1,48 +1,14 @@
 <?php
-require_once 'core/init.php';
+require_once  'core/init.php';
 
 $user = new User();
 $validate = new Validate();
 
-if (!$user->isLoggedIn()){
+if(!$user->isLoggedIn()){
     Redirect::to('index.php');
 }
 
-if(Input::exists()) {
-    if (Token::check(Input::get('token'))) {
-
-
-            try {
-                include_once('tools/page.php');
-                include_once("tools/sql.php");
-
-                $db = Database::getInstance();
-                $clientId = $user->data()->client_id;
-                //create an object
-                $page = new Page($db, $clientId);
-
-                // add one
-                if ($page->add($_POST['name'])) {
-                    // create file and folder to store pages.
-                    $path = "companyInfo/page/" . $clientId;
-                    if(!is_readable($path)){
-                        is_file($path) or mkdir($path,0777);
-                    }
-                    Session::flash('page', 'New page '. $_POST['name'] .' has been added!');
-                    Redirect::to('pageList.php');
-
-                } else {
-                    $validate->addError('Sorry, adding new page failed. Please try again.');
-                    //echo "add #1 fail<br>";
-                }
-            } catch (Exception $e) {
-                die($e->getMessage()); //or you can redirect to other page.
-            }
-
-    }
-}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +16,7 @@ if(Input::exists()) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Wecrue - Add Category</title>
+    <title>Wecrue - Category</title>
 </head>
 <body>
 
@@ -78,7 +44,7 @@ if(Input::exists()) {
                 </div>
 
                 <div class="dropdown">
-                    <a class="nav-item nav-link dropdown-toggle active" href="#"
+                    <a class="nav-item nav-link dropdown-toggle" href="#"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                         id="pageDropdown"
                     >Page</a>
@@ -129,15 +95,15 @@ if(Input::exists()) {
                     </div>
                 </div>
                 <div class="dropdown">
-                            <a class="nav-item nav-link dropdown-toggle" href="#"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                               id="saleDropdown"
-                            >Orders</a>
+                    <a class="nav-item nav-link dropdown-toggle active" href="#"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       id="saleDropdown"
+                    >Orders</a>
 
-                            <div class="dropdown-menu" aria-labelledby="saleDropdown">
-                                <a class="dropdown-item" href="orderList.php">View orders</a>
-                            </div>
-                        </div>
+                    <div class="dropdown-menu" aria-labelledby="saleDropdown">
+                        <a class="dropdown-item" href="orderList.php">View orders</a>
+                    </div>
+                </div>
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
         </div>
@@ -145,33 +111,59 @@ if(Input::exists()) {
     </div>
 </nav>
 
-<div class="container bg-faded py-5">
-    <h2 class="mb-4">Create Addtional Page</h2>
+<div class="container bg-faded py-5" style="min-height: 100vh">
+    <h2 class="mb-4">List of Orders</h2>
     <?php
-    if(Session::exists('createC')) {
-        echo '<p class="text-success">' . Session::flash('createC') . '</p>';
-    }
-
-    if($validate->errors()) {
-        foreach ($validation->errors() as $error) {
-            echo '<small class="text-warning">' . $error . '</small><br />';
-        }
+    if(Session::exists('page')) {
+    echo '<p class="text-success">' . Session::flash('page') . '</p>';
     }
     ?>
 
-    <form action="" method="post">
-        <fieldset class="form-group">
-            <legend></legend>
-            <div class="form-group col-md-6">
-                <label class="form-control-label" for="name"><span class="text-danger">*</span> Name</label>
-                <input class="form-control" type="text" id="name" name="name" value="" required>
-            </div>
-        </fieldset>
-        <div class="form-group">
-            <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-            <input class="btn btn-primary" type="submit" value="Add" />
-        </div>
-    </form>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Invoices#</th>
+            <th>Customer Name</th>
+            <th>Actions</th>
+        </tr>
+        <?php
+
+        include_once('tools/order.php');
+        include_once("tools/sql.php");
+
+        $db = Database::getInstance();
+        $clientId = $user->data()->client_id;
+        //create an object
+        $order = new Order($db, $clientId);
+
+        $invoiceidarr = array();
+
+        $alldata = $order->getAll();
+        while ($row = mysqli_fetch_assoc($alldata)) {
+            $flag = true;
+
+            foreach ($invoiceidarr as $key => $rowa) {
+                if ($rowa[0] == $row['invoice_id']){
+                    $flag = false;
+                }
+            }
+            if ($flag){
+                $array =  array($row['invoice_id'],$row['customer_name'] );
+                array_push($invoiceidarr, $array);
+            }
+        }
+
+        foreach ($invoiceidarr as $key => $row) {
+            echo '<tr>';
+            echo '<td>'. $row[0] .'</td>';
+            echo '<td>'. $row[1] .'</td>';
+            echo '<td><a href="viewOrder.php?id='. $row[0] .'">Detail</a></td>';
+            echo '</tr>';
+        }
+
+        ?>
+    </table>
+
 </div>
 
 <?php include('includes/footer.inc'); ?>
