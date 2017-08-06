@@ -20,15 +20,15 @@ if (Input::exists()) {
             //$remember = (Input::get('remember') === 'on') ? true : false;
 
 
-            if ($login = $user->login(Input::get('admin_username'), Input::get('admin_password')) && $user->data()->validated) {
-                if ($login) {
+            if ($login = $user->login(Input::get('admin_username'), Input::get('admin_password'))) {
+                if ($login && $user->data()->validated) {
                     Redirect::to('indexAdmin.php');
-                } else {
-                    $validate->addError('Sorry, you entered wrong admin password.');
+                } else if (!$user->data()->validated) {
+                    $user->logout();
+                    $validate->addError('Sorry, you cannot login unless you verified your email address');
                 }
             } else{
-                $user->logout();
-                $validate->addError('Sorry, you cannot login unless you verified your email address');
+                $validate->addError('Sorry, you entered wrong admin password.');
             }
         }
     }
