@@ -12,26 +12,17 @@
     header("Location: index.php");
     exit;
   }
-	
+
+    include_once '/data/www/default/wecreu/tools/discountCalculator.php';
+
   // items
   $alldata = $good->getGoodDetail($_GET['id']);
   if(mysqli_num_rows($alldata) == 0){
-    echo "<p class='text-center'>Product not found</p>";
+    echo "<p class='text-center'>Good not found</p>";
   } else{
     $row = mysqli_fetch_assoc($alldata);
 
-    $oldprice = $row['good_price'];
-    $saleid = $row['sale_id'];
-    if(isset($saleid)){
-      //  echo "sale exists";
-        $query="SELECT discount FROM sale WHERE sale_id = ".$saleid;
-      //  echo $query;
-        $conn = $db->getConnection();  
-        $sale = $conn->query($query);
-        $salerow = mysqli_fetch_assoc($sale);
-
-        $salediscount = $salerow['discount'];
-    }
+    $calcprice = discountCalculate($_GET['id']);
 
 ?>
 
@@ -64,18 +55,9 @@
             <tr height="50px">
               <td class="text-center"><?php echo $row['good_description'];?></td>
               <td class="text-center"><?php echo $row['good_weight'];?> lbs</td>
-            <?php
-                if($saleid){
-                    $newprice =  sprintf("%01.2f",($oldprice-($salediscount/100*$oldprice)));
-            ?>
-              <td class="text-center">$<?php echo $newprice."<br/>[Sale ".$salediscount."%, regular price $".$oldprice."]";  ?></td>
-            <?php
-                } else {
-            ?>
-              <td class="text-center">$<?php echo $oldprice; ?></td>
-            <?php
-                }
-            ?>
+
+              <td class="text-center">$<?php echo $calcprice; ?></td>
+
             </tr>
           </tbody>
         </table>
