@@ -2,20 +2,20 @@
 //include 'conf.ini';
 
 include 'csql.php';
-    $isValid = true; 
+    $isValid = true;
 	$proceed = 0;
-  
+
     if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-     
+
 
         if(empty($_POST["name"])){
 
-       
+
             $nameErr = "Please enter your name";
 			$isValid=false;
         } else {
-            
+
           //  echo "good_name is not empty, processing...<br/>";
             $name = validate($_POST["name"]);
             if(strlen($name) > 100){
@@ -24,10 +24,10 @@ include 'csql.php';
             } else {
                 $nameErr = "";
             }
-        
+
 		}
       //  echo "checking good_image<br/>";
-		
+
         if(!empty($_POST["address"])){
 
          //   echo "good_image is not empty, processing...<br/>";
@@ -37,12 +37,12 @@ include 'csql.php';
                 $addressErr = "Address must be under 300 characters ";
             } else {
 				$addressErr = "";
-                
+
             }
         }
 		else{
 			$addressErr = "Please enter an address";
-		}		
+		}
 
       //  echo "checking description<br/>";
         if(!empty($_POST["number"])){
@@ -55,7 +55,7 @@ include 'csql.php';
             } else if(!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $phone)){
 				$phoneErr = "Phone number must follow this format 000-000-0000";
 				$isValid=false;
-			} 
+			}
 			else{
                 $phoneErr = "";
             }
@@ -75,9 +75,9 @@ include 'csql.php';
 		}
 		else {
                 $cityErr = "";
-            
+
         }
-		
+
 		if(empty($_POST["state"])){
 
        //     echo "good_price is empty<br/>";
@@ -89,9 +89,9 @@ include 'csql.php';
 		}
 		else {
                 $stateErr = "";
-            
+
         }
-		
+
 		if(empty($_POST["country"])){
 
        //     echo "good_price is empty<br/>";
@@ -103,9 +103,9 @@ include 'csql.php';
 		}
 		else {
                 $countryErr = "";
-            
+
         }
-		
+
 		if(empty($_POST["email"])){
 
        //     echo "good_price is empty<br/>";
@@ -117,55 +117,55 @@ include 'csql.php';
 		}
 		else {
                 $emailErr = "";
-            
+
         }
-   
+
     }
 
    // echo "setting client_id ...";
     //$clientid=file_get_contents("conf.ini");
 	//echo $clientid;
-    //$clientVer = true; 
+    //$clientVer = true;
  //   echo " to ".$clientid." and clientVer = ".$clientVer."<br/>";
 
   //  echo "calling uploadImage script<br/>";
     //include 'uploadImage.php';
-  
+
  //   echo "goodValidate getting ready to insert into db<br/>";
   //  echo "$nameVer, $imageVer, $descVer, $priceVer, $qtyVer, $weightVer, $catVer, $clientVer Calling DB<br/>";
 
     if($isValid){
-
         //$cart = new Cart();
-		
         $name = $_POST["name"];
-		$address = $_POST["address"];  
-		$number = $_POST["number"];  
-		$city = $_POST["city"];  
-		$state = $_POST["state"];  
-		$country = $_POST["country"];  
-		$email = $_POST["email"];  		
-		
-		
+		$address = $_POST["address"];
+		$number = $_POST["number"];
+		$city = $_POST["city"];
+		$state = $_POST["state"];
+		$country = $_POST["country"];
+		$email = $_POST["email"];
+
+
         //echo "adding new customer ".$name.",".$number.",".$address.",".$city.",".$state.",".$country.",".$email."<br/>";
-		$test = $dbc->query("INSERT INTO customer(customer_name, customer_number, customer_street_address, customer_city, customer_state, customer_country, customer_email) 
+		$test = $dbc->query("INSERT INTO customer(customer_name, customer_number, customer_street_address, customer_city, customer_state, customer_country, customer_email)
                       VALUES ('".$name."','".$number."', '".$address."','".$city ."', '".$state."', '".$country."', '".$email."')");
-					  
-		$confirm ="Successfully Added";			  
-					  
+
+		$confirm ="Successfully Added";
+
+        // set customer id to cookie
+        $sql = "SELECT `customer_id` FROM `customer` WHERE `customer_name` = '$name' AND `customer_number` = '$number' AND `customer_street_address`  = '$address' AND `customer_city`  = '$city' AND `customer_state`  = '$state' AND `customer_country`  = '$country' AND `customer_email` = '$email' ORDER BY `customer_id` DESC";
+        $customerid = mysqli_fetch_assoc($dbc->query($sql));
+        $customerid = $customerid['customer_id'];
+        $_SESSION['sessCustomerID'] = $customerid;
+
         if($test){
-           
             $confirm ="Successfully Added";
 			$proceed = 1;
 			$proc=1;
-          
-
         } else {
             echo "error received adding new customer ".$name.",".$number.",".$address.",".$city.",".$state.",".$country.",".$email."<br/>";
-
         }
     }
-    
+
 
     function validate($data){
     //    echo "--function validate(".$data.") called<br/>";
@@ -175,6 +175,6 @@ include 'csql.php';
         return $data;
     }
 
-    
+
 
 ?>

@@ -21,10 +21,10 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
             'price' => $row['good_price'],
             'qty' => 1
         );
-        
+
         $insertItem = $cart->insert($itemData);
         $redirectLoc = $insertItem?'viewCart.php':'index.php';
-		
+
         header("Location: ".$redirectLoc);
     }elseif($_REQUEST['action'] == 'updateCartItem' && !empty($_REQUEST['id'])){
         $itemData = array(
@@ -34,13 +34,20 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
         $updateItem = $cart->update($itemData);
         echo $updateItem?'ok':'err';die;
     }elseif($_REQUEST['action'] == 'removeCartItem' && !empty($_REQUEST['id'])){
-		
+
         $deleteItem = $cart->remove($_REQUEST['id']);
         header("Location: viewCart.php");
     }elseif($_REQUEST['action'] == 'placeOrder' && $cart->total_items() > 0 && !empty($_SESSION['sessCustomerID'])){
+        // get client tax
+        $clientId = file_get_contents('conf.ini');
+        $query = $dbc->query("SELECT * FROM client WHERE client_id = $clientId");
+        $client_tax = $query->fetch_assoc()['client_tax'];
+        $price = $cart->total() * (1 + $client_tax/100);
+        $price = round($price,2);
         // insert order details into database
-        $insertOrder = $dbc->query("INSERT INTO invoice (customer_id, invoice_total_quantity, invoice_price,invoice_final_price) VALUES ('".$_SESSION['sessCustomerID']."','".$cart->total_items()."', '".$cart->total()."','".$cart->total()*1.13 ."')");
-        
+        $sql = "INSERT INTO invoice (customer_id, invoice_total_quantity, invoice_price,invoice_final_price) VALUES ('".$_SESSION['sessCustomerID']."','".$cart->total_items()."', '".$cart->total()."','".$price ."')";
+        $insertOrder = $dbc->query("$sql");
+
         if($insertOrder){
             $orderID = $dbc->insert_id;
             $sql = '';
@@ -51,7 +58,7 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
             }
             // insert order items into database
             $insertOrderItems = $dbc->multi_query($sql);
-            
+
             if($insertOrderItems){
                 $cart->destroy();
                 header("Location: orderSuccess.php?id=$orderID");
