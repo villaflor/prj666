@@ -1,0 +1,109 @@
+.aBorder {border-style: solid; border-color: silver; }
+.header {
+  background-color: red;
+  border-style: solid;
+}
+.logo {
+  background-color: white;
+  height: 100px;
+  width: 100px;
+}
+.footer {
+  background-color: red;
+  border-style: solid;
+}
+
+.copyright-text {
+    margin: 40px 0;
+    font-size: 13px;
+}
+
+.cname {
+  background-color: white;
+  height: 50px;
+  text-align: center;
+}
+
+
+.narbar {
+  border-style: solid;
+}
+.narbar img {
+  height: 30px;
+  width: 30px;
+}
+
+.mnavbar {
+  position: relative;
+  min-height: 50px;
+  border: 1px solid transparent;
+}
+
+.sidebar {
+  border-right: solid;
+  background-color: #b1f2fe;
+}
+.sidebar li {
+  border-bottom: solid;
+}
+.hicon {
+  margin: 10px 10px;
+}
+
+.topBorder {
+  border-top: solid;
+}
+.item {
+  border-style: solid;
+  margin: 15px;
+  height: 210px;
+  width: 200px;
+}
+
+.goodlist > div > a > img {
+  transition: .1s transform;
+  transform: translateZ(0);
+  margin: 10px auto;
+  height: 130px;
+  width: 130px;
+}
+
+.goodlist > div > a > p {
+  margin-left: 0px;
+}
+
+.goodlist > div:hover {
+  z-index: 1;
+}
+
+.goodlist > div:hover > a > img {
+  transform: scale(1.75, 1.75);
+  transition: .3s transform;
+}
+
+.cf:before, .cf:after {
+  display: table;
+  content: "";
+  line-height: 0;
+}
+
+.cf:after {
+  clear: both;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    background-color: #495461;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
