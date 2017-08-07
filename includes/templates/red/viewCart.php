@@ -4,8 +4,6 @@
 include 'cartSession.php';
 $cart = new Cart;
 
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,15 +89,32 @@ $cart = new Cart;
 			}
 
             $cartItems = $cart->contents();
-
+            include ("/data/www/default/wecreu/tools/discountCalculator.php");
+            $priceTotal = 0;
             foreach($cartItems as $item){
-
         ?>
         <tr>
+            <?php
+              $gid = $item["id"];
+              $priceAfterDiscount =  discountCalculate($gid);
+            ?>
             <td><?php echo $item["name"]; ?></td>
-            <td><?php echo '$'.$item["price"].' CAD'; ?></td>
+            <td>
+            <?php
+            if ($item["price"] != $priceAfterDiscount){
+              echo '<span style="text-decoration:line-through;">$'.$item["price"].' CAD</span>';
+              echo '<br> $'.$priceAfterDiscount.' CAD';
+              $subTotal = $priceAfterDiscount;
+            }else{
+              echo '$'.$item["price"].' CAD';
+              $subTotal = $item["price"];
+            }
+            $subTotal = $subTotal * $item["qty"];
+            $priceTotal += $subTotal;
+             ?>
+           </td>
             <td><input type="number" min="1" step="1" class="form-control text-center" value="<?php echo $item["qty"]; ?>" onchange="updateCartItem(this, '<?php echo $item["rowid"]; ?>')"></td>
-            <td><?php echo '$'.$item["subtotal"].' CAD'; ?></td>
+            <td><?php echo '$'.$subTotal.' CAD'; ?></td>
             <td>
                 <a href="cartAction.php?action=removeCartItem&id=<?php echo $item["rowid"]; ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
@@ -114,7 +129,7 @@ $cart = new Cart;
             <td colspan="2"></td>
             <?php if($cart->total_items() > 0){ ?>
             <td class="">
-              Price: <?php echo '$'.round($cart->total(),2).' CAD';?> <br/>
+              Price: <?php echo '$'.round($priceTotal,2).' CAD';?> <br/>
               Tax %: <?php echo $client->getClientTax()."%";?> <br/>
               Tax: $<?php echo round($cart->total()*($client->getClientTax()/100),2);?> CAD<br/>
               Total: <strong><?php echo '$'.round($cart->total()*($client->getClientTax()/100 + 1 ),2); ?></strong> CAD</td>
