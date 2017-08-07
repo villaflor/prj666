@@ -12,20 +12,34 @@
     header("Location: index.php");
     exit;
   }
-
+	
   // items
   $alldata = $good->getGoodDetail($_GET['id']);
   if(mysqli_num_rows($alldata) == 0){
     echo "<p class='text-center'>Product not found</p>";
   } else{
     $row = mysqli_fetch_assoc($alldata);
+
+    $oldprice = $row['good_price'];
+    $saleid = $row['sale_id'];
+    if(isset($saleid)){
+      //  echo "sale exists";
+        $query="SELECT discount FROM sale WHERE sale_id = ".$saleid;
+      //  echo $query;
+        $conn = $db->getConnection();  
+        $sale = $conn->query($query);
+        $salerow = mysqli_fetch_assoc($sale);
+
+        $salediscount = $salerow['discount'];
+    }
+
 ?>
 
 <div class="col-md-9 col-sm-9 col-xs-9">
   <div class="row">
     <div class="col-xs-4"></div>
     <div class="nnn col-lg-3 col-md-4 col-sm-4 col-xs-3 img-circle float-right clearfix">
-      <img src="<?php echo "/wecreu/images/".$row['good_image'];?>" class="img-responsive" alt="<?php echo $row['good_name'];?>" />
+      <img src="<?php echo "/wecreu/images/".$row['good_image'];?>" class="img-responsive" alt="Good image" />
       </div>
   </div>
   <br>
@@ -50,7 +64,18 @@
             <tr height="50px">
               <td class="text-center"><?php echo $row['good_description'];?></td>
               <td class="text-center"><?php echo $row['good_weight'];?> lbs</td>
-              <td class="text-center">$<?php echo $row['good_price'];?></td>
+            <?php
+                if($saleid){
+                    $newprice =  sprintf("%01.2f",($oldprice-($salediscount/100*$oldprice)));
+            ?>
+              <td class="text-center">$<?php echo $newprice."<br/>[Sale ".$salediscount."%, regular price $".$oldprice."]";  ?></td>
+            <?php
+                } else {
+            ?>
+              <td class="text-center">$<?php echo $oldprice; ?></td>
+            <?php
+                }
+            ?>
             </tr>
           </tbody>
         </table>
