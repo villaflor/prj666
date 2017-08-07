@@ -14,6 +14,7 @@
 <?php
 require_once("/data/www/default/wecreu/tools/search.php");
 include_once("/data/www/default/wecreu/tools/sql.php");
+include_once '/data/www/default/wecreu/tools/discountCalculator.php';
 
 $db = Database::getInstance();
 
@@ -69,7 +70,7 @@ while ($row = mysqli_fetch_assoc($alldata)) {
         }
         echo $name;
         ?>
-      </p> <p>$<?php echo $row['good_price'];?></p>
+      </p> <p>$<?php echo discountCalculate($row['good_id']);?></p>
     </a>
 </div>
 <?php
