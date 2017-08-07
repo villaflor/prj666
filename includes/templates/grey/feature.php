@@ -59,7 +59,7 @@
       <div class="col-md-6 pro-txt">
         <h3><?php echo $row['sale_name']; ?></h3>
         <p class="desc"><?php echo $row['sale_description']; ?></p>
-        <p class="pro-off"><?php echo substr($row['discount'], 0, -3)."% OFF"; ?></p>
+        <p class="pro-off"><?php echo /*substr(*/$row['discount']/*, 0, -3)*/."% OFF"; ?></p>
         <a href="cartAction.php?action=addToCart&id=<?php echo $goodrow['good_id']; ?>" class="btn pro-btn-color btn-lg">Add To Cart</a>
         <a href="detail.php?id=<?php echo $goodrow['good_id']; ?>" class="btn pro-btn-color btn-lg pro-btn-right">See Full Details</a>
 
