@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <?php include("metadata.php") ?>
-    <title><?php echo $client->getClientSiteTitle(); ?></title>
+    <title>Green Template</title>
 </head>
 
 <body style="background-color: seagreen">
@@ -15,9 +15,6 @@
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
-        <?php if ($contact == 1 ){?>
-		<a class="nav-item nav-link text-white" href="contact-us.php">Contact us</a>
-		<?php } ?>
     </nav>
 </div>
 <div class="container mb-5">
@@ -50,6 +47,7 @@
 
     <?php
     include '/data/www/default/wecreu/tools/good.php';
+    include_once '/data/www/default/wecreu/tools/discountCalculator.php';
 
     $db = Database::getInstance();
     $good = new Good($db);
@@ -76,7 +74,7 @@
         echo '<section class="col-md-3">';
         echo '<p>' . $goodrow["good_name"] . '</p>';
         echo '<a href="detail.php?gid=' .$goodrow['good_id'] .'"><img class="img-thumbnail" height="250" width="250" src="../wecreu/images/' . $goodrow['good_image'] . '" alt="good image"></a>';
-        echo '<p>Price: $' . $goodrow['good_price'] . ' / lb</p>';
+        echo '<p>Price: $' . discountCalculate($goodrow['good_id']) . ' / lb</p>';
         echo "</section>";
     }
     ?>

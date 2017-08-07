@@ -2,6 +2,7 @@
 include '/data/www/default/wecreu/tools/sql.php';
 include '/data/www/default/wecreu/tools/good.php';
 include '/data/www/default/wecreu/tools/csql.php';
+include_once '/data/www/default/wecreu/tools/discountCalculator.php';
 
 //get rows query
 //$query = $dbc->query("SELECT * FROM good ORDER BY good_id");
@@ -9,10 +10,10 @@ include '/data/www/default/wecreu/tools/csql.php';
 
 $db = Database::getInstance();
 $good = new Good($db);
-//    echo "getting good object";
 $alldata = $good->getGoodDetail($_GET["gid"]);
 
 $goodrow = mysqli_fetch_assoc($alldata);
+$calcprice = discountCalculate($_GET["gid"]);
 
 ?>
 
@@ -33,9 +34,6 @@ $goodrow = mysqli_fetch_assoc($alldata);
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
-        <?php if ($contact == 1 ){?>		
- -		<a class="nav-item nav-link text-white" href="contact-us.php">Contact us</a>		
- -		<?php } ?>
     </nav>
 </div>
 <div class="container mb-5">
@@ -72,7 +70,8 @@ $goodrow = mysqli_fetch_assoc($alldata);
         </div>
         <div class="container row">
             <section class="col-md-6"><p>Description: <?php echo "$goodrow[good_description]";  ?></p></section>
-            <section class="col-md-6"><p>Price: $ <?php echo "$goodrow[good_price]";  ?></p></section>
+            <section class="col-md-6"><p>Price: $ <?php echo $calcprice;  ?></p></section>
+ 
         </div>
     </div>
 </div>
