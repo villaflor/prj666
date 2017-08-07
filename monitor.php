@@ -94,7 +94,7 @@ if(!$user->isLoggedIn()){
                 echo '<td>' . $item->client_site_title . '</td>';
                 echo '<td>' . $item->last_payment . '</td>';
                 echo '<td>' . $date->diff(new DateTime($item->last_payment))->format("%a") .'</td>';
-                echo '<td><a href="clientDetail.php?clientId='.$item->client_id.'">details</a> | <a href="sendEmailToClient.php?email=' . $item->client_admin_email . '&name=' . $item->client_name .'">send email</a></td>';
+                echo '<td><a href="clientDetail.php?clientId='.$item->client_id.'">details</a> | <a href="adminEditCom.php?clientId='.$item->client_id.'">edit</a> | <a href="sendEmailToClient.php?email=' . $item->client_admin_email . '&name=' . $item->client_name .'">send email</a></td>';
                 echo '</tr>';
             }
         }
@@ -126,7 +126,7 @@ if(!$user->isLoggedIn()){
                 echo '<th>' . $item->client_name . '</th>';
                 echo '<td>' . $item->client_site_title . '</td>';
                 echo '<td>' . $item->last_payment . '</td>';
-                echo '<td><a href="clientDetail.php?clientId='.$item->client_id.'">details</a> | <a href="sendEmailToClient.php?email=' . $item->client_admin_email . '&name=' . $item->client_name .'">send email</a></td>';
+                echo '<td><a href="clientDetail.php?clientId='.$item->client_id.'">details</a> | <a href="adminEditCom.php?clientId='.$item->client_id.'">edit</a> | <a href="sendEmailToClient.php?email=' . $item->client_admin_email . '&name=' . $item->client_name .'">send email</a></td>';
                 echo '</tr>';
             }
         }
