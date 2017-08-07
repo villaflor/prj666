@@ -89,11 +89,11 @@ $cart = new Cart;
 					$cart->removeAll();
 				}
 			}
-			
+
             $cartItems = $cart->contents();
-			
+
             foreach($cartItems as $item){
-			
+
         ?>
         <tr>
             <td><?php echo $item["name"]; ?></td>
@@ -113,9 +113,14 @@ $cart = new Cart;
             <td><a href="index.php" class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continue Shopping</a></td>
             <td colspan="2"></td>
             <?php if($cart->total_items() > 0){ ?>
-            <td class="text-center"><strong>Total <?php echo '$'.round($cart->total()*1.13,2).' CAD'; ?></strong></td>
+            <td class="">
+              Price: <?php echo '$'.round($cart->total(),2).' CAD';?> <br/>
+              Tax %: <?php echo $client->getClientTax()."%";?> <br/>
+              Tax: $<?php echo round($cart->total()*($client->getClientTax()/100),2);?> CAD<br/>
+              Total: <strong><?php echo '$'.round($cart->total()*($client->getClientTax()/100 + 1 ),2); ?></strong> CAD</td>
             <td><a href="checkout.php" class="btn btn-success btn-block">Checkout <i class="glyphicon glyphicon-menu-right"></i></a></td>
             <?php } ?>
+
         </tr>
     </tfoot>
     </table>

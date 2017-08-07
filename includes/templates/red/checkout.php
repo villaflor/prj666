@@ -1,7 +1,7 @@
 <?php
 // include database configuration file
 include 'sql.php';
-
+$clientId = file_get_contents('conf.ini');
 $nameErr = $addressErr = $phoneErr = $cityErr = $stateErr = $countryErr = $emailErr = "";
 $proceed=0;
 //include validation file
@@ -29,6 +29,9 @@ $_SESSION['sessCustomerID'] = 4;
 // get customer details by session customer ID
 $query = $dbc->query("SELECT * FROM customer WHERE customer_id = ".$_SESSION['sessCustomerID']);
 $custRow = $query->fetch_assoc();
+
+$query = $dbc->query("SELECT * FROM client WHERE client_id = $clientId");
+$client_tax = $query->fetch_assoc()['client_tax'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +54,7 @@ $custRow = $query->fetch_assoc();
 	.spaceFive{margin-left: 62px}
 	.spaceSix{margin-left: 45px}
 	.spaceSeven{margin-left: 59px}
-	
+
     </style>
 </head>
 <body>
@@ -89,9 +92,9 @@ $custRow = $query->fetch_assoc();
 			State: <input type="text" name="state" class="spaceFive"><br>
 			Country: <input type="text" name="country" class="spaceSix"><br>
 			Email: <input type="text" name="email" class="spaceSeven"><br>
-			
+
 		cartAction.php?action=placeOrder
-		</form>			
+		</form>
 			*/
         ?>
         <tr>
@@ -106,24 +109,29 @@ $custRow = $query->fetch_assoc();
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="3"></td>
-            <?php if($cart->total_items() > 0){ ?>
-            <td class="text-center"><strong>Total <?php echo '$'.round($cart->total()*1.13, 2) .' CAD'; ?></strong></td>
+          <td colspan="3"></td>
+          <?php if($cart->total_items() > 0){ ?>
+            <td>
+              Price: <?php echo '$'.round($cart->total(),2).' CAD';?> <br/>
+              Tax %: <?php echo $client_tax."%";?> <br/>
+              Tax: $<?php echo round($cart->total()*($client_tax/100),2);?> CAD<br/>
+              Total: <strong><?php echo '$'.round($cart->total()*($client_tax/100 + 1 ),2); ?></strong> CAD
+            </td>
             <?php } ?>
         </tr>
-		
+
     </tfoot>
     </table>
-	
+
     <div class="shipAddr">
-	
+
         <h4>Shipping Details</h4>
-		
+
 		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" style="" method="post" enctype="multipart/form-data">
-						
-		
+
+
 			Name:<input type="text" name="name" class="spaceOne" autofocus placeholder="Enter name"><br/>
-			
+
 			<p style="color:#ff0000;"><?php echo $nameErr; ?></p>
 			Address:      <input type="text" name="address" class="spaceTwo" placeholder="Enter address"><br>
 			<p style="color:#ff0000;"><?php echo $addressErr; ?></p>
@@ -137,7 +145,7 @@ $custRow = $query->fetch_assoc();
 			<p style="color:#ff0000;"><?php echo $countryErr; ?></p>
 			Email: <input type="text" name="email" class="spaceSeven" placeholder="Enter email"><br>
 			<p style="color:#ff0000;"><?php echo $emailErr; ?></p>
-			
+
 			<input class="submit" type="submit" value="Submit"/>
 			</br>
 			</br>
