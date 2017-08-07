@@ -3,7 +3,7 @@
   <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Tangerine">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.good.css">
   <link rel="stylesheet" href="css/promotion.css">
   <link rel="stylesheet" href="css/table.css">
 
@@ -27,10 +27,10 @@
 
         $query="SELECT sale.* FROM client JOIN category ON category.client_id = client.client_id JOIN good ON good.category_id = category.category_id JOIN sale ON sale.sale_id = good.sale_id WHERE client.client_id = ".$clientid." GROUP BY sale.sale_id";
        // echo $query;
-        $conn = $db->getConnection();  
+        $conn = $db->getConnection();
         $allsale = $conn->query($query);
         $rowcount = mysqli_num_rows($allsale);
-       
+
       ?>
 
   <div class="container-m bg-faded pt-5 goodlist cf col-md-9 col-sm-12 col-xs-12">
@@ -51,7 +51,7 @@
             if($i%2 != 0){
         ?>
           <div class="col-md-6 pro-image">
-            <img src=<?php echo "/wecreu/images/".$goodrow['good_image']; ?> height="300" width="400" /> 
+            <img src=<?php echo "/wecreu/images/".$goodrow['good_image']; ?> height="300" width="400" />
           </div>
         <?php
             }
@@ -68,7 +68,7 @@
             if($i%2 == 0){
         ?>
           <div class="col-md-6 pro-image">
-            <img src=<?php echo "/wecreu/images/".$goodrow['good_image']; ?> height="300" width="400" /> 
+            <img src=<?php echo "/wecreu/images/".$goodrow['good_image']; ?> height="300" width="400" />
           </div>
         <?php
             }
@@ -84,7 +84,7 @@
     <?php
         }
     ?>
- 
+
   </div>
   </body>
 </html>

@@ -181,6 +181,17 @@ if(Input::exists()){
                       </div>
                   </div>
 
+                  <div class="dropdown">
+                    <a class="nav-item nav-link dropdown-toggle active" href="#"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                       id="saleDropdown"
+                    >Orders</a>
+
+                    <div class="dropdown-menu" aria-labelledby="saleDropdown">
+                        <a class="dropdown-item" href="orderList.php">View orders</a>
+                    </div>
+                </div>
+
                   <a class="nav-item nav-link" href="logout.php">Log out</a>
               </div>
           </div>
@@ -286,32 +297,6 @@ if(Input::exists()){
 <script src="js/jquery-3.1.1.slim.min.js"></script>
 <script src="js/tether.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
- <script type="text/javascript">
-    var ue = UE.getEditor('editor', {
-      toolbars: [['forecolor', 'fontsize', 'bold', 'italic', 'underline', 'strikethrough', 'blockquote', 'insertunorderedlist', 'insertorderedlist', 'justifyleft','justifycenter', 'justifyright',  'link', 'fullscreen']],
-      elementPathEnabled: true,
-      enableContextMenu: false,
-      wordCount:false,
-      emotionLocalization:true,
-      imagePopup:false
-    });
 
-    function save(){
-      var data = ue.getContent();
-      $.ajax({
-        url:"tools/ueditor/php/postPage.php",
-        data:{data:data,clientid:<?php echo $clientId;?>, pageId:<?php echo $page_id;?>},
-        dataType:"text",
-        method:"POST",
-        success:function(data){
-          alert(data);
-        },
-        error:function(data){
-          alert(data);
-        }
-      });
-    }
-
-  </script>
 </body>
 </html>
