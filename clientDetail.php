@@ -54,7 +54,12 @@ $check = 0;
 
     <div class="container bg-faded py-5" style="min-height: 100vh">
         <h1 class="mb-4">Client profile</h1>
+        <?php
+        if(Session::exists('clientD')) {
+            echo '<p class="text-success">' . Session::flash('clientD') . '</p>';
+        }
 
+        ?>
         <div class="container mb-4">
             <section class="container py-5 bg-primary rounded mb-4">
                 <div class="row mb-5">
