@@ -2,10 +2,10 @@
 $clientIdRed = file_get_contents('conf.ini');
 session_id($clientIdRed);
 session_start();
-include 'sql.php';
+//include 'csql.php';
 class Cart {
     protected $cart_contents = array();
-
+	private $dbc;
     public function __construct(){
         // get the shopping cart array from the session
         $this->cart_contents = !empty($_SESSION['cart_contents'])?$_SESSION['cart_contents']:NULL;
@@ -13,6 +13,21 @@ class Cart {
             // set some base values
             $this->cart_contents = array('cart_total' => 0, 'total_items' => 0);
         }
+		
+		//DB details
+		$sqlinfo = parse_ini_file("/secret/sql.ini");
+		$dbHost = $sqlinfo['host'];
+		$dbUsername = $sqlinfo['username'];
+		$dbPassword = $sqlinfo['password'];
+		$dbName = $sqlinfo['database'];
+
+		//Create connection and select DB
+		$this->dbc = new mysqli($dbHost, $dbUsername, $dbPassword, $dbName);
+
+		if ($this->dbc->connect_error) {
+			die("Unable to connect database: " . $this->dbc->connect_error);
+		}
+
     }
 
     /**
@@ -89,6 +104,13 @@ class Cart {
                  */
                 // prep the quantity
                 $item['qty'] = (int) $item['qty'];
+				$item_id = $item['id'];
+				$item_qty = $item['qty'];
+				$sql = "SELECT * FROM `good` WHERE `good_id` = $item_id";
+				//$query = $this->dbcdbc->query($sql);
+				//$row = mysqli_fetch_assoc($query);
+				//$qtyOH = $row['good_in_stock'];
+				
                 if($item['qty'] <= 0){
                     return FALSE;
                 }

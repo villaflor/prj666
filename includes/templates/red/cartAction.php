@@ -72,11 +72,31 @@ $price = round($priceTotal*($client_tax/100 + 1 ),2);
             $cartItems = $cart->contents();
             foreach($cartItems as $item){
                 $sql .= "INSERT INTO order_line (invoice_id, good_id, good_quantity) VALUES ('".$orderID."', '".$item['id']."', '".$item['qty']."');";
+				
             }
             // insert order items into database
             $insertOrderItems = $dbc->multi_query($sql);
 
             if($insertOrderItems){
+				foreach($cartItems as $item){
+					//get item id
+					//get the qty
+					//get qoh
+					
+					//new qty = qoh - qty
+					//update the databse new qty
+					
+					$item_id = $item['id'];
+					$item_qty = $item['qty'];
+					$sql = "SELECT `good_in_stock` FROM `good` WHERE `good_id` = $item_id";
+					$query = $dbc->query($sql);
+					$row = mysqli_fetch_assoc($query);
+					$qtyOH = $row['good_in_stock'];
+					$newQty = $qtyOH - $item_qty;
+					$sql = "UPDATE `good` SET `good_in_stock`=$newQty WHERE `good_id` = $item_id";
+					$query = $dbc->query($sql);
+				
+				}
                 $cart->destroy();
                 header("Location: orderSuccess.php?id=$orderID");
             }else{

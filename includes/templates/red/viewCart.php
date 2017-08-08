@@ -91,6 +91,8 @@ $cart = new Cart;
             $cartItems = $cart->contents();
             include ("/data/www/default/wecreu/tools/discountCalculator.php");
             $priceTotal = 0;
+			$checkQTY = true;
+			
             foreach($cartItems as $item){
         ?>
         <tr>
@@ -113,7 +115,20 @@ $cart = new Cart;
             $priceTotal += $subTotal;
              ?>
            </td>
-            <td><input type="number" min="1" step="1" class="form-control text-center" value="<?php echo $item["qty"]; ?>" onchange="updateCartItem(this, '<?php echo $item["rowid"]; ?>')"></td>
+		   <?php
+				$item_id = $item['id'];
+				$item_qty = $item['qty'];
+				$sql = "SELECT `good_in_stock` FROM `good` WHERE `good_id` = $item_id";
+				$query = $dbc->query($sql);
+				$row = mysqli_fetch_assoc($query);
+				$qtyOH = $row['good_in_stock'];
+				if ($item_qty > $qtyOH){
+					$checkQTY = false;
+				}
+				
+				
+		   ?>
+            <td><input type="number" min="1" step="1" max="<?php echo $qtyOH;?>" class="form-control text-center" value="<?php echo $item["qty"]; ?>" onchange="updateCartItem(this, '<?php echo $item["rowid"]; ?>')"></td>
             <td><?php echo '$'.$subTotal.' CAD'; ?></td>
             <td>
                 <a href="cartAction.php?action=removeCartItem&id=<?php echo $item["rowid"]; ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="glyphicon glyphicon-trash"></i></a>
@@ -127,13 +142,15 @@ $cart = new Cart;
         <tr>
             <td><a href="index.php" class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continue Shopping</a></td>
             <td colspan="2"></td>
-            <?php if($cart->total_items() > 0){ ?>
+            <?php 
+
+			if($cart->total_items() > 0 && $checkQTY){ ?>
             <td class="">
               Price: <?php echo '$'.round($priceTotal,2).' CAD';?> <br/>
               Tax %: <?php echo $client->getClientTax()."%";?> <br/>
               Tax: $<?php echo round($priceTotal*($client->getClientTax()/100),2);?> CAD<br/>
               Total: <strong><?php echo '$'.round($priceTotal*($client->getClientTax()/100 + 1 ),2); ?></strong> CAD</td>
-            <td><a href="checkout.php" class="btn btn-success btn-block">Checkout <i class="glyphicon glyphicon-menu-right"></i></a></td>
+				<td><a href="checkout.php" class="btn btn-success btn-block">Checkout <i class="glyphicon glyphicon-menu-right"></i></a></td>
             <?php } ?>
 
         </tr>
