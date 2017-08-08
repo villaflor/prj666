@@ -43,6 +43,8 @@
     $clientId = file_get_contents('conf.ini');
     include_once("/data/www/default/wecreu/tools/sql.php");
     include_once('/data/www/default/wecreu/tools/good.php');
+    include_once '/data/www/default/wecreu/tools/discountCalculator.php';
+
     $db = Database::getInstance();
    // $good = new Good($db,$clientId);
     $good = new Good($db);
@@ -53,13 +55,14 @@
       echo "<p class='text-center'>Product not found</p>";
     } else{
       $row = mysqli_fetch_assoc($alldata);
+        $imagepath = "/wecreu/images/".$row['good_image'];
     ?>
 
     <div class="col-md-9 col-sm-9 col-xs-9">
       <div class="row">
         <div class="col-xs-4"></div>
         <div class="nnn col-lg-3 col-md-4 col-sm-4 col-xs-3 img-circle float-right clearfix">
-          <img src="<?php echo "/wecreu/images/".$row['good_image'];?>" class="img-responsive" alt="<?php echo $row['good_name'];?>" >
+          <img src="<?php echo $imagepath;?>" class="img-responsive" alt="<?php echo $row['good_name']; ?>" >
           </div>
       </div>
       <br>
@@ -84,7 +87,7 @@
                 <tr height="50px">
                   <td class="text-center"><?php echo $row['good_description'];?></td>
                   <td class="text-center"><?php echo $row['good_weight'];?> lbs</td>
-                  <td class="text-center">$<?php echo $row['good_price'];?></td>
+                  <td class="text-center">$<?php echo discountCalculate($row['good_id']);?></td>
                 </tr>
               </tbody>
             </table>
