@@ -79,7 +79,7 @@
         ?>
                 <section class="col-6 mb-5"  >
                     <a href="detail.php?gid=<?php echo $goodrow['good_id']; ?>" >
-                        <img class="img-thumbnail" src=<?php echo "/wecreu/images/".$goodrow['good_image']; ?> alt="cow" />
+                        <img class="img-thumbnail" src=<?php echo "'/wecreu/images/".$goodrow['good_image']."'"; ?> alt="cow" />
                     </a>
                 </section>
         <?php
