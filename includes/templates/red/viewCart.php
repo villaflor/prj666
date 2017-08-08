@@ -96,7 +96,7 @@ $cart = new Cart;
         <tr>
             <?php
               $gid = $item["id"];
-              $priceAfterDiscount =  discountCalculate($gid);
+              $priceAfterDiscount = discountCalculate($gid);
             ?>
             <td><?php echo $item["name"]; ?></td>
             <td>
@@ -131,8 +131,8 @@ $cart = new Cart;
             <td class="">
               Price: <?php echo '$'.round($priceTotal,2).' CAD';?> <br/>
               Tax %: <?php echo $client->getClientTax()."%";?> <br/>
-              Tax: $<?php echo round($cart->total()*($client->getClientTax()/100),2);?> CAD<br/>
-              Total: <strong><?php echo '$'.round($cart->total()*($client->getClientTax()/100 + 1 ),2); ?></strong> CAD</td>
+              Tax: $<?php echo round($priceTotal*($client->getClientTax()/100),2);?> CAD<br/>
+              Total: <strong><?php echo '$'.round($priceTotal*($client->getClientTax()/100 + 1 ),2); ?></strong> CAD</td>
             <td><a href="checkout.php" class="btn btn-success btn-block">Checkout <i class="glyphicon glyphicon-menu-right"></i></a></td>
             <?php } ?>
 
