@@ -52,6 +52,12 @@ if(isset($saleid)){
       <?php if ($contact == 1 ){?>		
 		<a class="nav-item nav-link text-white" href="contact-us.php">Contact us</a>		
       <?php } ?>
+      <?php
+        $alldata = $page->getAll();
+        while ($row = mysqli_fetch_assoc($alldata)) {
+          echo '<a class="nav-item nav-link text-white" href="page.php?page='.$row['id'].'">'.$row['page_name'].'</a>';
+        }
+        ?>
 
     </nav>
 </div>
