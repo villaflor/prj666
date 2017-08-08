@@ -3,6 +3,7 @@ require_once  'core/init.php';
 include '/data/www/default/wecreu/tools/good.php';
 include '/data/www/default/wecreu/tools/category.php';
 include_once '/data/www/default/wecreu/tools/sql.php';
+include_once '/data/www/default/wecreu/tools/discountCalculator.php';
 
 $user = new User();
 $validate = new Validate();
@@ -89,7 +90,7 @@ if(!$user->isLoggedIn()){
                         <a class="dropdown-item" href="createsale.php">Create Sale</a>
                     </div>
                 </div>
-                <div class="dropdown">
+		    <div class="dropdown">
                             <a class="nav-item nav-link dropdown-toggle" href="#"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                id="saleDropdown"
@@ -99,6 +100,7 @@ if(!$user->isLoggedIn()){
                                 <a class="dropdown-item" href="orderList.php">View orders</a>
                             </div>
                         </div>
+
                 <a class="nav-item nav-link" href="logout.php">Log out</a>
             </div>
         </div>
@@ -113,31 +115,63 @@ if(!$user->isLoggedIn()){
         echo '<p class="text-success">' . Session::flash('good') . '</p>';
     }
 
-
+              
     $db = Database::getInstance();
     $good = new Good($db);
 //    echo "getting good object";
-    $alldata = $good->getGoodDetail($_GET["gid"]);
+    $goodid = $_GET["gid"];
+    $alldata = $good->getGoodDetail($goodid);
 
-    $row = mysqli_fetch_assoc($alldata);
-    $imagepath = "images/".$row['good_image'];
+    if(mysqli_num_rows($alldata) == 0){
+        echo "<p>Good not found</p>";
+    } else{
+        $row = mysqli_fetch_assoc($alldata);
+        $imagepath = "images/".$row['good_image'];
 
+        $oldprice = $row['good_price'];
+        $calcprice = discountCalculate($goodid);
+        $saleid = $row['sale_id'];
+        $saledescription = "No sale";
+
+        if(isset($saleid)){
+          //  echo "sale exists";
+            $query="SELECT * FROM sale WHERE sale_id = ".$saleid;
+          //  echo $query;
+            $conn = $db->getConnection();  
+            $sale = $conn->query($query);
+            $salerow = mysqli_fetch_assoc($sale);
+            $startdate = date("Y-m-d", strtotime($salerow['start_date']));
+            $enddate = date("Y-m-d", strtotime($salerow['end_date']));
+
+            $saledescription = "'".$salerow['sale_name']."' at ".$salerow['discount']."%<br/>Starts ".$startdate." and ends ".$enddate;
+        }
     ?>
 
-
+				 
 	<img src='<?php echo $imagepath;  ?>' alt="good image" height="200" width="200" />
-
+			
     <table class="table table-striped">
         <tr>
-            <td>Product Name: <?php echo "$row[good_name]";  ?></td>
+            <td>Product Name: <?php echo "$row[good_name]";  ?></td>                            
             <td>Quantity: <?php echo "$row[good_in_stock]";  ?></td>
         </tr>
         <tr>
-            <td>Category: <?php echo "$row[category_name]";  ?></td>
+            <td>Category: <?php echo "$row[category_name]";  ?></td>                        
             <td>Weight: <?php echo "$row[good_weight]";  ?> lbs</td>
         </tr>
         <tr>
-            <td>Price: $ <?php echo "$row[good_price]";  ?></td>
+            <?php
+            if(isset($saleid)){
+            ?>
+            <td>Price: $ <?php echo $calcprice." (Current listed price, Regular price $".$oldprice.")";  ?></td> 
+            <?php
+            } else {
+            ?>
+            <td>Price: $ <?php echo $calcprice;  ?></td>     
+            <?php
+            }
+            ?>
+
             <td>Taxable: <?php if(isset($row['good_taxable'])){
                                     if($row['good_taxable']==1){
                                         echo "Taxable";
@@ -149,25 +183,19 @@ if(!$user->isLoggedIn()){
                                 }  ?></td>
         </tr>
         <tr>
-            <td>Sales Applicable: <?php if(isset($row['sale_id'])){
-                                        $query="SELECT `sale_name` FROM `sale` WHERE `sale_id` = ".$row['sale_id'];
-                                     //   echo $query;
-                                        $conn = $db->getConnection();
-                                        $datasale=$conn->query($query);
-                                        $salerow=mysqli_fetch_assoc($datasale);
-                                        echo "$salerow[sale_name]";
-                                    }else{
-                                        echo "No Sale";
-                                    }?></td>
+            <td>Sales Applicable: <?php echo $saledescription; ?></td>     
             <td></td>
         </tr>
-
+					
         <tr >
             <td> Description:<?php echo "$row[good_description]";  ?></td>
             <td></td>
         </tr>
-
+					
     </table>
+    <?php
+    }
+    ?>
 
 </div>
 

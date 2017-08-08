@@ -40,7 +40,7 @@
         <?php $contact = file_get_contents("contact.ini");
 		if($contact == 1) {?>
 		<li><a href="contact-us.php">Contact Us</a></li>
-		
+
         <?php
 		}
         $alldata = $page->getAll();
@@ -53,7 +53,7 @@
   </div>
   <!-- icons -->
   <div class="col-md-2 col-sm-2 col-xs-2">
-    <a href="cart.php"> <img class="pull-right hicon" src="images/cart.gif" alt="Cart"> </a>
+    <a href="viewCart.php"> <img class="pull-right hicon" src="images/cart.gif" alt="Cart"> </a>
   </div>
 
 </div>

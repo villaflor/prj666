@@ -12,6 +12,8 @@
 		
 		<?php
 			include 'Header.php';
+            include_once '/data/www/default/wecreu/tools/discountCalculator.php';
+
 		?>
 		
 		<div class="middle">
@@ -24,9 +26,14 @@
                     $good = new Good($db);
               
                     $alldata = $good->getGoodDetail($_GET["gid"]);
-                   
-                    $row = mysqli_fetch_assoc($alldata);
-                    $imagepath = "../wecreu/images/".$row['good_image'];
+                     if(mysqli_num_rows($alldata) == 0){
+                        echo "<p class='text-center'>Good not found</p>";
+                    } else{
+
+                        $row = mysqli_fetch_assoc($alldata);
+                        $imagepath = "../wecreu/images/".$row['good_image'];
+                        $calcprice = discountCalculate($_GET["gid"]);
+
                 ?>
                 
 				<div class="goodimage" >     
@@ -44,7 +51,7 @@
 							<td>Weight: <?php echo "$row[good_weight]";  ?> lbs</td>
 						</tr>
 						<tr>
-							<td>Price: $ <?php echo "$row[good_price]";  ?></td>                           
+							<td>Price: $ <?php echo $calcprice;  ?></td>                           
 							<td>Taxable: <?php if(isset($row['good_taxable'])){
                                                     if($row['good_taxable']==1){
                                                         echo "Taxable";
@@ -57,12 +64,15 @@
 						</tr>
                         <tr>
                             <td>Sales Applicable: <?php if(isset($row['sale_id'])){
-                                                            $query="SELECT `sale_name` FROM `sale` WHERE `sale_id` = ".$row['sale_id'];
+                                                            $query="SELECT * FROM `sale` WHERE `sale_id` = ".$row['sale_id'];
                                                          //   echo $query;
                                                             $conn = $db->getConnection();  
                                                             $datasale=$conn->query($query);
                                                             $salerow=mysqli_fetch_assoc($datasale);
-                                                            echo "$salerow[sale_name]"; 
+                                                            $startdate = date("Y-m-d", strtotime($salerow['start_date']));
+                                                            $enddate = date("Y-m-d", strtotime($salerow['end_date']));
+
+                                                            echo $salerow['sale_name'].", ".$salerow['discount']."% off $".$row['good_price']."<br/> from ".$startdate." to ".$enddate; 
                                                         }else{
                                                             echo "No Sale";
                                                         }?></td>     
@@ -79,6 +89,9 @@
 						</tr>
 					</table>
 				</div>
+                <?php
+                }
+                ?>
 			</div>
 			
 			<?php

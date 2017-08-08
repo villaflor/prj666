@@ -13,6 +13,8 @@
 		<?php
 			include 'Header.php';
             $clientId = file_get_contents('conf.ini');
+            include_once '/data/www/default/wecreu/tools/discountCalculator.php';
+
           //  $db = Database::getInstance();
             //$category = new Category($db,1);
 		?>
@@ -46,7 +48,7 @@
                         <?php echo "$row[good_name]";  ?>
                         <img src=<?php echo "../wecreu/images/".$row['good_image']; ?> alt="good image" height="120" width="120" style="padding:20px 40px;"/>
                         <br />
-                        $<?php echo "$row[good_price]";  ?>
+                        $<?php echo discountCalculate($row['good_id']);  ?>
                         </a>
                     </div>
                  <?php

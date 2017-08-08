@@ -15,6 +15,20 @@ $alldata = $good->getGoodDetail($_GET["gid"]);
 $goodrow = mysqli_fetch_assoc($alldata);
 $calcprice = discountCalculate($_GET["gid"]);
 
+$oldprice = $goodrow['good_price'];
+$saleid = $goodrow['sale_id'];
+
+
+if(isset($saleid)){
+  //  echo "sale exists";
+    $query="SELECT discount FROM sale WHERE sale_id = ".$saleid;
+  //  echo $query;
+    $conn = $db->getConnection();  
+    $sale = $conn->query($query);
+    $salerow = mysqli_fetch_assoc($sale);
+
+    $salediscount = $salerow['discount'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,6 +48,11 @@ $calcprice = discountCalculate($_GET["gid"]);
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
+
+      <?php if ($contact == 1 ){?>		
+		<a class="nav-item nav-link text-white" href="contact-us.php">Contact us</a>		
+      <?php } ?>
+
     </nav>
 </div>
 <div class="container mb-5">
@@ -70,8 +89,10 @@ $calcprice = discountCalculate($_GET["gid"]);
         </div>
         <div class="container row">
             <section class="col-md-6"><p>Description: <?php echo "$goodrow[good_description]";  ?></p></section>
+
             <section class="col-md-6"><p>Price: $ <?php echo $calcprice;  ?></p></section>
  
+
         </div>
     </div>
 </div>
