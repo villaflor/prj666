@@ -117,7 +117,6 @@ if(Input::exists()) {
                     <div class="dropdown-menu" aria-labelledby="goodDropdown">
                         <a class="dropdown-item" href="good.php">View goods</a>
                         <a class="dropdown-item" href="create-good.php">Create good</a>
-                        <a class="dropdown-item" href="edit-good.php">Edit good</a>
                     </div>
                 </div>
 
