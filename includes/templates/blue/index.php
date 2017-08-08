@@ -28,7 +28,7 @@
             $allsale = $conn->query($query);
             $productName = "";
             $saleName = "";
-            $saleAmount = ""
+            $saleAmount = "";
 		?>
 		
 		<div class="middle">
@@ -41,11 +41,10 @@
                         if($allsale) {
                             while ($row = mysqli_fetch_assoc($allsale)){
                             $productName = "Click an image<br/>to check out<br/>our current<br/>Promos!";//$row['good_name'];
-                        //    $saleName = $row['sale_name'];
-                          //  $saleAmount = $row['discount'];
+                            $imagepath = "/wecreu/images/".$row['good_image'];
                     ?>
                     <a href="GoodDetail.php?gid=<?php echo "$row[good_id]";?>">
-					<img class="slides" src=<?php echo "../wecreu/images/".$row['good_image']; ?> alt=<?php echo $row['good_name']; ?> height="536" width="559"/>
+					<img class="slides" src="<?php echo $imagepath; ?>" alt=<?php echo $row['good_name']; ?> height="536" width="559"/>
 					</a>
                     <?php
                             }
