@@ -126,7 +126,7 @@ if(Input::exists()){
                   <a class="nav-item nav-link" href="profile.php?user=<?php echo escape($user->data()->username); ?>">Profile</a>
 
                   <div class="dropdown">
-                      <a class="nav-item nav-link dropdown-toggle active" href="#"
+                      <a class="nav-item nav-link dropdown-toggle" href="#"
                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                          id="profileDropdown"
                       >Account</a>
@@ -174,7 +174,6 @@ if(Input::exists()){
                       <div class="dropdown-menu" aria-labelledby="goodDropdown">
                           <a class="dropdown-item" href="good.php">View goods</a>
                           <a class="dropdown-item" href="create-good.php">Create good</a>
-                          <a class="dropdown-item" href="edit-good.php">Edit good</a>
                       </div>
                   </div>
 
