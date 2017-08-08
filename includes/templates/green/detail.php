@@ -14,21 +14,7 @@ $alldata = $good->getGoodDetail($_GET["gid"]);
 
 $goodrow = mysqli_fetch_assoc($alldata);
 $calcprice = discountCalculate($_GET["gid"]);
-
-$oldprice = $goodrow['good_price'];
-$saleid = $goodrow['sale_id'];
-
-
-if(isset($saleid)){
-  //  echo "sale exists";
-    $query="SELECT discount FROM sale WHERE sale_id = ".$saleid;
-  //  echo $query;
-    $conn = $db->getConnection();  
-    $sale = $conn->query($query);
-    $salerow = mysqli_fetch_assoc($sale);
-
-    $salediscount = $salerow['discount'];
-}
+$imagepath = "/wecreu/images/".$goodrow['good_image'];
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +54,7 @@ if(isset($saleid)){
 </div>
 <div class="container mb-5">
     <div class="text-center mb-5">
-        <img src="<?php echo "../wecreu/images/".$goodrow['good_image']; ?>" alt="cow" class="rounded">
+        <img src="<?php echo $imagepath; ?>" alt="good image" class="rounded">
     </div>
     <div class="container text-center mb-5">
         <div class="container row">
@@ -89,10 +75,8 @@ if(isset($saleid)){
         </div>
         <div class="container row">
             <section class="col-md-6"><p>Description: <?php echo "$goodrow[good_description]";  ?></p></section>
-
             <section class="col-md-6"><p>Price: $ <?php echo $calcprice;  ?></p></section>
  
-
         </div>
     </div>
 </div>
