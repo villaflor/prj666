@@ -42,8 +42,26 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
         $clientId = file_get_contents('conf.ini');
         $query = $dbc->query("SELECT * FROM client WHERE client_id = $clientId");
         $client_tax = $query->fetch_assoc()['client_tax'];
-        $price = $cart->total() * (1 + $client_tax/100);
-        $price = round($price,2);
+
+
+// get discount
+$priceTotal = 0;
+$cartItems = $cart->contents();
+$clientId = file_get_contents('conf.ini');
+include_once("/data/www/default/wecreu/tools/sql.php");
+include_once('/data/www/default/wecreu/tools/client.php');
+include_once('/data/www/default/wecreu/tools/good.php');
+//create an object
+$db = Database::getInstance();
+$client = new Client($db,$clientId);
+$good = new Good($db,$clientId);
+include ("/data/www/default/wecreu/tools/discountCalculator.php");
+foreach($cartItems as $item){
+    $discountedPrice = discountCalculate($item['id']) * $item['qty'];
+    $priceTotal += $discountedPrice;
+}
+
+$price = round($priceTotal*($client_tax/100 + 1 ),2);
         // insert order details into database
         $sql = "INSERT INTO invoice (customer_id, invoice_total_quantity, invoice_price,invoice_final_price) VALUES ('".$_SESSION['sessCustomerID']."','".$cart->total_items()."', '".$cart->total()."','".$price ."')";
         $insertOrder = $dbc->query("$sql");

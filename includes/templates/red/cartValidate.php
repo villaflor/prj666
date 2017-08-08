@@ -156,7 +156,6 @@ include 'csql.php';
         $customerid = mysqli_fetch_assoc($dbc->query($sql));
         $customerid = $customerid['customer_id'];
         $_SESSION['sessCustomerID'] = $customerid;
-
         if($test){
             $confirm ="Successfully Added";
 			$proceed = 1;
