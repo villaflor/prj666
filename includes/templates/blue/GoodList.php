@@ -41,12 +41,12 @@
                  //   echo "getting goods list";
                    
                     while ($row = mysqli_fetch_assoc($alldata)){
-                     //   echo "$row[good_name]<br/>";
+                     $imagepath = "/wecreu/images/".$row['good_image'];
                     ?>
                     <div class="gooditem">
                         <a href="GoodDetail.php?gid=<?php echo "$row[good_id]";?>">
                         <?php echo "$row[good_name]";  ?>
-                        <img src=<?php echo "../wecreu/images/".$row['good_image']; ?> alt="good image" height="120" width="120" style="padding:20px 40px;"/>
+                        <img src="<?php echo $imagepath; ?>" alt="good image" height="120" width="120" style="padding:20px 40px;"/>
                         <br />
                         $<?php echo discountCalculate($row['good_id']);  ?>
                         </a>

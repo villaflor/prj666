@@ -31,7 +31,7 @@
                     } else{
 
                         $row = mysqli_fetch_assoc($alldata);
-                        $imagepath = "../wecreu/images/".$row['good_image'];
+                        $imagepath = "/wecreu/images/".$row['good_image'];
                         $calcprice = discountCalculate($_GET["gid"]);
 
                 ?>
