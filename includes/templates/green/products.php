@@ -66,23 +66,17 @@
     } else{
         $alldata = $good->getAllGoods("*", $clientId);
     }
-    //  echo "getting goods list";
+    ?>
 
-//    $counter = mysqli_num_rows($alldata);
-//    for ($x = 0; $x < $counter; $x + 4){
-//        for ($y = $x; $y < 5 + $x; $y++){
-//
-//        }
-//    }
-//    ?>
     <div class="row text-center">
 
         <?php
     while ($goodrow = mysqli_fetch_assoc($alldata)){
+        $imagepath = "/wecreu/images/".$goodrow['good_image'] ;
 
         echo '<section class="col-md-3">';
         echo '<p>' . $goodrow["good_name"] . '</p>';
-        echo '<a href="detail.php?gid=' .$goodrow['good_id'] .'"><img class="img-thumbnail" height="250" width="250" src="../wecreu/images/' . $goodrow['good_image'] . '" alt="good image"></a>';
+        echo '<a href="detail.php?gid=' .$goodrow['good_id'] .'"><img class="img-thumbnail" height="250" width="250" src="'.$imagepath.'" alt="good image" /></a>';
         echo '<p>Price: $' . discountCalculate($goodrow['good_id']) . ' / lb</p>';
         echo "</section>";
     }
