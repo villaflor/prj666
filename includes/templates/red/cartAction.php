@@ -37,12 +37,11 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
 
         $deleteItem = $cart->remove($_REQUEST['id']);
         header("Location: viewCart.php");
-    }elseif($_REQUEST['action'] == 'placeOrder' && $cart->total_items() > 0 && !empty($_SESSION['sessCustomerID'])){
+    }elseif($_REQUEST['action'] == 'placeOrder' && $cart->total_items() > 0 && isset($_GET['cid']) && !empty($_SESSION['sessCustomerID'])){
         // get client tax
         $clientId = file_get_contents('conf.ini');
         $query = $dbc->query("SELECT * FROM client WHERE client_id = $clientId");
         $client_tax = $query->fetch_assoc()['client_tax'];
-
 
 // get discount
 $priceTotal = 0;
@@ -60,12 +59,12 @@ foreach($cartItems as $item){
     $discountedPrice = discountCalculate($item['id']) * $item['qty'];
     $priceTotal += $discountedPrice;
 }
+$custId = $_GET['cid'];
 
 $price = round($priceTotal*($client_tax/100 + 1 ),2);
         // insert order details into database
-        $sql = "INSERT INTO invoice (customer_id, invoice_total_quantity, invoice_price,invoice_final_price) VALUES ('".$_SESSION['sessCustomerID']."','".$cart->total_items()."', '".$cart->total()."','".$price ."')";
+        $sql = "INSERT INTO invoice (customer_id, invoice_total_quantity, invoice_price,invoice_final_price) VALUES ('" . $custId . "','".$cart->total_items()."', '".$cart->total()."','".$price ."')";
         $insertOrder = $dbc->query("$sql");
-
         if($insertOrder){
             $orderID = $dbc->insert_id;
             $sql = '';

@@ -193,7 +193,7 @@ $client_tax = $query->fetch_assoc()['client_tax'];
 		<?php
 		if($proceed){
 		?>
-        <a href="cartAction.php?action=placeOrder" class="btn btn-success orderBtn">Place Order <i class="glyphicon glyphicon-menu-right"></i></a>
+        <a href="cartAction.php?action=placeOrder&cid=<?php echo $customerid;?>" class="btn btn-success orderBtn">Place Order <i class="glyphicon glyphicon-menu-right"></i></a>
 		<?php
 		}
 		?>
