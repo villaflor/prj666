@@ -12,6 +12,7 @@
     header("Location: index.php");
     exit;
   }
+    include_once '/data/www/default/wecreu/tools/discountCalculator.php';
 
   // items
   $alldata = $good->getGoodDetail($_GET['id']);
@@ -19,13 +20,14 @@
     echo "<p class='text-center'>Product not found</p>";
   } else{
     $row = mysqli_fetch_assoc($alldata);
+    $calcprice = discountCalculate($_GET['id']);
 ?>
 
 <div class="col-md-9 col-sm-9 col-xs-9">
   <div class="row">
     <div class="col-xs-4"></div>
     <div class="nnn col-lg-3 col-md-4 col-sm-4 col-xs-3 img-circle float-right clearfix">
-      <img src="<?php echo "/wecreu/images/".$row['good_image'];?>" class="img-responsive" alt="<?php echo $row['good_name'];?>" />
+      <img src="<?php echo "/wecreu/images/".$row['good_image'];?>" class="img-responsive" alt="><?php echo $row['good_name'];?>" />
       </div>
   </div>
   <br>
@@ -50,7 +52,7 @@
             <tr height="50px">
               <td class="text-center"><?php echo $row['good_description'];?></td>
               <td class="text-center"><?php echo $row['good_weight'];?> lbs</td>
-              <td class="text-center">$<?php echo $row['good_price'];?></td>
+              <td class="text-center">$<?php echo $calcprice;?></td>
             </tr>
           </tbody>
         </table>

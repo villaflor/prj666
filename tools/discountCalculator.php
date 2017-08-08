@@ -18,22 +18,22 @@ function discountCalculate($goodid){
     $alldata = $good->getGoodDetail($goodid);
  //   echo "good has been collected from db<br/>";
     if(mysqli_num_rows($alldata) > 0){
-
+        
        $row = mysqli_fetch_assoc($alldata);
-
+ 
         $oldprice = $row['good_price'];
         $saleid = $row['sale_id'];
     //    echo "found good id, its old price is ".$oldprice." its on sale ".$saleid."<br/>";
         $discountedPrice = $oldprice;
     //    echo "if no sale - price is ".$discountedPrice."<br/>";
         if(isset($saleid)){//check if good is on sale
-
+          
             $query="SELECT * FROM sale WHERE sale_id = ".$saleid;//get sale info
-
-            $conn = $db->getConnection();
+          
+            $conn = $db->getConnection();  
             $sale = $conn->query($query);
             $salerow = mysqli_fetch_assoc($sale);
-
+            
             $startdate = date("Y-m-d", strtotime($salerow['start_date']));
             $enddate = date("Y-m-d", strtotime($salerow['end_date']));
             $todaydate = date("Y-m-d");
@@ -44,7 +44,7 @@ function discountCalculate($goodid){
              //   echo "dates are valid, discounting ".$salediscount."% <br/>";
                 $discountedPrice = sprintf("%01.2f",($oldprice-($salediscount/100*$oldprice)));//if sale is ongoing, calculate new price
             }
-        }
+        } 
     }
  //   echo "returning ".$discountedPrice."<br/>";
     return $discountedPrice;
