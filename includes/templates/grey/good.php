@@ -23,6 +23,7 @@
     include_once("/data/www/default/wecreu/tools/sql.php");
     include_once('/data/www/default/wecreu/tools/client.php');
     include_once('/data/www/default/wecreu/tools/good.php');
+    include_once '/data/www/default/wecreu/tools/discountCalculator.php';
     require_once("/data/www/default/wecreu/tools/search.php");
 
     //create an object
@@ -71,10 +72,11 @@
       echo "Sorry, we can't find any record.";
     }
     while ($row = mysqli_fetch_assoc($alldata)) {
+      $imagepath = "/wecreu/images/".$row['good_image'];
       ?>
       <div class="item col-md-12 col-sm-4 col-xs-4">
         <a href='detail.php?id=<?php echo $row['good_id'];?>'>
-           <img src="<?php echo "/wecreu/images/".$row['good_image'];?>" class="img-responsive" alt="<?php echo $row['good_name'];?>">
+           <img src="<?php echo $imagepath;?>" class="img-responsive" alt="<?php echo $row['good_name'];?>">
           <p>
             <?php
             $name = $row['good_name'];
@@ -84,7 +86,7 @@
             }
             echo $name;
             ?>
-          </p> <p>$<?php echo $row['good_price'];?></p>
+          </p> <p>$<?php echo discountCalculate($row['good_id']);?></p>
         </a>
     </div>
     <?php
