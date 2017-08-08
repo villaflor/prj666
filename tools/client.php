@@ -57,7 +57,13 @@ class Client {
         $this->client_id = $client_id;
 	}
 
-	// Magic method clone is empty to prevent duplication of connection
+	public function getClientTax() {
+		$sql_query = "SELECT * FROM client WHERE client_id = $this->client_id";
+	  $result = $this->mysqli->query($sql_query);
+	  $result = mysqli_fetch_assoc($result);
+	  return $result['client_tax'];
+	}
+
 	private function __clone() { }
 }
 ?>
