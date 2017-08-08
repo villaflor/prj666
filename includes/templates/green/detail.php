@@ -2,6 +2,7 @@
 include '/data/www/default/wecreu/tools/sql.php';
 include '/data/www/default/wecreu/tools/good.php';
 include '/data/www/default/wecreu/tools/csql.php';
+include_once '/data/www/default/wecreu/tools/discountCalculator.php';
 
 //get rows query
 //$query = $dbc->query("SELECT * FROM good ORDER BY good_id");
@@ -12,6 +13,7 @@ $good = new Good($db);
 $alldata = $good->getGoodDetail($_GET["gid"]);
 
 $goodrow = mysqli_fetch_assoc($alldata);
+$calcprice = discountCalculate($_GET["gid"]);
 
 $oldprice = $goodrow['good_price'];
 $saleid = $goodrow['sale_id'];
@@ -46,9 +48,11 @@ if(isset($saleid)){
         <a class="nav-item nav-link active" href="products.php">Products</a>
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
+
       <?php if ($contact == 1 ){?>		
 		<a class="nav-item nav-link text-white" href="contact-us.php">Contact us</a>		
       <?php } ?>
+
     </nav>
 </div>
 <div class="container mb-5">
@@ -85,18 +89,10 @@ if(isset($saleid)){
         </div>
         <div class="container row">
             <section class="col-md-6"><p>Description: <?php echo "$goodrow[good_description]";  ?></p></section>
-            <?php
-                if($saleid){
-                    $newprice =  sprintf("%01.2f",($oldprice-($salediscount/100*$oldprice)));
-            ?>
-            <section class="col-md-6"><p>Price: $<?php echo $newprice."  [Sale ".$salediscount."%, regular price $".$oldprice."]";  ?></p></section>
-            <?php
-                } else {
-            ?>
-            <section class="col-md-6"><p>Price: $ <?php echo $oldprice;  ?></p></section>
-            <?php
-                }
-            ?>
+
+            <section class="col-md-6"><p>Price: $ <?php echo $calcprice;  ?></p></section>
+ 
+
         </div>
     </div>
 </div>
