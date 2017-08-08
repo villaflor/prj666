@@ -15,9 +15,10 @@
     ?>
 	<img src="images/logo.jpg" alt="logo" height="130" width="140" />
 			
-	<form>
-		<input type="text" name="keyword" /> Search
-	</form>
+	<form action="search.php" method="GET">
+       <input type="text" name="keyword" />
+        <input type="submit" value="Submit" />
+    </form>
 	<h1><a href="index.php" style="text-decoration:none;"><?php echo $client->getClientSiteTitle(); ?></a></h1>
 			
 </header>
