@@ -37,8 +37,8 @@ if($cart->total_items() <= 0){
 //$nameErr = $addressErr = $phoneErr = $cityErr = $stateErr = $countryErr = $emailErr = "";
 
 // get customer details by session customer ID
-$query = $dbc->query("SELECT * FROM customer WHERE customer_id = ".$_SESSION['sessCustomerID']);
-$custRow = $query->fetch_assoc();
+//$query = $dbc->query("SELECT * FROM customer WHERE customer_id = ".$_SESSION['sessCustomerID']);
+//$custRow = $query->fetch_assoc();
 
 $query = $dbc->query("SELECT * FROM client WHERE client_id = $clientId");
 $client_tax = $query->fetch_assoc()['client_tax'];
