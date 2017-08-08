@@ -44,14 +44,14 @@
                 $goodquery="SELECT good_id, good_image FROM good WHERE sale_id = ".$row['sale_id']." LIMIT 1";
                 $goodinfo = $conn->query($goodquery);
                 $goodrow = mysqli_fetch_assoc($goodinfo);
-
+                $imagepath = "/wecreu/images/".$goodrow['good_image'];
       ?>
     <div class="row pro-container">
         <?php
             if($i%2 != 0){
         ?>
           <div class="col-md-6 pro-image">
-            <img src=<?php echo "/wecreu/images/".$goodrow['good_image']; ?> height="300" width="400" />
+            <img src="<?php echo $imagepath; ?>" height="300" width="400" />
           </div>
         <?php
             }
@@ -68,7 +68,7 @@
             if($i%2 == 0){
         ?>
           <div class="col-md-6 pro-image">
-            <img src=<?php echo "/wecreu/images/".$goodrow['good_image']; ?> height="300" width="400" />
+            <img src="<?php echo $imagepath; ?>" height="300" width="400" />
           </div>
         <?php
             }
