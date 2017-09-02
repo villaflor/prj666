@@ -24,6 +24,7 @@ class Search {
 	@return goods
 	*/
 	public function searchGood($keyword, $limit, $offSet) {
+		$keyword = trim($keyword);
 		$keyword = explode('"', $keyword)[0];
 		$keyword = explode("'", $keyword)[0];
 		$keyword = explode("&", $keyword)[0];
@@ -42,7 +43,7 @@ class Search {
 		$keyword = explode("]", $keyword)[0];
 		$keyword = explode("}", $keyword)[0];
 		$keyword = explode("{", $keyword)[0];
-                $keyword = explode('\\', $keyword)[0];
+    $keyword = explode('\\', $keyword)[0];
 		$keyword = explode("|", $keyword)[0];
 		$keyword = explode("<", $keyword)[0];
 		$keyword = explode(">", $keyword)[0];

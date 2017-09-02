@@ -126,7 +126,8 @@ $user = new User();
 
 <div class="container bg-faded py-5" style="min-height: 65vh">
     <h2 class="mb-4">About Wecreu</h2>
-
+    <p>In the modern world, having an online presence can be crucial for the success of a new business. The internet has connected a large portion of the human population. This means a large market of potential clients is available. This can be a huge source of income for a new business, for whom it is critically important to make enough revenue to cover their expenses and succeed in the business world. If they succeed and become prosperous they will create jobs, foster creativity and innovation and contribute to the economy. </p>
+    <p>This application will generate a finished website. But not just any website. This website will be a new startup’s or a small business’ very own online store where they will be able to post their products and sell them over the internet.</p>
 </div>
 
 <?php include('includes/footer.inc'); ?>

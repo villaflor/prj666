@@ -1,4 +1,14 @@
 <!DOCTYPE html>
+<!--
+Blue template - Main page, 
+formatted for BLUE template
+contains slideshow consisting of company logo and images of goods 
+that are or will be on sale if there are any
+HTML/CSS, PHP for getting goods and sale info created by Olga
+
+update: August 19 by Olga
+Edit text
+-->
 <?php include 'Header.php';?>
 <html lang="en-US">
 	<head>
@@ -8,15 +18,13 @@
 		
 		<title><?php echo $client->getClientSiteTitle();?></title>
 		<link rel="stylesheet" href="css/stylesheet.css" />
-		
-		
-
 	</head>
 	<body>
 		
 		<?php
 			
            
+            //gets all goods that have a sale (future and current)
             include_once '/data/www/default/wecreu/tools/sql.php';
             $clientid = file_get_contents('conf.ini');
 
@@ -26,9 +34,9 @@
            // echo $query;
             $conn = $db->getConnection();  
             $allsale = $conn->query($query);
-            $productName = "";
-            $saleName = "";
-            $saleAmount = "";
+          //  $productName = "";
+           // $saleName = "";
+            //$saleAmount = "";
 		?>
 		
 		<div class="middle">
@@ -40,7 +48,7 @@
                     <?php
                         if($allsale) {
                             while ($row = mysqli_fetch_assoc($allsale)){
-                            $productName = "Click an image<br/>to check out<br/>our current<br/>Promos!";//$row['good_name'];
+                           // $productName = "";
                             $imagepath = "/wecreu/images/".$row['good_image'];
                     ?>
                     <a href="GoodDetail.php?gid=<?php echo "$row[good_id]";?>">
@@ -55,9 +63,8 @@
 				</div>
 			
 				<div class="info">
-				<!--	<p><?php echo $saleName.":"; ?></p>-->
-					<p><?php echo $productName; ?></p>
-                <!--    <p><?php echo $saleAmount." % off!"; ?></p>-->
+					<p>Click an image<br/>to check out<br/>our Current<br/>and Future<br/>Promos!</p>
+               
 				</div>
 			</div>
 			

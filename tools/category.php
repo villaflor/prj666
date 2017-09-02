@@ -9,7 +9,7 @@ class Category {
 
 	private $mysqli;
 	private $client_id;
-	
+
 	/*
 	Get All categories
 	@return category
@@ -20,7 +20,7 @@ class Category {
 	}
 
 	/*
-	Get All categories including hidden categories 
+	Get All categories including hidden categories
 	@return category
 	*/
 	public function getAllAvaliable() {
@@ -70,7 +70,17 @@ class Category {
 	}
 
 	/*
-	show a hidden category 
+	Delete a category
+	*/
+	public function delete($id) {
+		$sql_query = "DELETE FROM `good` WHERE `category_id` = $id";
+		$this->mysqli->query($sql_query);
+		$sql_query = "DELETE FROM `category` WHERE `category`.`category_id` = $id AND client_id = $this->client_id";
+		return $this->mysqli->query($sql_query);
+	}
+
+	/*
+	show a hidden category
 	*/
 	public function show($id) {
 		$sql_query = "UPDATE category SET category_display=1 WHERE category_id=$id AND client_id = $this->client_id";
@@ -83,7 +93,7 @@ class Category {
 		$this->mysqli = $db->getConnection();
         $this->client_id = $client_id;
 	}
-	
+
 	// Magic method clone is empty to prevent duplication of connection
 	private function __clone() { }
 }

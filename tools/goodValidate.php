@@ -1,21 +1,19 @@
 <?php
-  //  echo "goodValidate starts<br/>";
-
-  //  $nameVer = $imageVer = $descVer = $priceVer = $qtyVer = $weightVer = $catVer = $clientVer = false; 
+ /*
+ Good validation script, checks if user input in create-good and edit-good forms 
+ is present and valid and returns error messages if it is not
+ Author Olga
+*/
   
     if($_SERVER["REQUEST_METHOD"] == "POST"){
 
-      //  echo "got POST data<br/>";
-     //   echo "checking good_name<br/>";
-
+        //checking name
         if(empty($_POST["good_name"])){
 
-        //    echo "good_name is empty<br/>";
             $nameErr = "Please enter a good name";
 
         } else {
             
-          //  echo "good_name is not empty, processing...<br/>";
             $name = validate($_POST["good_name"]);
             if(strlen($name) > 100){
                 $nameErr = "Name must be less that 100 characters, contains ".strlen($name);
@@ -24,25 +22,22 @@
             }
         }
 
+     //  checking image presence(uploading is different file)
        if(!empty($_FILES["good_image"]['name'])){
             
             $imagelength = validate($_FILES["good_image"]['name']);
             if(strlen($imagelength) > 256){
                 $imageErr = "image file path must be less that 256 characters";
             } else { 
-              //  echo "calling uploadImage script<br/>";
-                include '/data/www/default/wecreu/tools/uploadImage.php';
+                $imageVer = true;
             }
         } else {
-        //    echo "no image uploaded <br/>";
-            $imageVer = true;
-            //$image="";
+            $imageVer = false;
         }
 
-      //  echo "checking description<br/>";
+      //  checking description
         if(!empty($_POST["description"])){
 
-        //    echo "description is not empty, processing...<br/>";
             $description = validate($_POST["description"]);
             if(strlen($description) > 300){
                 $descriptionErr = "Description must be less that 300 characters ".strlen($description);
@@ -51,15 +46,12 @@
             }
         }
 
-     //   echo "checking good_price<br/>";
+     //   checking good_price
         if(empty($_POST["good_price"])){
 
-       //     echo "good_price is empty<br/>";
             $priceErr = "Please enter a price";
 
         } else {
-
-      //      echo "good_price is not empty, processing...<br/>";
             $price = validate($_POST["good_price"]);
             if(!preg_match("/^\d{1,8}(\.\d{0,2}|)$/", $price)){
                 $priceErr = "Price must be 8 digits, 2 decimals at most";
@@ -68,10 +60,9 @@
             }
         }
 
-   //     echo "checking good_quantiy<br/>";
+   //     checking good_quantity
         if(!empty($_POST["good_quantity"])){
 
-       //     echo "good_quantity is not empty, processing...<br/>";
             $quantity = validate($_POST["good_quantity"]);
             if(!preg_match("/^\d{1,6}$/", $quantity)){
                 $quantityErr = "Quantity must be 6 digits at most";
@@ -80,10 +71,9 @@
             }
         }
 
-  //      echo "checking good_weight<br/>";
+  //      checking good_weight
         if(!empty($_POST["good_weight"])){
 
-      //      echo "good_weight is not empty, processing...<br/>";
             $weight = validate($_POST["good_weight"]);
             if(!preg_match("/^\d{1,6}(\.\d{0,2}|)$/", $weight)){
                 $weightErr = "Weight must be 6 digits, 2 decimals at most";
@@ -92,47 +82,36 @@
             }
         }
 
-    //    echo "checking taxable<br/>";
+    //   checking taxable
         if(empty($_POST["taxable"])){
             $taxable = 0;
-       //     echo "<br/> taxable is empty, is set to ".$_POST['taxable']." and ".$taxable."<br/>";
         } else {
             $taxable = 1;
-      //      echo "<br/> taxable is not empty, is set to ".$_POST['taxable']." and ".$taxable."<br/>";
         }
 
-    //    echo "checking visible<br/>";
+    //   checking visible
         if(empty($_POST["visible"])){
             $visible = 0;
-     //       echo "<br/> visible is empty, is set to ".$_POST['visible']." and ".$visible."<br/>";
         } else {
             $visible = 1;
-      //      echo "<br/> visible is not empty, is set to ".$_POST['visible']." and ".$visible."<br/>";
         }
 
-     //   echo "checking category_id<br/>";
+     //  checking category_id
         if(empty($_POST["category_id"])){
-
-        //    echo "category_id is empty<br/>";
             $categoryErr = "Please choose a category";
-
         } else {
-
-         //   echo "category_id is not empty, processing...<br/>";
             $category = validate($_POST["category_id"]);
             $catVer = true;
         }
-     //   echo "checking sale_id<br/>";
+     //   checking sale_id
         if(isset($_POST["sale_id"])){
-
-        //    echo "sale_id is not empty, processing...".$_POST["sale_id"]."<br/>";
             $sale = validate($_POST["sale_id"]);
         }
     }
 
- 
+ //validation function
     function validate($data){
-     //   echo "--function validate(".$data.") called<br/>";
+    
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);

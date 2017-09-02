@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<!--
+Grey template - goods list page, 
+retrieves and provides a list of goods for a selected category, 
+formatted for GREY template
+
+updated August 21 by Olga
+Fixing price displays
+-->
 <html class="no-js">
   <head>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -22,18 +30,15 @@
     $clientId = file_get_contents('conf.ini');
     include_once("/data/www/default/wecreu/tools/sql.php");
     include_once('/data/www/default/wecreu/tools/client.php');
+    include_once('/data/www/default/wecreu/tools/page.php');
     include_once('/data/www/default/wecreu/tools/good.php');
+    include_once("/data/www/default/wecreu/tools/search.php");
     include_once '/data/www/default/wecreu/tools/discountCalculator.php';
-    require_once("/data/www/default/wecreu/tools/search.php");
 
-    //create an object
     $db = Database::getInstance();
     $client = new Client($db,$clientId);
+    $page = new Page($db,$clientId);
     $good = new Good($db,$clientId);
-
-    $db = Database::getInstance();
-
-    //create an object
     $search = new Search($db,$clientId);
 
     // call get all
@@ -72,11 +77,10 @@
       echo "Sorry, we can't find any record.";
     }
     while ($row = mysqli_fetch_assoc($alldata)) {
-      $imagepath = "/wecreu/images/".$row['good_image'];
       ?>
       <div class="item col-md-12 col-sm-4 col-xs-4">
         <a href='detail.php?id=<?php echo $row['good_id'];?>'>
-           <img src="<?php echo $imagepath;?>" class="img-responsive" alt="<?php echo $row['good_name'];?>">
+           <img src="<?php echo "/wecreu/images/".$row['good_image'];?>" class="img-responsive" alt="<?php echo $row['good_name'];?>">
           <p>
             <?php
             $name = $row['good_name'];
@@ -86,7 +90,14 @@
             }
             echo $name;
             ?>
-          </p> <p>$<?php echo discountCalculate($row['good_id']);?></p>
+          </p> <p><?php 
+                    $calcprice=discountCalculate($row['good_id']);//display current price from database or with discount
+                    if(isset($row['sale_id'])&& $calcprice != $row['good_price']){
+                        echo '<span style="color:#990000;">$'.$calcprice.'</span> [<span style="text-decoration:line-through;">$'.$row['good_price'].'</span>]';
+                    } else {
+                        echo "$".$row['good_price'];
+                    }
+                ?></p>
         </a>
     </div>
     <?php
@@ -94,23 +105,23 @@
 
     ?>
     </div>
-    </div>
       <div class="row">
-        <div class="btn-group pull-right" role="group" aria-label="...">
+        <div class="col-md-12">
+        <div class="btn-group pull-left" role="group" aria-label="...">
           <?php
           if($offSet!=0){
-            echo '<a href="'.$pre.'" class="btn" role="button"><-</a>';
+            echo '<a href="'.$pre.'" class="btn" role="button">Privious Page</a>';
           }
           if($total == $limit){
             if($nextTotal != 0) {
-              echo '<a href="'.$last.'" class="btn" role="button">-></a>';
+              echo '<a href="'.$last.'" class="btn" role="button">Next Page</a>';
             }
           }
           ?>
         </div>
       </div>
+      </div>
     </div>
-
 
   </body>
 </html>

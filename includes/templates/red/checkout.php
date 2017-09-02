@@ -1,56 +1,90 @@
 <?php
-// include database configuration file
+/*
+* Checkout page. 
+* This page redisplays the items in shopping cart as they will be seen in the invoice,
+* and provides  form for customer t fill in.
+* Once valid information is entered the order is placed
+* Author Olga
+*/
+
+// include database configuration file and other necessary files
 $clientId = file_get_contents('conf.ini');
-include_once("/data/www/default/wecreu/tools/sql.php");
+require_once('/data/www/default/wecreu/core/init.php');
+include_once('/data/www/default/wecreu/tools/placeOrder.php');
 include_once('/data/www/default/wecreu/tools/client.php');
-include_once('/data/www/default/wecreu/tools/good.php');
-//create an object
+include_once("/data/www/default/wecreu/tools/sql.php");
+include_once '/data/www/default/wecreu/classes/Cookie.php';
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+//prepare variables
 $db = Database::getInstance();
 $client = new Client($db,$clientId);
-$good = new Good($db,$clientId);
+$isValid = true;
 
 
-include 'sql.php';
-$clientId = file_get_contents('conf.ini');
-$nameErr = $addressErr = $phoneErr = $cityErr = $stateErr = $countryErr = $emailErr = "";
-$proceed=0;
-//include validation file
-if($_POST){
-   include 'cartValidate.php';
+$name=$address=$phone=$city=$state=$country=$email=$payment="";
+$nameErr=$addressErr=$phoneErr=$cityErr=$stateErr=$countryErr=$emailErr=$paymentErr="";
 
-}
+include_once('/data/www/default/wecreu/tools/cartValidate.php');
+   
+$cookieTotalQty=0;
+$cookiePriceTotal=0;
+$cookieFinalPrice=0;
+$getCookieGoods = Cookie::getCart($clientId);
+$cookieDataArray = array();
 
-// initializ shopping cart class
-include 'cartSession.php';
-$cart = new Cart;
+    if($getCookieGoods){//store cookie data in a 2D array
 
-// redirect to home if cart is empty
-if($cart->total_items() <= 0){
-    header("Location: index.php");
-}
+        foreach($getCookieGoods as $index => $item){
 
-// set customer ID in session
-// $_SESSION['sessCustomerID'] = 115;
+            $cookieTotalQty += $item->quantity;
 
+            $cookiePrice=0;
+            if ($item->discount_price){
+                $cookiePrice = $item->discount_price;
+            }else{
+                $cookiePrice = $item->good_price;
+            } 
+            $cookiePriceTotal += $cookiePrice * $item->quantity;
 
+            array_push($cookieDataArray, array(
+                        'goodId' => $item->good_id,
+                        'goodName' => $item->good_name,
+                        'price' => $cookiePrice,
+                        'quantity' => $item->quantity,
+                        'subTotal' => $cookiePrice * $item->quantity));
+        }
 
-//$nameErr = $addressErr = $phoneErr = $cityErr = $stateErr = $countryErr = $emailErr = "";
+        $cookieFinalPrice = round($cookiePriceTotal*($client->getClientTax()/100 + 1 ),2);
+        $cookiePriceTotal = round($cookiePriceTotal,2);
+    }
 
-// get customer details by session customer ID
-//$query = $dbc->query("SELECT * FROM customer WHERE customer_id = ".$_SESSION['sessCustomerID']);
-//$custRow = $query->fetch_assoc();
+   if($_POST && $isValid && $getCookieGoods){// data present, data valid and cookie didn't expire
 
-$query = $dbc->query("SELECT * FROM client WHERE client_id = $clientId");
-$client_tax = $query->fetch_assoc()['client_tax'];
+        $customerData = array(
+        'name' => $name,
+        'address' => $address,
+        'phone' => $phone,
+        'city' => $city,
+        'state' => $state,
+        'country' => $country,
+        'email' => $email,
+        'payment' => $payment
+        );
+
+        placeOrder($customerData, $cookieDataArray, $cookieTotalQty, $cookiePriceTotal, $cookieFinalPrice);
+    } 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Checkout</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<?php include_once("headmeta.php");?>
+
     <style>
     .container{width: 100%;padding: 50px;}
     .table{width: 65%;float: left;}
@@ -66,138 +100,133 @@ $client_tax = $query->fetch_assoc()['client_tax'];
 	.spaceSeven{margin-left: 59px}
 
     </style>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.js" integrity="sha256-tA8y0XqiwnpwmOIl3SGAcFl2RvxHjA8qp0+1uCGmRmg=" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container">
-    <h1>Order Preview</h1>
-	<p>Step 1: Fill out shipping detail fields and click submit</p>
-	<p>Step 2: Once you recieve confirmation please confirm that the shipping deatils are correct then click the place order button</p>
-    <table class="table">
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-        </tr>
-    </thead>
-    <tbody>
+  <!-- header -->
+  <?php include_once("header.php");?>
+  <br>
+   <div class="container bg-faded pt-5">
+
+    <div class="container">
+        <h1>Order Preview</h1>
+        <p>Step 1: Fill out shipping detail fields and click submit</p>
+        <p>Step 2: Once you receive confirmation please confirm that the shipping details are correct then click the place order button</p>
+        <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
         <?php
-        if($cart->total_items() > 0){
-            //get cart items from session
-            $cartItems = $cart->contents();
-            include ("/data/www/default/wecreu/tools/discountCalculator.php");
+        //display data in cookie if available
+        $getCookieData = Cookie::getCart($clientId);
+
+        if($getCookieData){
             $priceTotal = 0;
-            foreach($cartItems as $item){
-              $gid = $item["id"];
-              $priceAfterDiscount = discountCalculate($gid);
 
-			/*
-			<p><?php echo $custRow['customer_name']; ?></p>
-			<p><?php echo $custRow['customer_email']; ?></p>
-			<p><?php echo $custRow['customer_city']; ?></p>
-			<p><?php echo $custRow['customer_street_address']; ?></p>
-
-		<form>
-			Customer ID:<input type="text" name="custID" class="spaceThree" autofocus><br>
-			Name:<input type="text" name="name" class="spaceOne"><br>
-			Address:      <input type="text" name="address" class="spaceTwo"><br>
-			Phone Number: <input type="text" name="number"><br>
-			City: <input type="text" name="city" class="spaceFour"><br>
-			State: <input type="text" name="state" class="spaceFive"><br>
-			Country: <input type="text" name="country" class="spaceSix"><br>
-			Email: <input type="text" name="email" class="spaceSeven"><br>
-
-		cartAction.php?action=placeOrder
-		</form>
-			*/
+            foreach($getCookieData as $index => $item){
         ?>
-        <tr>
-
-            <td><?php echo $item["name"]; ?></td>
-            <td>
-            <?php
-            if ($item["price"] != $priceAfterDiscount){
-              echo '<span style="text-decoration:line-through;">$'.$item["price"].' CAD</span>';
-              echo '<br> $'.$priceAfterDiscount.' CAD';
-              $subTotal = $priceAfterDiscount;
-            }else{
-              echo '$'.$item["price"].' CAD';
-              $subTotal = $item["price"];
+            <tr>
+                <?php
+                $gid = $item->good_id;
+                ?>
+                <td><?php echo $item->good_name; ?></td>
+                <td><?php    
+                        if ($item->discount_price){
+                            echo '$'.$item->discount_price.' CAD';
+                            $subTotal = $item->discount_price;
+                        }else{
+                            echo '$'.$item->good_price.' CAD';
+                            $subTotal = $item->good_price;
+                        } 
+                        $subTotal = $subTotal * $item->quantity;
+                        $priceTotal += $subTotal;
+                    ?></td>
+                <td><?php echo $item->quantity; ?></td>
+                <td><?php echo '$'.$subTotal.' CAD'; ?></td>
+            </tr>
+        <?php
             }
-            $subTotal = $subTotal * $item["qty"];
-            $priceTotal += $subTotal;
-            ?></td>
-            <td><?php echo $item["qty"]; ?></td>
-            <td><?php echo '$'.$subTotal.' CAD'; ?></td>
-        </tr>
-        <?php } }else{ ?>
-        <tr><td colspan="4"><p>No items in your cart......</p></td>
-        <?php } ?>
-    </tbody>
-    <tfoot>
-        <tr>
-          <td colspan="3"></td>
-          <?php if($cart->total_items() > 0){ ?>
-            <td>
-              Price: <?php echo '$'.round($priceTotal,2).' CAD';?> <br/>
-              Tax %: <?php echo $client_tax."%";?> <br/>
-              Tax: $<?php echo round($priceTotal*($client_tax/100),2);?> CAD<br/>
-              Total: <strong><?php echo '$'.round($priceTotal*($client_tax/100 + 1 ),2); ?></strong> CAD
-            </td>
-            <?php } ?>
-        </tr>
+        } else {
+        ?>
+            <tr><td colspan="4"><p>No items in your cart......</p></td></tr>
+        <?php
+        }
+        ?>
+        </tbody>
+        <tfoot>
+            <tr>
+            <?php
+            //calculate totals
+            if(count($getCookieData) > 0){ ?>
 
-    </tfoot>
-    </table>
+              <td colspan="3"></td>
+                <td>
+                  Price: <?php echo '$'.round($priceTotal,2).' CAD';?><br/>
+                  Tax %:  <?php echo $client->getClientTax()."%";?><br/>
+                  Tax: $<?php echo round($priceTotal*($client->getClientTax()/100),2);?> CAD<br/>
+                  Total: <strong><?php echo '$'.round($priceTotal*($client->getClientTax()/100 + 1 ),2); ?></strong> CAD
+                </td>
+            <?php
+            }
+            ?>
+            </tr>
+        </tfoot>
+        </table>
 
-    <div class="shipAddr">
+        <div class="shipAddr">
 
-        <h4>Shipping Details</h4>
+            <h4>Shipping Details</h4>
 
-		<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" style="" method="post" enctype="multipart/form-data">
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" style="" method="post" enctype="multipart/form-data">
 
+                Name:<input type="text" name="name" maxlength="50" class="spaceOne" autofocus placeholder="Enter name" value="<?php echo $name; ?>" /><br/>
+                <p style="color:#ff0000;"><?php echo $nameErr; ?></p>
+                Address: <input type="text" name="address" class="spaceTwo" maxlength="280" placeholder="Enter address" value="<?php echo $address; ?>" /><br>
+                <p style="color:#ff0000;"><?php echo $addressErr; ?></p>
+                Phone Number: <input type="text" name="number" maxlength="14" placeholder="Enter phone number" value="<?php echo $phone; ?>" /><br>
+                <p style="color:#ff0000;"><?php echo $phoneErr; ?></p>
+                City: <input type="text" name="city" class="spaceFour" maxlength="99" placeholder="Enter city" value="<?php echo $city; ?>" /><br>
+                <p style="color:#ff0000;"><?php echo $cityErr; ?></p>
+                Province: <input type="text" name="state" class="spaceFive" maxlength="99" placeholder="Enter state" value="<?php echo $state; ?>" /><br>
+                <p style="color:#ff0000;"><?php echo $stateErr; ?></p>
+                Country: <input type="text" name="country" class="spaceSix" maxlength="99" placeholder="Enter country" value="<?php echo $country; ?>" /><br>
+                <p style="color:#ff0000;"><?php echo $countryErr; ?></p>
+                Email: <input type="text" name="email" class="spaceSeven"  maxlength="140" placeholder="Enter email" value="<?php echo $email; ?>" /><br>
+                <p style="color:#ff0000;"><?php echo $emailErr; ?></p>
+                Payment: <br/>
+                 <input style="margin-left: 10px;" type="radio" name="payment" id="payment" value="paypal" /> Paypal<br/>
+                <input style="margin-left: 10px;" type="radio" name="payment" id="payment" value="amex" /> American Express<br/>
+                <input style="margin-left: 10px;" type="radio" name="payment" id="payment" value="visa" /> Visa<br/>
+                <input style="margin-left: 10px;" type="radio" name="payment" id="payment" value="mastercard" /> Mastercard <br/>
+                <p style="color:#ff0000;"><?php echo $paymentErr; ?></p>
+                
+                <input class="btn btn-success orderBtn" type="submit" id="subm" value="Place Order"/>
+                <p style="color:red; font-size:25px;" id="subMsg"></p>
+                </br>
+                </br>
+            </form>
+        </div>
 
-			Name:<input type="text" name="name" class="spaceOne" autofocus placeholder="Enter name"><br/>
-
-			<p style="color:#ff0000;"><?php echo $nameErr; ?></p>
-			Address:      <input type="text" name="address" class="spaceTwo" placeholder="Enter address"><br>
-			<p style="color:#ff0000;"><?php echo $addressErr; ?></p>
-			Phone Number: <input type="text" name="number" placeholder="Enter phone number"><br>
-			<p style="color:#ff0000;"><?php echo $phoneErr; ?></p>
-			City: <input type="text" name="city" class="spaceFour" placeholder="Enter city"><br>
-			<p style="color:#ff0000;"><?php echo $cityErr; ?></p>
-			State: <input type="text" name="state" class="spaceFive" placeholder="Enter state"><br>
-			<p style="color:#ff0000;"><?php echo $stateErr; ?></p>
-			Country: <input type="text" name="country" class="spaceSix" placeholder="Enter country"><br>
-			<p style="color:#ff0000;"><?php echo $countryErr; ?></p>
-			Email: <input type="text" name="email" class="spaceSeven" placeholder="Enter email"><br>
-			<p style="color:#ff0000;"><?php echo $emailErr; ?></p>
-
-			<input class="submit" type="submit" value="Submit"/>
-			</br>
-			</br>
-			<?php
-				if($proceed==1){
-					echo $name;
-			?>
-			<p style="color:#1dff00;"><?php echo $confirm; ?></p>
-			<?php
-				}
-			?>
-		</form>
-    </div>
-
-    <div class="footBtn">
-        <a href="index.php" class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continue Shopping</a>
-		<?php
-		if($proceed){
-		?>
-        <a href="cartAction.php?action=placeOrder&cid=<?php echo $customerid;?>" class="btn btn-success orderBtn">Place Order <i class="glyphicon glyphicon-menu-right"></i></a>
-		<?php
-		}
-		?>
+        <div class="footBtn">
+            <a href="index.php" class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continue Shopping</a>
+        </div>
+        <script>
+   $(document).ready(function(){
+      $("#subm").click(function(){
+         $("#subm").hide();
+         $("#subMsg").text("You purchase is submitting, it may take one minute to validate your information.");
+      });
+   });
+</script>
     </div>
 </div>
+<!-- footer -->
+<?php include_once("footer.php");?>
 </body>
 </html>

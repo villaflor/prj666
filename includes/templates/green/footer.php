@@ -1,5 +1,5 @@
 <footer>
-    <div class="container">
+    <div class="container" style="word-wrap: break-word">
         <p class="text-center"><?php
               $url = "/data/www/default/wecreu/companyInfo/footer/".$clientId.".txt";
               if (file_exists($url)) {

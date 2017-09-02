@@ -6,14 +6,23 @@ $validate = new Validate();
 $wait=0;
 $wait2=0;
 if (!$user->isLoggedIn()){
-    Redirect::to('index.php');
+    Redirect::to('login.php');
 }
+
 if(Input::exists()){
+	$allowed =  array('png' ,'jpg' ,'JPG' ,'PNG', 'jPG', 'jpG', 'Jpg', 'jPg' , 'JpG', 'pNG', 'pnG', 'Png', 'PnG', 'pNg');
+	$filename = $_FILES['client_logo']['name'];
+	$ext = pathinfo($filename, PATHINFO_EXTENSION);
     if ($_FILES['client_logo']['size'] == 0)
     {
         $validate->addError('Logo is required');
         //echo "No logo uploaded";
     }
+	else if (!in_array($ext,$allowed)){
+		$validate->addError('File must be .png or .jpg');
+	}
+		
+	
     else{
         $client_name = $user->data()->username;
         $com_title = $user->data()->client_site_title;
@@ -28,7 +37,7 @@ if(Input::exists()){
         $destination3 = '/data/www/default/' . $client_name . '/css';
 		$destination4 = '/data/www/default/' . $client_name . '/js';
 		$destination5 = '/data/www/default/' . $client_name . '/good';
-		$destination6 = '/data/www/default/' . $client_name . '/backup';
+		//$destination6 = '/data/www/default/' . $client_name . '/backup';
         $check=0;
 // To create the nested structure, the $recursive parameter
 // to mkdir() must be specified.
@@ -78,22 +87,22 @@ if(Input::exists()){
                     die('Failed to create folders...');
                 }
             }
-			if (!file_exists($destination6)){
+			/*if (!file_exists($destination6)){
                 if (!mkdir($destination6, 0770, true)) {
                     die('Failed to create folders...');
                 }
-            }
+            }*/
             $source = '/data/www/default/wecreu/includes/templates/blue';
             $source2 = '/data/www/default/wecreu/includes/templates/blue/images';
             $source3 = '/data/www/default/wecreu/includes/templates/blue/css';
 			$source4 = '/data/www/default/wecreu/includes/templates/blue/good';
-			$source5 = '/data/www/default/wecreu/includes/templates/blue/backup';
+			//$source5 = '/data/www/default/wecreu/includes/templates/blue/backup';
             if($check==0){
                 recurse_copy($source,$destination);
                 recurse_copy($source2,$destination2);
                 recurse_copy($source3,$destination3);
 				recurse_copy($source4,$destination5);
-				recurse_copy($source5,$destination6);
+				//recurse_copy($source5,$destination6);
             }
             /*ob_start();
             include('../prj/template/blue/index.php');
@@ -399,7 +408,24 @@ function rrmdir($dir) {
         <h1 class="navbar-brand mb-0 mr-3">Hello <a class="text-white" href="profile.php?user=<?php echo escape($user->data()->username); ?>"><?php echo escape($user->data()->username); ?></a>!</h1>
     </div>
 </nav>
+
 <div class="container bg-faded py-5" style="min-height: 100vh" >
+<?php 
+$rc = 0;
+
+$categories = new Category();
+$categories->getCategory($user->data()->client_id);
+if($categories->exists()){
+	foreach($categories->data() as $category){
+		$good = new Good();
+		$good->getGood(array('category_id', '=', $category->category_id));
+		if($good->exists()) $rc++;
+	}
+}
+
+if($rc){
+
+?>
     <h2 class="mb-4">Generate template</h2>
     <?php
     if(Session::exists('generate')) {
@@ -447,7 +473,7 @@ function rrmdir($dir) {
                     Grey</label>
             </div>
 			<div class="form-check">
-                <p style=" margin-left:15px;"><span class="text-danger">*</span> Do you want to have the "Contact us" page?</p>
+                <p style=" margin-left:15px;"><span class="text-danger">*</span> Do you want to have the "Contact us" page? (not applicaple to grey template)</p>
                 <label class="form-check-label" for="contact">
 
                     <input class="form-check-input" style=" margin-left:20px;" type="checkbox" name="contact" id="contact" value = "yes">
@@ -517,8 +543,20 @@ function move() {
 	//window.alert("Please wait !!!");
 }
 </script>
-<?php //}?>
+<?php } 
+else{
+?>
+<div>
+<p style="font-size:25px; font-weight:500;">You don't have any product's category yet, you need at least one category and one product before generating your site</p>
+
+<a style="display:block; padding-top:20px;" href="http://myvmlab.senecacollege.ca:5726/wecreu/addCategoryForm.php">Add category</a></br>
+<a href="http://myvmlab.senecacollege.ca:5726/wecreu/create-good.php">Add product</a>
+
 </div>
+
+<?php } ?>
+</div>
+
 
 <?php include('includes/footer.inc'); ?>
 

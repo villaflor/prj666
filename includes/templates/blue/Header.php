@@ -12,13 +12,26 @@
         $allcategory = $category->getAll();
         $client = new Client($db,$clientid);
         $page = new Page($db,$clientid);
+
+		if (file_exists ("../template.php")){
+		  $color="#32409e";
+		  include_once("../template.php");
+		}
+
     ?>
 	<img src="images/logo.jpg" alt="logo" height="130" width="140" />
-			
-	<form action="search.php" method="GET">
-       <input type="text" name="keyword" />
-        <input type="submit" value="Submit" />
-    </form>
+    <div <?php
+        if (file_exists ("../template.php")){
+          echo 'style="z-index:99; margin-top:25px;"';
+        }
+
+     ?>
+     >
+    	<form action="search.php" method="GET">
+           <input type="text" name="keyword" />
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
 	<h1><a href="index.php" style="text-decoration:none;"><?php echo $client->getClientSiteTitle(); ?></a></h1>
-			
+
 </header>

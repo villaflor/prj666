@@ -1,11 +1,20 @@
 <?php
 require_once  'core/init.php';
+include_once("tools/sql.php");
+ $db = Database::getInstance();
 
 $user = new User();
 $validate = new Validate();
-
+$invoiceMark = new Invoice($db);
+ 
 if(!$user->isLoggedIn()){
     Redirect::to('index.php');
+}
+
+if(Input::get('action') == 'delete'){
+    if(Input::get('toBeDeleted')){
+        $invoiceMark->deleteInvoice(Input::get('toBeDeleted'));
+    }
 }
 
 ?>
@@ -16,7 +25,7 @@ if(!$user->isLoggedIn()){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <title>Wecrue - Category</title>
+    <title>Wecrue - Order</title>
 </head>
 <body>
 
@@ -128,9 +137,7 @@ if(!$user->isLoggedIn()){
         <?php
 
         include_once('tools/order.php');
-        include_once("tools/sql.php");
-
-        $db = Database::getInstance();
+       
         $clientId = $user->data()->client_id;
         //create an object
         $order = new Order($db, $clientId);
@@ -156,7 +163,7 @@ if(!$user->isLoggedIn()){
             echo '<tr>';
             echo '<td>'. $row[0] .'</td>';
             echo '<td>'. $row[1] .'</td>';
-            echo '<td><a href="viewOrder.php?id='. $row[0] .'">Detail</a></td>';
+            echo '<td><a href="viewOrder.php?id='. $row[0] .'">Detail</a> <a href="orderList.php?action=delete&toBeDeleted=' . $row[0] . '">Delete</a></td>';
             echo '</tr>';
         }
 

@@ -27,6 +27,11 @@
         <a class="nav-item nav-link text-white" href="cart.php">Cart</a>
         <a class="nav-item nav-link text-white" href="about-us.php">About us</a>
         <?php
+        if ($contact == 1 ){
+        ?>
+        <a class="nav-item nav-link text-white" href="contact-us.php">Contact us</a>
+        <?php
+        }
             $alldata = $page->getAll();
             while ($row = mysqli_fetch_assoc($alldata)) {
                 $active = '';

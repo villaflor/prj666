@@ -149,7 +149,14 @@ if($action === 'delete'){
                             echo '<th>' . $item->good_name . '</th>';
                             echo '<td>' . $item->sale_name . '</td>';
                             echo '<td>' . $item->discount . '</td>';
-                            echo '<td><a href="onsale.php?action=delete&item_id='. escape($item->good_id) .'">delete</a></td>';
+                            echo '<td>'
+                            ?>
+                             <!-- <a href="onsale.php?action=delete&item_id='. escape($item->good_id) .'">delete</a> -->
+                            <form action="onsale.php?action=delete&item_id=<?php echo $item->good_id;?>" method="post">
+                                <input type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Do you really want to delete this sale?');" value="Delete">
+                            </form>
+                            </td>
+                            <?php
                             echo '</tr>';
 
 

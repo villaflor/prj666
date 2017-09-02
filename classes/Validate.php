@@ -31,12 +31,12 @@ class Validate{
                     switch ($rule){
                         case 'min':
                             if(strlen($value) < $rule_value){
-                                $this->addError("{$item} must be a minimum of {$rule_value} characters.");
+                                $this->addError("new password must be a minimum of {$rule_value} characters.");
                             }
                             break;
                         case 'max':
                             if(strlen($value) > $rule_value){
-                                $this->addError("{$item} must be a maximum of {$rule_value} characters.");
+                                $this->addError("new password must be a maximum of {$rule_value} characters.");
                             }
                             break;
                         case 'matches':
@@ -56,9 +56,9 @@ class Validate{
                             }
                             break;
                         case 'futureDate':
-                            if($date_now = date("Y-m-d") >= $value && $rule_value){
-                                $this->addError("{$rules['name']} must be a future date");
-                            }
+                            // if($date_now = date("Y-m-d") >= $value && $rule_value){
+                            //     $this->addError("{$rules['name']} must be a future date");
+                            // }
                             break;
                     }
                 }

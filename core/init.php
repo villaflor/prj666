@@ -35,10 +35,10 @@ $GLOBALS['config'] = array(
 /// It allows the program to pass in a function that deals with or that is run every
 /// time a class is accessed.
 spl_autoload_register(function($class){
-    require_once 'classes/' . $class .'.php';
+    require_once '/data/www/default/wecreu/classes/' . $class .'.php';
 });
 
-require_once 'functions/sanitize.php';
+require_once '/data/www/default/wecreu/functions/sanitize.php';
 
 if(Cookie::exists(Config::get('remember/cookie_name')) && !Session::exists(Config::get('session/session_name'))){
     $hash = Cookie::get(Config::get('remember/cookie_name'));

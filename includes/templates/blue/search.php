@@ -16,9 +16,11 @@
 			<div class="content">
 				<?php
           $clientId=file_get_contents("conf.ini");
-					$search = require_once("/data/www/default/wecreu/tools/search.php");
-					$search = new Search($db,$clientId);
-					// call get all
+	$search = require_once("/data/www/default/wecreu/tools/search.php");
+	$search = new Search($db,$clientId);
+          include_once '/data/www/default/wecreu/tools/discountCalculator.php';
+
+	// call get all
           $limit=999;
           if(isset($_GET['offSet'])){
             $offSet=$_GET['offSet'];
@@ -53,10 +55,12 @@
             ?>
                     <div class="gooditem">
                         <a href="GoodDetail.php?gid=<?php echo "$row[good_id]";?>">
-                        <?php echo "$row[good_name]";  ?>
-                        <img src=<?php echo "$row[good_image]"; ?> alt="good image" height="120" width="120" style="padding:20px 40px;"/>
+                        <?php echo "$row[good_name]";
+                          $imagepath = "/wecreu/images/".$row['good_image'];
+                        ?>
+                        <img src="<?php echo "$imagepath"; ?>" alt="good image" height="120" width="120" style="padding:20px 40px;"/>
                         <br />
-                        $<?php echo "$row[good_price]";  ?>
+                        $<?php echo discountCalculate($row['good_id']);  ?>
                         </a>
                     </div>
                  <?php

@@ -122,7 +122,7 @@ $categories = new Category();
     ?>
 
 
-    <table class="table table-striped">
+    <table class="table table-striped" style="table-layout: fixed; width: 100%">
         <tr>
             <th>Name</th>
             <th>Description</th>
@@ -134,14 +134,24 @@ $categories = new Category();
         foreach ($categories->data() as $category){
             echo '<tr>';
             echo '<th>'. $category->category_name .'</th>';
-            echo '<td>'. $category->category_description .'</td>';
+            echo '<td style="word-wrap: break-word">'. $category->category_description .'</td>';
             if ($category->category_display) {
                 echo '<td>Yes</td>';
             } else{
                 echo '<td>No</td>';
             }
+            ?>
+            <td>
+              <form action="categoryDel.php?cid=<?php echo $category->category_id;?>" method="post">
+                <a class="btn btn-warning" href="editcategory.php?user=<?php echo $user->data()->username .'&categoryNo='. $category->category_id;?>">Edit</a>
+                <input type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Do you want to delete this category?');" value="Delete">
+              </form>
+            </td>
+            <?php
+            // echo '<td><a href="editcategory.php?user='. $user->data()->username .'&categoryNo='. $category->category_id .'">edit</a></td>';
 
-            echo '<td><a href="editcategory.php?user='. $user->data()->username .'&categoryNo='. $category->category_id .'">edit</a></td>';
+
+
             echo '</tr>';
         }
         ?>

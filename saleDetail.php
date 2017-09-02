@@ -15,9 +15,9 @@ if(!$saleId){
     Redirect::to('index.php');
 }
 
-if(!$sale->isBelongToUser($saleId, $user->data()->client_id)){
-    Redirect::to('index.php');
-}
+//if(!$sale->isBelongToUser($saleId, $user->data()->client_id)){
+//    Redirect::to('index.php');
+//}
 
 $sale->findSale(array('sale_id', '=', $saleId));
 
@@ -27,6 +27,7 @@ if (!$sale->exists()){
 
 $sale_list = array();
 $numSale = 0;
+$sale_id = 0;
 
 ?>
 
@@ -149,13 +150,14 @@ $numSale = 0;
                         <p>Start date</p><hr>
                         <h3 class="text-white">
                             <?php
+                                $sale_id = $sale->data()->sale_id;
                                 echo $sale->data()->start_date;
                             ?>
                         </h3>
                     </div>
                     <div class="col">
                         <p>Description</p><hr>
-                        <h3 class="text-white">
+                        <h3 class="text-white" style="word-wrap: break-word">
                             <?php
                             echo $sale->data()->sale_description;
                             ?>
@@ -191,8 +193,10 @@ $numSale = 0;
     $sale->getGoodWithSale($user->data()->client_id);
     $goodsOnSale = $sale->data();
     foreach ($goodsOnSale as $goodItem){
-        $sale_list[] =  '<p>' .$goodItem->good_name. ' <span class="badge badge-default">'. $goodItem->good_in_stock .' in stock</span></p>';
-        $numSale++;
+        if ($goodItem->sale_id == $sale_id) {
+            $sale_list[] = '<p>' . $goodItem->good_name . ' <span class="badge badge-default">' . $goodItem->good_in_stock . ' in stock</span></p>';
+            $numSale++;
+        }
     }
 
 
@@ -227,7 +231,7 @@ $numSale = 0;
         </section>
     </div>
 
-    <h4><a href="editsale.php?sale_id=<?php echo $saleId; ?>">Edit</a> | <a href="sale.php">List</a></h4>
+    <h4><a href="editsale.php?sale_id=<?php echo $saleId; ?>">Edit</a> | <a href="sale.php">Back to sales</a></h4>
 
 
 </div>

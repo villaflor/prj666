@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<!--
+Red template - Good List page, 
+retrieves and provides a list of goods for a selected category, 
+formatted for RED template
+
+updated August 21 by Olga
+Fixing price displays
+-->
 <html lang="en">
 <?php include_once("headmeta.php");?>
 <body >
@@ -70,7 +78,14 @@ while ($row = mysqli_fetch_assoc($alldata)) {
         }
         echo $name;
         ?>
-      </p> <p>$<?php echo discountCalculate($row['good_id']);?></p>
+      </p> <p><?php 
+                    $calcprice=discountCalculate($row['good_id']);//display current price from database or with discount
+                    if(isset($row['sale_id'])&& $calcprice != $row['good_price']){
+                        echo '<span style="color:#990000;">$'.$calcprice.'</span> [<span style="text-decoration:line-through;">$'.$row['good_price'].'</span>]';
+                    } else {
+                        echo "$".$row['good_price'];
+                    }
+                ?></p>
     </a>
 </div>
 <?php
@@ -83,7 +98,7 @@ while ($row = mysqli_fetch_assoc($alldata)) {
     <div class="btn-group pull-right" role="group" aria-label="...">
       <?php
       if($offSet!=0){
-        echo '<a href="'.$pre.'" class="btn" role="button">Privious page</a>';
+        echo '<a href="'.$pre.'" class="btn" role="button">Previous page</a>';
       }
       if($total == $limit){
         if($nextTotal != 0) {

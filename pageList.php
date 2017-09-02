@@ -144,7 +144,16 @@ if(!$user->isLoggedIn()){
         while ($row = mysqli_fetch_assoc($alldata)) {
             echo '<tr>';
             echo '<td>'. $row['page_name'] .'</td>';
-              echo '<td><a href="editPage.php?id='. $row['id'] .'">Edit</a> | <a href="?delete='. $row['id'] .'">Delete</a></td>';
+            ?>
+            <td>
+            <form action="<?php echo "?delete=" . $row['id'];?>" method="post">
+            <?php
+            echo '<a class="btn btn-warning" href="editPage.php?id='. $row['id'] .'">Edit</a> | ';
+            ?>
+                <input type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Do you really want to delete this page?');" value="Delete">
+            </form>
+            </td>
+            <?php
             echo '</tr>';
         }
 

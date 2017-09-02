@@ -39,16 +39,22 @@
          $cClick = $category->getAll();
          while ($row = mysqli_fetch_assoc($cClick)) {
            ?>
-           $("<?php echo "#c$row[category_id]"; ?>").click(function(){
+            $("<?php echo "#c$row[category_id]"; ?>").click(function(){
             $("#good").attr("src","good.php?cid=<?php echo "$row[category_id]"; ?>");
           });
            <?php
          }
          ?>
 
+
          $("#shoppingCart").click(function(){
-          $("#good").attr("src","cart.php");
+          $("#good").attr("src","viewCart.php");
         });
+        //  all categories onclick listener
+        $("#allCategories").click(function(){
+            $("#good").attr("src","good.php?cid=*");
+        });
+
        });
 
      </script>
@@ -68,6 +74,12 @@
 
     </head>
     <body>
+      <?php
+      if (file_exists ("../template.php")){
+        $color="#4b4854";
+        include_once("../template.php");
+      }
+      ?>
       <!-- SIDEBAR -->
       <div class="sidebar-menu hidden-xs">
         <div class="top-section">
@@ -88,7 +100,7 @@
         <div class="main-navigation">
           <ul class="navigation">
             <li><a href="#top"><i class="fa fa-globe"></i>Welcome</a></li>
-            <li class="dropdown"><a href="#products"><i class="fa fa-star"></i>Products</a>
+            <li class="dropdown"><a  id='allCategories' href="#products"><i class="fa fa-star"></i>Products</a>
               <ul class="dropdown-content ">
                <?php
                // to list all categories
@@ -208,6 +220,7 @@
       <div class="row">
        <div class="col-md-12">
         <h4 class="widget-title">EMAIL US</h4>
+        <p>Note: Your message will be sent to site owner's email: <b><?php echo $client->getClientEmail();?></b></p>
       </div>
     </div>
     <div class="row">
@@ -234,7 +247,7 @@
   </div>
 </div>
 
-<div class="row" id="footer">
+<div class="row" id="footer" style="word-wrap: break-word">
   <div class="col-md-12">
     <hr/>
     <br/>

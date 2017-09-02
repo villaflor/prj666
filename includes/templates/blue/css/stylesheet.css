@@ -1,11 +1,13 @@
 html{
 	background-color:#ffffff;
 }
-
+p {
+	margin-top:0 !important;
+}
 body{
 	height:1000px;
-	width:1440px;
-	background-color:#ffff99;
+	/*width:100%;1440px;
+	background-color:#ffff99;*/
 }
 
 /*---Header---*/
@@ -196,7 +198,7 @@ nav ul li a:hover:not(.active){
 
 footer{
 	background: linear-gradient(#CAE1FF, #6495ED);
-	height:134px;
+	min-height:134px;
 	float:bottom;
 	margin:0;
 }

@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<!--
+Green template - Good List page, 
+retrieves and provides a list of goods for a selected category, 
+formatted for GREEN template
+
+updated August 21 by Olga
+Fixing price displays
+-->
 <html lang="en">
 <head>
     <?php include("metadata.php") ?>
@@ -70,14 +78,23 @@
 
     <div class="row text-center">
 
-        <?php
+    <?php
     while ($goodrow = mysqli_fetch_assoc($alldata)){
+
         $imagepath = "/wecreu/images/".$goodrow['good_image'] ;
+        $priceentry = "price unavailable";
+        $calcprice = discountCalculate($goodrow['good_id']);
+        if(isset($goodrow['sale_id']) && $calcprice != $goodrow['good_price']){//display current price from database or with discount
+            $priceentry = '<span style="color:#990000;">$'.$calcprice.'</span> [<span style="text-decoration:line-through;">$'.$goodrow['good_price'].'</span>]';
+        } else {
+            $priceentry = "$".$goodrow['good_price'];
+        }
+
 
         echo '<section class="col-md-3">';
         echo '<p>' . $goodrow["good_name"] . '</p>';
         echo '<a href="detail.php?gid=' .$goodrow['good_id'] .'"><img class="img-thumbnail" height="250" width="250" src="'.$imagepath.'" alt="good image" /></a>';
-        echo '<p>Price: $' . discountCalculate($goodrow['good_id']) . ' / lb</p>';
+        echo '<p>Price: ' . $priceentry . '</p>';
         echo "</section>";
     }
     ?>

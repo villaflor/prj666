@@ -172,7 +172,7 @@ if(Input::exists()) {
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="desc"><span class="text-danger">*</span> Description</label>
-                <textarea class="form-control" rows="3" name="desc" id="desc" value="Enter description"><?php echo escape($category->data()->category_description); ?></textarea>
+                <textarea maxlength="250" class="form-control" rows="3" name="desc" id="desc" value="Enter description"><?php echo escape($category->data()->category_description); ?></textarea>
                 <input type="hidden" name="method" value="categoryAdd">
             </div>
             <div class="checkbox">
@@ -181,7 +181,8 @@ if(Input::exists()) {
                         <?php
                             if($category->data()->category_display) echo "checked"
                         ?>
-                    > Visible
+                    > Visible<br/>
+                    <p style="font-size:10px">Note: if you don't check, it will not be displayed in your site.</p>
 
                 </label>
             </div>

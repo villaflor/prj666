@@ -1,9 +1,11 @@
 <?php
+ob_start();
 require_once 'core/init.php';
 
 $user = new User();
 $good = new Good();
 $category = new Category();
+$sale = new Sale();
 $lowStocks = array();
 $numLowStocks = 0;
 $categories_list = array();
@@ -14,7 +16,7 @@ $sale_list = array();
 $numSale = 0;
 
 if($user->data()->username !== Input::get('user')){
-    Redirect::to(404);
+    Redirect::to('index.php');
 }
 
 if(!$user->isLoggedIn()){
@@ -143,9 +145,13 @@ if(!$username = Input::get('user')){
             <section class="container py-5 bg-primary rounded mb-4">
                 <div class="row mb-5">
                     <div class="col-2"><img src="<?php
-                        if ($logo = $user->data()->client_logo){
+						$deletedDir000 = '/data/www/default/' . $client_name;
+						//if(file_exists($deletedDir000)){
+							
+						//}
+                        if (file_exists($deletedDir000) && $logo = $user->data()->client_logo){
                             echo $logo;
-                        } else {
+                        } else if (!file_exists($deletedDir000)){
                             echo 'images/defaultlogo.jpg';
                         }
                         ?>" alt="logo" class="img-thumbnail" width="250px" height="250px"></div>
@@ -233,7 +239,9 @@ if(!$username = Input::get('user')){
                                 }
 
                                 if($goodItem->sale_id){
-                                    $sale_list[] = '<p>'.$goodItem->good_name . '  <span class="badge badge-default">'. $goodItem->good_in_stock .' in stock</span></p>';
+                                    $sale->findSale(array('sale_id', '=', $goodItem->sale_id));
+                                    $sale_list[] = '<p>'.$goodItem->good_name . '  <span class="badge badge-default">'. $goodItem->good_in_stock .' in stock</span><span class="badge badge-default">'.
+                                        substr($sale->data()->sale_name, 0, 10) .'...</span></p>';
                                     $numSale++;
                                 }
                                 $numGoods++;
@@ -366,10 +374,14 @@ if(!$username = Input::get('user')){
                 </div>
             </section>
         </div>
+		<?php 
+		
+		if(file_exists('/data/www/default/' . $user->data()->username)){
+		?>
         <form action="" method="post">
             <input class="btn btn-primary float-right" type="submit" name="submitBtn" onclick="return confirm('Do you really want to delete your site?');" value="Delete your website">
         </form>
-
+		<?php }?>
     </div>
 
 
@@ -410,12 +422,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 rrmdir($deletedDir6);
             }
             rrmdir($deletedDir);
-            $check == 1;
+            //$check == 1;
+			//sleep(1000);
+			Redirect::to("profile.php?user=" . escape($user->data()->username));
         }
+		//sleep(50);
+		//Redirect::to("profile.php?user=" . escape($user->data()->username));
+		
     }
-    if ($check == 1){
+    /*if ($check == 1){
         echo "Your site has been deleted.";
-    }
+    }*/
+	
 
 }
 

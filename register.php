@@ -67,6 +67,7 @@ if(Input::exists()){
                     'client_site_title' => Input::get('client_site_title'),
                     'client_logo' => Input::get('client_logo'),
                     'client_information' => Input::get('client_info'),
+					'phone_number' => Input::get('phone_number'),
                     'client_tax' => (Input::get('client_tax') ?: 0.0),
                     'payment_option_paypal' => (Input::get('paypal') ?: 0),
                     'payment_option_visa' => (Input::get('visa') ?: 0),
@@ -105,6 +106,7 @@ if(Input::exists()){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Wecrue - Register</title>
 </head>
 <body>
@@ -153,15 +155,20 @@ if(Input::exists()){
             <legend>Client Information</legend>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="client_name"><span class="text-danger">*</span> Client name</label>
-                <input class="form-control" type="text" name="client_name" id="client_name" placeholder="Enter client's name" value="<?php echo escape(Input::get('client_name'))?>" />
+                <input required class="form-control" type="text" maxlength="30" name="client_name" id="client_name" placeholder="Enter client's name" value="<?php echo escape(Input::get('client_name'))?>" />
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="client_site_title"><span class="text-danger">*</span> Site title</label>
-                <input class="form-control" type="text" name="client_site_title" id="client_site_title" placeholder="What will be your site name?" value="<?php echo escape(Input::get('client_site_title'))?>" />
+                <input required class="form-control" type="text" maxlength="30" name="client_site_title" id="client_site_title" placeholder="What will be your site name?" value="<?php echo escape(Input::get('client_site_title'))?>" />
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="client_info">Client information</label>
-                <textarea class="form-control" rows="3" name="client_info" id="client_info" placeholder="Tell me about your company"><?php echo escape(Input::get('client_info'))?></textarea>
+                <textarea class="form-control" maxlength="256" rows="3" name="client_info" id="client_info" placeholder="Tell me about your company"><?php echo escape(Input::get('client_info'))?></textarea>
+            </div>
+			<div class="form-group col-md-6">
+                <label class="form-control-label" for="phone_number"><span class="text-danger">*</span> Client phone number</label>
+                <input class="form-control" type="text" maxlength="10"  name="phone_number" id="phone_number" required placeholder="Format: ##########" value="<?php echo escape(Input::get('phone_number'))?>" />
+                <p style="color:red;" id="phoneErr"></p>
             </div>
         </fieldset>
         <fieldset class="form-group">
@@ -169,8 +176,9 @@ if(Input::exists()){
             <div class="form-group form-inline">
                 <label class="form-control-label mr-2" for="client_tax">client tax</label>
                 <input type="hidden" name="client_tax" value=0>
-                <input class="form-control" type="number" min="0.01" step="0.01" name="client_tax" id="client_tax" style="width: 90px;" value="<?php echo escape(Input::get('client_tax'))?>" />
+                <input class="form-control" type="number" min="0.00" step="0.01" name="client_tax" id="client_tax" style="width: 90px;" value="13" />
                 <span class="input-group-addon">%</span>
+                <p style="color:red;" id="taxErrMsg"></p>
             </div>
             <div class="form-check">
                 <label class="form-check-label" for="paypal">
@@ -198,29 +206,30 @@ if(Input::exists()){
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <legend>Administrator Registration</legend>
+            <legend>Client Registration</legend>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="username"><span class="text-danger">*</span> Username</label>
-                <input class="form-control" type="text" name="username" id="username" placeholder="Enter username" value="<?php echo escape(Input::get('username'))?>" autocomplete="off" />
+                <input required class="form-control" type="text" maxlength="15" name="username" id="username" placeholder="Enter username" value="<?php echo escape(Input::get('username'))?>" autocomplete="off" />
+                <p style="color:red;" id="nameErr"></p>
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="password"><span class="text-danger">*</span> Password</label>
-                <input class="form-control" type="password" name="password" id="password" placeholder="Enter password" />
+                <input required class="form-control" type="password" maxlength="64" name="password" id="password" placeholder="Enter password" />
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="password_again"><span class="text-danger">*</span> Re-enter Password</label>
-                <input class="form-control" type="password" name="password_again" id="password_again" placeholder="Re-enter password" />
+                <input required class="form-control" type="password" maxlength="64" name="password_again" id="password_again" placeholder="Re-enter password" />
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="client_admin_email"><span class="text-danger">*</span> Admin email</label>
-                <input class="form-control" type="email" name="client_admin_email" id="client_admin_email" value="<?php echo escape(Input::get('client_admin_email'))?>" placeholder="Enter email" />
+                <input class="form-control" type="email" maxlength="150" name="client_admin_email" id="client_admin_email" required value="<?php echo escape(Input::get('client_admin_email'))?>" placeholder="Enter email" />
                 <small class="form-text text-muted">We will never share your email</small>
             </div>
         </fieldset>
 
         <div class="form-group">
             <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-            <input class="btn btn-primary" type="submit" value="Register" />
+            <input id="subm" class="btn btn-primary" type="submit" value="Register" />
         </div>
 
     </form>
@@ -231,5 +240,63 @@ if(Input::exists()){
 <script src="js/jquery-3.1.1.slim.min.js"></script>
 <script src="js/tether.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script>
+    var originalTax = $("#client_tax").val();
+
+    var cheSub = function(){
+      if($("#taxErrMsg").text() == "" && $("#nameErr").text() == "" && $("#phoneErr").text() == ""){
+          $("#subm").removeAttr("disabled");
+      } else {
+          $("#subm").attr("disabled","disabled");
+      }
+    };
+    $("#client_tax").blur(function(){
+        var tax = this.value;
+        if(tax < 0 || tax >= 100){
+            $("#client_tax").val(originalTax);
+            $("#taxErrMsg").text("* Your tax must be between 0 ~ 99.99%");
+        }else{
+            $("#taxErrMsg").text("");
+        }
+    });
+
+    var specialChars = "\ <>@!#$%^&*()_+[]{}?:;|'\"\\,./~`-=";
+    var check = function(string){
+        for(i = 0; i < specialChars.length;i++){
+            if(string.indexOf(specialChars[i]) > -1){
+                return true
+            }
+        }
+        return false;
+    }
+
+    $("#username").blur(function(){
+        var name = $("#username").val();
+        if(!check(name)){
+            $("#nameErr").text("");
+            cheSub();
+
+        }else{
+            $("#nameErr").text("Please don't contain any special charactor or space");
+            cheSub();
+        }
+    });
+
+    var phoneVali = function(){
+         var phone = $("#phone_number").val();
+         return phone.match(/[0-9]{10}/);
+    }
+
+    $("#phone_number").blur(function(){
+        var phone = $("#phone_number").val();
+        if(phoneVali()){
+            $("#phoneErr").text("");
+            cheSub();
+        }else{
+            $("#phoneErr").text("Please follow the format: ##########");
+            cheSub();
+        }
+    });
+</script>
 </body>
 </html>
