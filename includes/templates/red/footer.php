@@ -1,4 +1,4 @@
-<div class="row footer">
+<div class="row footer" style="word-wrap: break-word">
   <br>
  	 <p class="copyright-text">
      <?php

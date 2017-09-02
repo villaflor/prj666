@@ -201,20 +201,22 @@ if(Input::exists()){
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="description"><span class="text-danger">*</span> Description</label>
-                <textarea class="form-control" rows="3" name="description" id="description" placeholder="Enter description"><?php echo escape($sale->data()->sale_description); ?></textarea>
+                <textarea maxlength="125" class="form-control" rows="3" name="description" id="description" placeholder="Enter description"><?php echo escape($sale->data()->sale_description); ?></textarea>
             </div>
             <div class="form-group form-inline">
                 <label class="form-control-label mr-2 ml-3" for="discount"><span class="text-danger">*</span>&nbspDiscount</label>
                 <input class="form-control" type="number" min="0.01" step="0.01" name="discount" id="discount" style="width: 90px;" value="<?php echo escape($sale->data()->discount); ?>" />
                 <span class="input-group-addon">%</span>
+                <p id="discountErr" style="color:red;"></p>
             </div>
             <div class="form-group col-md-6" >
                 <label class="form-control-label" for="start_date"><span class="text-danger">*</span> Start date</label>
-                <input class="form-control" type="date" name="start_date" id="start_date" placeholder="Format: YYYY-MM-DD" value="<?php echo $sale->data()->start_date; ?>" disabled />
+                <input class="form-control" type="date" name="start_date" id="start_date" placeholder="Format: YYYY-MM-DD" value="<?php echo substr($sale->data()->start_date,0,10); ?>" disabled />
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="end_date"><span class="text-danger">*</span> End date</label>
-                <input class="form-control" type="date" name="end_date" id="end_date" placeholder="Format: YYYY-MM-DD" value="<?php echo $sale->data()->end_date; ?>" />
+                <input class="form-control" type="date" name="end_date" id="end_date" placeholder="Format: YYYY-MM-DD" value="<?php echo substr($sale->data()->end_date,0,10); ?>" />
+                <p id="endErr" style="color:red;"></p>
             </div>
             <fieldset class="form-group">
                 <legend>Item currently selected for sale</legend>
@@ -234,7 +236,7 @@ if(Input::exists()){
         </fieldset>
         <div class="form-group">
             <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-            <input class="btn btn-primary" type="submit" value="Edit" />
+            <input id="subm" class="btn btn-primary" type="submit" value="Edit" />
         </div>
     </form>
 </div>
@@ -243,6 +245,57 @@ if(Input::exists()){
 <script src="js/jquery-3.1.1.slim.min.js"></script>
 <script src="js/tether.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script>
+    var discountN = $("#discount").val();
+    var subm = function() {
+        if ($("#startErr").text() == "" && $("#endErr").text() == ""){
+            $("#subm").removeAttr("disabled");
+        }else{
+            $("#subm").attr("disabled","disabled");
+        }
+    }
 
+    $("#discount").blur(function(){
+        var discount = $("#discount").val();
+        if(discount <= 0 || discount >= 100){
+            $("#discount").val(discountN);
+            $("#discountErr").text("* Discount must be between 0 ~ 99.99%");
+        }else{
+            $("#discountErr").text("");
+        }
+        subm();
+    });
+
+    var check = function(){
+        if($("#start_date").val() && $("#start_date").val() == $("#end_date").val()){
+            $("#endErr").text("* Start date and end date cannot be same");
+        }else{
+            $("#endErr").text("");
+        }
+
+        if($("#start_date").val() != "" && $("#end_date").val()){
+            var today = new Date();
+            var sDate=new Date();
+            var s = $("#start_date").val().split("-");
+            sDate.setFullYear(s[0],s[1]-1,s[2]);
+
+            var eDate=new Date();
+            var e = $("#end_date").val().split("-");
+            eDate.setFullYear(e[0],e[1]-1,e[2]);
+
+            if(sDate >= eDate){
+                $("#endErr").text("* End date must be greater than start date");
+            }else{
+                $("#endErr").text("");
+            }
+        }
+        subm();
+    };
+
+    $("#end_date").blur(function(){
+        check();
+    });
+
+</script>
 </body>
 </html>

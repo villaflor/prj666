@@ -48,6 +48,11 @@ class Sale{
         return false;
     }
 
+    public function getAllSale($where = array()){
+        $data = $this->_db->get('sale', $where);
+        $this->_data = $data->results();
+    }
+
     public function update($fields = array(), $id = null){
         if(!$this->_db->update('sale', $id, $fields)){
             throw new Exception('There was a problem updating.');

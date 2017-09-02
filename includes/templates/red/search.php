@@ -68,7 +68,7 @@ while ($row = mysqli_fetch_assoc($alldata)) {
         }
         echo $name;
         ?>
-      </p> <p>$<?php echo $row['good_price'];?></p>
+      </p> <p>$<?php echo discountCalculate($row['good_id']);  ?></p>
     </a>
 </div>
 <?php

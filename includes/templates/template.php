@@ -1,0 +1,1 @@
+<span style="font-size:25px; z-index:50; position: fixed; background-color:<?php echo $color;?>; top:0; left:0; padding:0; margin:0; width: 100%; color:white; height:35px; text-align:center;"> This is only a demo template. <a style="color:#dddddd;" href="/wecreu/generateTemplate.php">Click here to generate your site.</a></span>

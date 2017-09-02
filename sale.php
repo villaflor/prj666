@@ -132,7 +132,7 @@ if (Input::get('deleteSale')){
     ?>
 
 
-    <table class="table table-striped">
+    <table class="table table-striped" style="table-layout: fixed; width: 100%">
         <tr>
             <th>Name</th>
             <th>Description</th>
@@ -140,16 +140,23 @@ if (Input::get('deleteSale')){
             <th>Actions</th>
         </tr>
         <?php
-        $sale->getSale($user->data()->client_id);
+        $sale->getAllSale(array('client_id', '=', $user->data()->client_id));
         if($sale->exists()) {
             $sales = $sale->data();
 
             foreach ($sales as $saleDetail) {
                 echo '<tr>';
                 echo '<th><a href="saleDetail.php?sale_id='.$saleDetail->sale_id.'">' . $saleDetail->sale_name . '</a></th>';
-                echo '<td>' . $saleDetail->sale_description . '</td>';
+                echo '<td style="word-wrap: break-word">' . $saleDetail->sale_description . '</td>';
                 echo '<td>' . $saleDetail->discount . " %" . '</td>';
-                echo '<td><a href="editsale.php?sale_id='. $saleDetail->sale_id .'">Edit</a> | <a href="sale.php?deleteSale='. $saleDetail->sale_id .'">Delete</a></td>';
+                echo '<td>'
+                ?>
+                <form action="sale.php?deleteSale=<?php echo $saleDetail->sale_id;?>" method="post">
+                <!-- <a href="editsale.php?sale_id='. $saleDetail->sale_id .'">Edit</a> | <a href="sale.php?deleteSale='. $saleDetail->sale_id .'">Delete</a> -->
+                <a class="btn btn-warning" href="editsale.php?sale_id=<?php echo $saleDetail->sale_id;?>">Edit</a> |
+                <input type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Do you really want to delete this sale?');" value="Delete">
+                </form></td>
+                <?php
                 echo '</tr>';
 
             }

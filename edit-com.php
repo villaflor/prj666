@@ -39,6 +39,7 @@ if(Input::exists()){
 			try{
 
 					$user->update(array(
+						'phone_number' => Input::get('phone_number'),
 						'client_information' => Input::get('client_information'),
 						'client_tax' => (Input::get('client_tax') ?: 0.0),
 						'payment_option_paypal' => (Input::get('paypal') ?: 0),
@@ -66,6 +67,7 @@ if(Input::exists()){
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Wecrue</title>
 </head>
 <body>
@@ -176,20 +178,26 @@ if(Input::exists()){
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="client_site_title">Site title</label>
-                <input class="form-control" type="text" name="client_site_title" id="client_site_title" placeholder="Edit site title" value="<?php echo escape($user->data()->client_site_title);?>" disabled = "disabled" />
+                <input class="form-control" type="text" name="client_site_title" id="client_site_title" placeholder="" value="<?php echo escape($user->data()->client_site_title);?>" disabled = "disabled" />
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="client_information">Client information</label>
-                <textarea class="form-control" rows="3" name="client_information" id="client_information" placeholder=""><?php echo escape($user->data()->client_information);?></textarea>
+                <textarea maxlength="256" class="form-control" rows="3" name="client_information" id="client_information" placeholder=""><?php echo escape($user->data()->client_information);?></textarea>
             </div>
+			<div class="form-group col-md-6">
+                <label class="form-control-label" for="phone_number">Phone number</label>
+                <input class="form-control" type="text" maxlength="10" pattern="[0-9]{10}" name="phone_number" id="phone_number" required placeholder="" value="<?php echo escape($user->data()->phone_number);?>" />
+				<p style="color:red;" id="phoneErr"></p>
+			</div>
         </fieldset>
         <fieldset class="form-group">
             <legend>Update Payment Method</legend>
             <div class="form-group form-inline">
                 <label class="form-control-label mr-2" for="client_tax">Total tax</label>
                 <input type="hidden" name="client_tax" value=0>
-                <input class="form-control" type="number" min="0.01" step="0.01" name="client_tax" id="client_tax" style="width: 90px;" value="<?php echo escape($user->data()->client_tax);?>" />
+                <input class="form-control" type="number" min="0.00" max="99.99" step="0.01" name="client_tax" id="client_tax" style="width: 90px;" value="<?php echo escape($user->data()->client_tax);?>" />
                 <span class="input-group-addon">%</span>
+                <p style="color:red;" id="taxErrMsg"></p>
             </div>
             <div class="form-check">
                 <label class="form-check-label" for="paypal">
@@ -217,7 +225,7 @@ if(Input::exists()){
             </div>
 			<div class="form-group col-md-6">
                 <label class="form-control-label" for="client_admin_email">Admin email</label>
-                <input class="form-control" type="email" name="client_admin_email" id="client_admin_email" value="<?php echo escape($user->data()->client_admin_email)?>"  />
+                <input maxlength="150" class="form-control" type="email" name="client_admin_email" id="client_admin_email" required value="<?php echo escape($user->data()->client_admin_email)?>"  />
                 <small class="form-text text-muted">We will never share your email</small>
             </div>
         </fieldset>
@@ -233,5 +241,31 @@ if(Input::exists()){
 <script src="js/jquery-3.1.1.slim.min.js"></script>
 <script src="js/tether.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script>
+    var originalTax = $("#client_tax").val();
+    $("#client_tax").blur(function(){
+        var tax = this.value;
+        if(tax < 0 || tax >= 100){
+            $("#client_tax").val(originalTax);
+            $("#taxErrMsg").text("* Your tax must be between 0 ~ 99.99%");
+        }else{
+            $("#taxErrMsg").text("");
+        }
+    });
+	phoneVali = function(){
+         var phone = $("#phone_number").val();
+         return phone.match(/[0-9]{10}/);
+	}
+$("#phone_number").blur(function(){
+    var phone = $("#phone_number").val();
+    if(phoneVali()){
+        $("#phoneErr").text("");
+        $("#subm").removeAttr("disabled");
+    }else{
+        $("#phoneErr").text("Please follow the format: ##########");
+        $("#subm").attr("disabled","disabled");
+    }
+});
+</script>
 </body>
 </html>

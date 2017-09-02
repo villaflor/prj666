@@ -28,7 +28,7 @@ if (Input::exists()) {
                     $validate->addError('Sorry, you cannot login unless you verified your email address');
                 }
             } else {
-                $validate->addError('Sorry, you entered wrong password.');
+                $validate->addError('Sorry, username or password is incorrect.');
             }
         }
     }
@@ -86,17 +86,13 @@ if (Input::exists()) {
         <fieldset class="form-group">
             <div class="form-group col-md-4">
                 <label class="form-control-label" for="username">Username</label>
-                <input class="form-control" type="text" name="username" id="username" placeholder="Enter username" autocomplete="off" value="<?php echo escape(Input::get('username'))?>">
+                <input class="form-control" type="text" maxlength="15" name="username" id="username" placeholder="Enter username" autocomplete="off" value="<?php echo escape(Input::get('username'))?>">
             </div>
             <div class="form-group col-md-4">
                 <label for="password" >Password</label>
-                <input class="form-control" type="password" name="password" id="password" placeholder="Enter password" autocomplete="off">
+                <input class="form-control" type="password" maxlength="64" name="password" id="password" placeholder="Enter password" autocomplete="off">
             </div>
-            <div class="form-group">
-                <label class="form-control-label" for="remember">
-                    <input type="checkbox" name="remember" id="remember"> Remember me
-                </label>
-            </div>
+            
             <div class="form-group">
                 <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
                 <input class="btn btn-primary" type="submit" value="Log in">

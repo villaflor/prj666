@@ -9,7 +9,7 @@
 		fwrite($myfile, $data);
 		fclose($myfile);
 
-		echo "Your About us page has been update";
+		echo "Your About us page has been updated";
 	}else{
 		echo "Your page has not been updated due to some errors";
 	}

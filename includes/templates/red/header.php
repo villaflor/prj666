@@ -2,7 +2,7 @@
   <div class="col-md-12 col-sm-12 col-xs-12">
     <!-- search bar -->
     <div class="row">
-      <div class="col-md-4 col-md-offset-9 col-sm-6 col-sm-offset-6 col-xs-offset-3 col-xs-8">
+      <div style="z-index:99" class="col-md-4 col-md-offset-9 col-sm-6 col-sm-offset-6 col-xs-offset-3 col-xs-8">
         <form action="search.php" method="GET">
           <input type="text" name="keyword" value="">
           <input type="submit" value="search">
@@ -53,7 +53,7 @@
   </div>
   <!-- icons -->
   <div class="col-md-2 col-sm-2 col-xs-2">
-    <a href="viewCart.php"> <img class="pull-right hicon" src="images/cart.gif" alt="Cart"> </a>
+    <a href="cart.php"> <img class="pull-right hicon" src="images/cart.gif" alt="Cart"> </a>
   </div>
 
 </div>

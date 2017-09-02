@@ -147,31 +147,37 @@ if(!$user->isLoggedIn()){
     ?>
 
 				 
-	<img src='<?php echo $imagepath;  ?>' alt="good image" height="200" width="200" />
+	<img src='<?php echo $imagepath;  ?>' alt=" " height="200" width="200" />
 			
-    <table class="table table-striped">
+    <table class="table table-striped" style="table-layout: fixed; width: 100%">
         <tr>
-            <td>Product Name: <?php echo "$row[good_name]";  ?></td>                            
-            <td>Quantity: <?php echo "$row[good_in_stock]";  ?></td>
+            <td>Product Name: </td><td> <?php echo "$row[good_name]";  ?></td>    
+        </tr>
+        <tr>                        
+            <td>Quantity: </td><td><?php echo "$row[good_in_stock]";  ?></td>
         </tr>
         <tr>
-            <td>Category: <?php echo "$row[category_name]";  ?></td>                        
-            <td>Weight: <?php echo "$row[good_weight]";  ?> lbs</td>
+            <td>Category: </td><td><?php echo "$row[category_name]";  ?></td>  
+         </tr>
+        <tr>                      
+            <td>Weight: </td><td><?php echo "$row[good_weight]";  ?> lbs</td>
         </tr>
         <tr>
             <?php
             if(isset($saleid)){
             ?>
-            <td>Price: $ <?php echo $calcprice." (Current listed price, Regular price $".$oldprice.")";  ?></td> 
+            <td>Price: $ </td><td><?php echo $calcprice." (Current listed price, Regular price $".$oldprice.")";  ?></td> 
             <?php
             } else {
             ?>
-            <td>Price: $ <?php echo $calcprice;  ?></td>     
+
+            <td>Price: $ </td><td><?php echo $calcprice;  ?></td>     
             <?php
             }
             ?>
-
-            <td>Taxable: <?php if(isset($row['good_taxable'])){
+</tr>
+        <tr>
+            <td>Taxable: </td><td><?php if(isset($row['good_taxable'])){
                                     if($row['good_taxable']==1){
                                         echo "Taxable";
                                     }else {
@@ -182,13 +188,11 @@ if(!$user->isLoggedIn()){
                                 }  ?></td>
         </tr>
         <tr>
-            <td>Sales Applicable: <?php echo $saledescription; ?></td>     
-            <td></td>
+            <td>Sales Applicable: </td><td><?php echo $saledescription; ?></td>     
         </tr>
 					
         <tr >
-            <td> Description:<?php echo "$row[good_description]";  ?></td>
-            <td></td>
+            <td > Description:</td><td style="word-wrap: break-word"><?php echo "$row[good_description]";  ?></td>
         </tr>
 					
     </table>

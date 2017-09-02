@@ -1,4 +1,16 @@
 <!DOCTYPE html>
+<!--
+Blue template - Good List page, 
+retrieves and provides a list of goods for a selected category, 
+or all categories when first opened
+formatted for BLUE template
+
+HTML/CSS, PHP for getting goods and sale info created by Olga
+
+update August 19 by Olga
+Fixing text overflow when good name is too small, and price displays
+updated August 21 check condition on price displays with better one
+-->
 <html lang="en-US">
 	<head>
 		<meta charset="UTF-8"/>
@@ -22,7 +34,7 @@
 		<div class="middle">
 		
 			<div class="content">
-				<h3>Goods in Category:<?php $selectcategory;
+				<h3>Goods in Category:<?php $selectcategory; //getting a category id to display goods from
                                             if(isset( $_GET["cid"])){
                                                 $selectcategory = $_GET["cid"];
                                                 $alldata = $category->getOne($selectcategory);
@@ -34,26 +46,39 @@
                                             }?> </h3>
 				
                 <?php
-                   
+                   // getting goods and displaying each in a formatted box
                     $good = new Good($db);
-                  //  echo "getting good object";
                     $alldata = $good->getAllGoods($selectcategory,$clientId);
-                 //   echo "getting goods list";
-                   
-                    while ($row = mysqli_fetch_assoc($alldata)){
-                     $imagepath = "/wecreu/images/".$row['good_image'];
-                    ?>
-                    <div class="gooditem">
-                        <a href="GoodDetail.php?gid=<?php echo "$row[good_id]";?>">
-                        <?php echo "$row[good_name]";  ?>
-                        <img src="<?php echo $imagepath; ?>" alt="good image" height="120" width="120" style="padding:20px 40px;"/>
-                        <br />
-                        $<?php echo discountCalculate($row['good_id']);  ?>
-                        </a>
-                    </div>
-                 <?php
+
+                    if(mysqli_num_rows($alldata) == 0){
+                        echo "<p>No goods were found in this category</p>";
+                    } else{  
+                        while ($row = mysqli_fetch_assoc($alldata)){
+                         $imagepath = "/wecreu/images/".$row['good_image'];
+                        ?>
+                        <div class="gooditem" style="max-height:230px;">
+                            <a href="GoodDetail.php?gid=<?php echo "$row[good_id]";?>">
+
+                            <?php $name = $row['good_name']; //trim name if too long
+                                    if(strlen($name) > 16 ){
+                                        $name = substr($name,0,16)."...";
+                                    }
+                                    echo $name;  ?>
+                            <img src="<?php echo $imagepath; ?>" alt="good image" height="120" width="120" style="padding:20px 40px;"/>
+                            <br />
+                                <?php $calcprice=discountCalculate($row['good_id']); //display current price from database or with discount
+                                    if(isset($row['sale_id']) && $calcprice != $row['good_price']){
+                                        echo '<span style="color:#990000;">$'.$calcprice.'</span> [<span style="text-decoration:line-through;">$'.$row['good_price'].'</span>]';
+                                    } else {
+                                        echo "$".$row['good_price'];
+                                    }
+                                ?>
+                            </a>
+                        </div>
+                     <?php
+                        }
                     }
-                ?>
+                    ?>
 
 				
 			</div>

@@ -1,0 +1,26 @@
+<p style="text-align: center;"><span style="font-size: 24px;">Entry Level/Intermediate Software Engineer&nbsp;</span></p><p><span style="font-size: 24px;"><br/></span></p><p>BITS Inc. - Toronto, ON</p><p>Intermediate/Senior Software Engineers</p><p><br/></p><p><strong>Mid-town Toronto – Immediate openings</strong></p><p>Tier1CRM
+ is a world-leading provider of sophisticated Cloud Computing business 
+applications. Our flagship product is Tier1ACE, the most advanced CRM 
+solution used by leading Wall Street and Bay Street Capital Markets 
+firms. A key to our success is the quality, experience and culture of 
+our product engineering team. We use leading edge product development 
+tools and we are firm believers in Agile process methodologies.<br/></p><p><br/></p><p>As
+ a key member of our product engineering team you will be responsible 
+for the development of complex, data driven, sophisticated desktop and 
+mobile applications for our highly demanding clients. Working 
+collaboratively with Product Management and our Quality Assurance and 
+Customer Success teams, our development engineers are responsible for 
+all technical aspects of product development including front-end and 
+back-end architecture, design and implementation and all related 
+processes of successful software development life-cycle and delivery.</p><p><br/></p><p>Our
+ perfect candidate is someone who personally sets the bar high in the 
+art of software craftsmanship, which involves more than just coding - 
+strong interpersonal and communications skills, excellent analytical 
+skills and the ability to plan and organize to flourish in a dynamic 
+environment. You enjoy collaborating with your teammates to continually 
+produce outstanding quality applications regardless of the technology 
+employed.</p><p><br/></p><p>There are several permanent, full-time 
+positions available for smart, dynamic, hardworking individuals who can 
+add to the skillset of and fit into the dynamic of the existing team.</p><p><br/></p><p><strong>Core Competencies:</strong></p><p>Experience/focus in the development of desktop and/or mobile applications<br/></p><p>Software engineering experience, particularly in the following areas:</p><p>Client-side
+ web development technologies including JavaScript, HTML5 and JSON along
+ with modern toolkits/frameworks such as jQuery and Angular.</p><p>Object Oriented programming, utilizing languages such as ActionScript (Apache FLEX), Java, Objective-C, C#</p><p>Native mobile application development (iOS, Android, BlackBerry)</p><p>SQL databases (SQL Server, Oracle, etc.) including data modelling</p><p>Extremely high attention to detail, quality and pride in workmanship</p><p>Self-starter who shows initiative and a willingness to explore and learn new technologies</p><p>Passion for user interfaces and usability</p><p>Additional highly desirable competencies (nice to have):</p><p><br/></p><p>Salesforce configuration and development including Visual Force, APEX and SOQL</p><p>Experience with Agile development process and methodologies</p><p>Small to medium size team leadership, providing development and architectural direction</p><p>User interface component design and development</p><p>Knowledge and understanding in Capital Markets and financial services industries</p><p>Job Type: Full-time</p><p><br/></p><p><strong>Job Location:</strong></p><p><br/></p><p>Toronto, ON</p><p>Required education:</p><p><br/></p><p>Bachelor&#39;s</p><p>Required experience:</p><p><br/></p><p>Software Engineering: 2 years</p><p><br/></p>

@@ -53,6 +53,10 @@
 
     <div class="row text-center">
     <?php
+    include_once("/data/www/default/wecreu/tools/good.php");
+    include_once("/data/www/default/wecreu/tools/discountCalculator.php");
+
+    $good = new Good($db);
         $limit=20;
         if(isset($_GET['offSet'])){
           $offSet=$_GET['offSet'];
@@ -99,8 +103,8 @@
                   echo $name;
                   ?>
               </p>
-              <a href="detail.php?gid=<?php echo $row['good_id'];?>"><img class="img-thumbnail" src="/wecreu/images/<?php echo $row['good_image'];?>" alt="cow"> </a>
-              <p class="text-center">Price: $<?php echo $row['good_price'];?></p>
+              <a href="detail.php?gid=<?php echo $row['good_id'];?>"><img class="img-thumbnail" src="/wecreu/images/<?php echo $row['good_image'];?>" alt=""> </a>
+              <p class="text-center">Price: $<?php echo discountCalculate($row['good_id']);  ?></p>
           </section>
         <?php
         }

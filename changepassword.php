@@ -38,7 +38,7 @@ if(Input::exists()){
                         'password' => Hash::make(Input::get('new_password'), $salt),
                         'salt' => $salt
                     ));
-                    Session::flash('changeP', 'Your password have been change.');
+                    Session::flash('changeP', 'Your password has been changed.');
                 } catch (Exception $e){
                     die($e->getMessage());
                 }

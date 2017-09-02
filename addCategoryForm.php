@@ -60,6 +60,7 @@ if(Input::exists()) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <title>Wecrue - Add Category</title>
 </head>
 <body>
@@ -174,17 +175,20 @@ if(Input::exists()) {
             <legend></legend>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="category_name"><span class="text-danger">*</span> Name</label>
-                <input class="form-control" type="text" id="category_name" name="category_name" value="">
+                <input maxlength="15" class="form-control" type="text" id="category_name" name="category_name" value="">
+                <p style="color:red" id="errMsg"></p>
             </div>
             <div class="form-group col-md-6">
                 <label class="form-control-label" for="desc"><span class="text-danger">*</span> Description</label>
-                <textarea class="form-control" rows="3" name="desc" id="desc" placeholder="Enter description"><?php echo escape(Input::get('desc'))?></textarea>
+                <textarea maxlength="255" class="form-control" rows="3" name="desc" id="desc" placeholder="Enter description"><?php echo escape(Input::get('desc'))?></textarea>
                 <input type="hidden" name="method" value="categoryAdd">
+                <p style="color:red" id="errMsgDesc"></p>
+
             </div>
         </fieldset>
         <div class="form-group">
             <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-            <input class="btn btn-primary" type="submit" value="Add" />
+            <input id="subm" class="btn btn-primary" type="submit" value="Add" />
         </div>
     </form>
 </div>
@@ -194,6 +198,43 @@ if(Input::exists()) {
 <script src="js/jquery-3.1.1.slim.min.js"></script>
 <script src="js/tether.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script>
+var specialChars = "<>@!#$%^&*()_+[]{}?:;|'\"\\,./~`-=";
+var check = function(string){
+    for(i = 0; i < specialChars.length;i++){
+        if(string.indexOf(specialChars[i]) > -1){
+            return true
+        }
+    }
+    return false;
+}
+
+$("#category_name").blur(function(){
+    if(check($('#category_name').val()) == false){
+        $("#errMsg").text("");
+        if ($("#errMsgDesc").text() === ""){
+            $("#subm").removeAttr("disabled");
+        }
+    }else{
+        $("#errMsg").text("* Please don't contain any special charactor");
+        $("#subm").attr("disabled","disabled");
+    }
+});
+
+$("#desc").blur(function(){
+    if(check($('#desc').val()) == false){
+        $("#errMsgDesc").text("");
+        if ($("#errMsg").text() === ""){
+            $("#subm").removeAttr("disabled");
+        }
+    }else{
+        $("#errMsgDesc").text("* Please don't contain any special charactor");
+        $("#subm").attr("disabled","disabled");
+    }
+});
+
+
+</script>
 
 </body>
 </html>

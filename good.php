@@ -151,7 +151,12 @@ $good = new Good($db);
                        } else {
                         echo "No";
                        }?></td>
-            <td><a href="edit-good.php?gid=<?php echo "$row[good_id]";?>">Edit</a> | <a href="delete-good.php?gid=<?php echo "$row[good_id]";?>">Delete</a></td>
+            <td>
+              <form action="<?php echo "delete-good.php?gid=" . $row['good_id'];?>" method="post">
+                <a class="btn btn-warning" href="edit-good.php?gid=<?php echo $row['good_id'];?>">Edit</a> |
+                <input type="submit" name="delete" class="btn btn-danger" onclick="return confirm('Do you really want to delete this product?');" value="Delete">
+              </form>
+            </td>
         </tr>
         <?php
         }
